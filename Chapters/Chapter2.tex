@@ -94,7 +94,8 @@ rename files simulate key presses DDos attacks
 
 \subsection{Structure}
 \subsubsection{Life cycle}
-Life cycles might differ from one bot to another but they have generally a common path
+Life cycles might differ from one bot to another but they have generally a common structure. This life cycle is composed of four steps
+The exploitation/infection 
 
 
 %A survey of botnet detection based on DNS
@@ -374,63 +375,120 @@ TODO: what was the first structure of botnets and how has it evolved?
 
 %A la place des discussion of features, placer la justification du choix de détéction en utilisant les études présentées. (je dois présenter toutes les autres techniques ss forcément aller en profondeur, comme ça on peut se positionner plus facilement.)
 
-To understand these methods of evasion we must first explain how DNS works, its normal use and how the botnets abuse it.
-\subsubsection{Description}
-TODO: what is DNS, its purpose in general and different parts of the DNS
-\subsubsection{Protocol}
-TODO: Common protocol steps
+Most of the time users send DNS requests with a particular question for the DNS server. The server will the reply a DNS responses, similar to the request with the "answer" field filled with the information requested. Here is the structure of the packets transmitted to help with the understanding of the sections used as features later on.
+\newpage
+\subsubsection{Normal DNS message structure}
+\begin{verbatim}
+    +---------------------+
+    |        Header       |
+    +---------------------+
+    |       Question      | the question for the name server
+    +---------------------+
+    |        Answer       | RRs answering the question
+    +---------------------+
+    |      Authority      | RRs pointing toward an authority
+    +---------------------+
+    |      Additional     | RRs holding additional information
+    +---------------------+
 
-\subsection{Techniques abusing DNS}
-\section{Presentation of related papers}
+\end{verbatim}
 
-\subsection{DNS}
+\subsubsection{Header section}
+Here is a detailed description of the header of the DNS packets. 
+\begin{verbatim}
+	                               1  1  1  1  1  1
+	 0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+	|                      ID                       |
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+	|QR|   OpCode  |AA|TC|RD|RA| Z|AD|CD|   RCODE   |
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+	|                QDCOUNT/ZOCOUNT                |
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+	|                ANCOUNT/PRCOUNT                |
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+	|                NSCOUNT/UPCOUNT                |
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+	|                    ARCOUNT                    |
+	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 
-\subsubsection{Special capabilities of the protocol}
+\end{verbatim}
+
+\begin{tabular}{l|l}
+value & explanation \\
+\hline
+identifier & id of request\\
+\hline
+opcode & Operation Type: 0 $\rightarrow$ query, 1 $\rightarrow$ Inverse query, 2 $\rightarrow$ DNS status\\
+\hline
+aa\_flag & Authoritative Answer: response \\
+\hline
+tc\_flag & Truncation: flag set on truncated messages due to length greater\\ & than that permitted.\\
+\hline
+rd\_flag & Recursion Desired: if set, asks the NS to pursue query recursively.\\
+\hline
+ra\_flag & Recursion available: recursive query supported by NS\\
+\hline
+rcode  & Response Code: ignored in request, useful in answers to provide\\ & query information.(ex: type of errors)\\
+\hline
+questions\_count  & Number of entries in the Question section\\
+\hline
+answers\_count  & Number of RR in the Answer section\\
+\hline
+authority\_count  & Number of NameServer RR in the Authority section\\
+\hline
+additional\_count  & Number of RR in the additional section\\
+\hline
+\end{tabular}
+
+
+
+\subsubsection{Question section}
+
+\begin{verbatim}
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                                               |
+    /                     QNAME                     /
+    /                                               /
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     QTYPE                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     QCLASS                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+\end{verbatim}
+
+\begin{tabular}{c|l}
+value & explanation\\
+\hline
+q\_name  & Domain name requested \\
+q\_type  & Type of RR record requested \\
+q\_class & Class of the request (often IN for internet) \\
+\end{tabular}
+
+\subsection{Botnets abusing DNS}
+TODO: Present the different abuses of the DNS protocol to evade detection
+(use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
+
+Studies have shown that to avoid detection, botnets have been using multiple techniques utilizing the DNS protocol capabilities to reach their C2. The DNS protocol has some features that have been exploited maliciously:  DNS tunnelling, fast-flux and domain flux.
+
+
+%%-------------------------------- THIS IS WHERE WE EXPLAIN THE DIFFERENT TYPES OF EVASIONS ------------------------------------
+
 TODO: Explain with the growing services of the internet "new"(research if they were part of the original protocol) capabilities arisen to allow this growth.(find an article supporting that). 
 Explain Fast flux, domain flux and tunnelling used for legitimate purposes.
 (find an article explaining how these are used by normal services or the standard of the protocol)
 
-DNS is an Internet service which translates names of sites into their numeric IP addresses. For
-every host, DNS has a list of A records each with a given Timeto- Live (TTL) value (normally from 1
-to 5 days). DNS returns these A records in round-robin way.
-CDN use a lower TTL to provide their content more efficiently
-Fast-Flux Service Network (FFSN) is a distributed proxy network -built on compromised machines
-(flux-agents)- that direct incoming DNS requests to the botnet’s desired address on the fly.
-%source J. Nazario and T. Holz, “As the net churns: Fast-flux botnet observations,” in The 3rd International Con- ference on Malicious and Unwanted Software, pp. 24– 31, Oct. 2008.
-
-%source P. B¨acher, T. Holz, M. K¨otter, and G. Wicherski,“Know your Enemy: Tracking Botnets,” Oct. 2008. (http://www.honeynet.org/papers/bots)
-This is done to allow the botnet’s domain name to have multiple IP addresses. In the meantime,
-involved DNS records are constantly changing every few minutes using a combination of round robin
-IP addresses and a very short TTL from any given particular DNS resource record.
-In FFSN, the victim client first sends an address query to DNS. Then, the DNS returns the IPs of a
-subset of active flux-agents. After that, the flux-agent relays the client’s request to the mothership3.
-The key factor in FFSN is the combination of a very short TTL and the round-robin answer from a
-large pool of active agents
-%source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in
-Proceedings of the first Conference on First Workshop on Hot Topics in Un- derstanding Botnets, pp.
-2, Berkeley, CA, USA, 2007.
-Some features for FF detection: nb of A records returned: 1-3 normal, 5 or more ff nb of NS: normal
--> small, ff -> several NS + several A records for the NS AS: small nb of A from 1 AS -> normal,
-located in different AS -> ff Hardware and IP: range of IP is diverged -> ff No physical agent -> ff no
-garantee uptime.
-FIGURE NORMAL FF AND BAD FF (single and double)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Survey on Botnets on DNS detection
-Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating
-the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,
-botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet
-detection processes [17]. The attackers or botmasters use the DNS services to hide their command
-and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to
-another without being noticed
 
 
-\subsubsection{Channel security/lookup resilience}
+\subsubsection{Domain flux}
+% explain  what domain flux is
+Domain-flux is a type of flux where bots are equipped with a special Domain Generation Algorithm (DGA).
+They use this algorithm to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their C2. The botmaster knows which domains are generated at a particular point in time and can register them before they are queried by
+the bots to be reached. This improves the resilience of botnets infrastructure a lot.
 
-\subsection{Botnets use and abuse of DNS protocol}
-TODO: Present the different abuses of the DNS protocol to evade detection
-(use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
-\subsubsection{Domain fast flux}
+
 TODO: present DF
 [source]
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
@@ -462,7 +520,22 @@ Brittle: Single domain
 Less brittle: Single flux
 Resilient: Double flux
 Very resilient: Domain flux
-\subsubsection{Fast-flux}
+
+
+\subsubsection{IP flux}
+IP flux or fast flux, 
+
+%Survey on Botnets on DNS detection
+Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet detection processes [17]. The attackers or botmasters use the DNS services to hide their command and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to another without being noticed
+
+Fast-Flux Service Network (FFSN) allows for one domain name to have an unlimited number of IP addresses, short TTLs(Time to live) values and the IPs rotating in a round robin fashion. IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective
+C2 server. This process helps botnet controllers avoid detection and blacklisting. But can be confused with real traffic. It has a different categories:
+\begin{enumerate}
+\item Single-flux: Multiple IP addresses are assigned to the same domain (either CNAME or A records). (low TTL, multiple autonomous system(AS) locations, proxies for master)
+\item NS flux: Multiple NS records assigned to the same domain
+\item Double-flux: Multiple name servers are assigned to the same domain and then use single-flux for the multiple IP addresses of the master. This provides a second layer of redundancy. This also means that the TTLs are short for the A records and the NS records too.
+\end{enumerate}
+
 [source]
 % file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
 Normal FF\\
@@ -472,15 +545,43 @@ single flux\\
 double flux\\
 \includegraphics[scale=.7]{img/double_FF.jpg}
 
-%"NS flux"
+%source P. B¨acher, T. Holz, M. K¨otter, and G. Wicherski,“Know your Enemy: Tracking Botnets,” Oct. 2008. (http://www.honeynet.org/papers/bots)
+This is done to allow the botnet’s domain name to have multiple IP addresses. In the meantime,
+involved DNS records are constantly changing every few minutes using a combination of round robin
+IP addresses and a very short TTL from any given particular DNS resource record.
+In FFSN, the victim client first sends an address query to DNS. Then, the DNS returns the IPs of a
+subset of active flux-agents. After that, the flux-agent relays the client’s request to the mothership3.
+The key factor in FFSN is the combination of a very short TTL and the round-robin answer from a
+large pool of active agents
+%source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in
+Proceedings of the first Conference on First Workshop on Hot Topics in Un- derstanding Botnets, pp.
+2, Berkeley, CA, USA, 2007.
+Some features for FF detection: nb of A records returned: 1-3 normal, 5 or more ff nb of NS: normal
+-> small, ff -> several NS + several A records for the NS AS: small nb of A from 1 AS -> normal,
+located in different AS -> ff Hardware and IP: range of IP is diverged -> ff No physical agent -> ff no
+garantee uptime.
+FIGURE NORMAL FF AND BAD FF (single and double)
+
+DNS is an Internet service which translates names of sites into their numeric IP addresses. For
+every host, DNS has a list of A records each with a given Timeto- Live (TTL) value (normally from 1
+to 5 days). DNS returns these A records in round-robin way.
+CDN use a lower TTL to provide their content more efficiently
+Fast-Flux Service Network (FFSN) is a distributed proxy network -built on compromised machines
+(flux-agents)- that direct incoming DNS requests to the botnet’s desired address on the fly.
+%source J. Nazario and T. Holz, “As the net churns: Fast-flux botnet observations,” in The 3rd International Con- ference on Malicious and Unwanted Software, pp. 24– 31, Oct. 2008.
+
+
+
 \subsubsection{DNS tunnelling}
-TODO: General presentation
+DNS tunnelling implies the act of tunnelling other protocols or data through DNS, for example using the TXT as q\_type and using the requests to actually send data. This has been done to avoid restrictions but is now also used to hide malicious traffic from botnets. They can also use DNS tunnelling to remain undetected while exfiltrating data. \cite{Botnet1}
+
 \subsubsection{Maybe Domain shadowing (need more research)}
 %[A Review Paper on Botnet and Botnet Detection Techniques in Cloud Computing] Shahid Anwar, Jasni Mohamad Zain, Mohamad Fadli Zolkipli, Zakira Inayat! Conference: ISCI 2014, September 2014
 \includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
 
 
 \section{Botnet detection related papers}
+\subsection{classification of botnet research and detection}
 In this section related to papers focused on Botnet detection, we are going to present the classifications of botnets and what part of the research we have decided to focus on.
 
 %[Botnet Detection Based On Machine Learning Techniques Using DNS Query Data]
@@ -596,7 +697,7 @@ finally for each relevant paper either do a summary with the 4 components or sim
 After this part we are supposed to be done with the research, we have a last discussion of how the following step is planned and what information from this chapter will be translated into the rest of the thesis.
 ASK: should we introduce the research on datasets in the SOTA or the model presentation?
 ME
-
+\subsection{All-in solutions}
 \subsubsection{Exposure}
 [source]
 %[EXPOSURE: a Passive DNS Analysis Service to Detect and Report Malicious Domains] Leyla Bilge, Symantec Research, France Sevil Sen, Hacettepe University, Turkey Davide Balzarotti, Eurecom, France Engin Kirda, Northeastern University, USA Christopher Kruegel, University of California - Santa Barbara, USA.
@@ -639,8 +740,179 @@ TODO: domain-flux can is mostly about analyzing domain names, here is a list of 
 %Detecting domain-flux botnet based on DNS traffic features in managed network Dinh-Tu Truong and Guang Cheng. https://de.wikipedia.org/wiki/Domain\_Flux, https://www.sciencedirect.com/science/article/pii/S1742287614001182, https://blog.malwarebytes.com/security-world/2016/12/explained-domain-generating-algorithm/\\
 DGA specific\\
 Detecting Algorithmically Generated Malicious Domain Names, %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
+
+%memoire
+%%%%%%%%%%%%%%%%%%%%%%%
+Domain flux is mainly used with DGAs and so here are some papers that have proposed an approach to detect it.
+
+In \cite{dga}, they analyse the basic features that are common to most domain generated by DGA. The first is the length that can be an identifier because DGAs have long domain name. Recent DGAs have shown to have shorter lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics. They end with 2 more advanced features that cover the shortcomings of the primitive ones. They propose these features to detect DGAs:\\\\
+\begin{tabular}{|l|}
+\hline
+length of the domain name excluding TLD (top level domain)\\
+\hline
+Number of vowels in the Second Level Domain (SLD)\\
+\hline
+Number of consonants in the SLD\\
+\hline
+Number of digits in the SLD\\
+\hline
+SLD trigram entropy\\
+\hline
+SLD trigram conditional probability\\
+\hline
+\end{tabular}
+\\
+
+These 6 features are very simple but have obtained really good results. The reason for the last 2 features is to improve the quality of the classification since some of the features could belong to botnets or legit domains. The definition of the features is explained in the section where this approach is analysed.
+
+In this paper\cite{dga3}, they propose an unsupervised approach based on anomaly detection with a set of metrics analysing ngrams of the SLD. They use the Kullback-Liebler divergence measure with unigrams and bigrams, they also used the Jaccard index between bigrams and the last feature is the Edit distance. These 3 features are used widely in the DGA detection research because of their efficiency. \\
+
+In this paper\cite{dga4}, they realize that during the generation algorithm, most of the domains will not be up, this will generate a lot of NXDomain responses. Furthermore, the caching of NXDomains is limited which means that they cannot hide this traffic. Their contribution consists of a clustering technique based on domain names and request patterns; and similarity metrics for malicious domains detection. What can be retrieved from this study is the feature related to NXDomains, and the clustering process for big datasets.
+
+In \cite{phoenix}, they explain the shortcomes of some of the other approaches. The study works in 2 phases: DGA discovery and DGA detection. In the discovery phase they apply the following filters that focus on linguistics: percentage of meaningful word in the domain name; popularity of the ngrams of the domain. They construct a base generated with the top 100.000 domains from Alexa. Then they define a distance (Mahalanobis distance) and thresholds(loose and stric ones) to determine when domains can be considered DGAs. They use known malicious domains to determine their thresholds. Afterwards they propose a sytem to cluster DGAs. They create a graph where each node is a domain and edges are created if both nodes resolve to similar IPs, the weight is proportional to the number of common resolved IPs. From all the "communities" discovered, they extract different common features to be reintroduced in the detection phase for each family of DGAs.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Fast-flux}
+%memoire
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For IP flux, most papers have similar features they propose to detect fast-flux. The big challenge is to find the small differences and detect malicious fast-flux networks(FFSN) from content delivery networks(CDNs). Both use fast-flux for different reasons such as load balancing, high availability and evasion.\\
+The features most papers \cite{honeynet}\cite{ff2}\cite{ff3}bring forward are shown on the figures below\cite{ff_botconf}, and listed here:\\\\
+\begin{tabular}{|l|}
+\hline
+Numerous unique A records for a domain\\
+\hline
+Numerous unique NS records for a  domain\\
+\hline
+Different Autonomous Systems (ASN) for the IPs of linked to the same domain\\
+\hline
+Different countries for the IPs of linked to the same domain\\
+\hline
+Short Time-To-Live (TTL)\\
+\hline
+\end{tabular}
+\\\\\\
+\includegraphics[scale=.7]{img/ff_features.jpg}\\
+\includegraphics[scale=.6]{img/ff_features_2.png}
+\\We present now the different features and approaches proposed to distinguish the CDNs from FFSN.\\
+
+Before the approach taken by \cite{ff2}, most of the detection was based on DNS Blacklisting (DNSBL), their new approach was a passive analysis of recursive DNS traffic. Recursive DNS  when your query is send to your DNS server, it starts by checking its cache and then will recursively ask other DNS servers until finding the address. Their purpose was to allow direct analysis of DNS requests and detect malicious ones. They want to improve the HoneyNet\cite{honeynet} features(short time-to-live (TTL), set of resolved IPs returned at each query changes rapidly, usually after every TTL, the overall set of resolved IPs obtained by querying the same domain name over time is often very large, the resolved IPs are scattered across many different networks)\\
+They start by applying filters to cluster the different networks of FF using the list above. On these clusters they then applied statistical supervised algorithms to do the classification. They used a base of features provided by \cite{fluXOR} and added their own. \\It starts with the passive features: \\\\
+\begin{tabular}{|l|}
+\hline
+Number of resolved IPs\\
+\hline
+Number of domains (in a cluster = domains with similar IPs)\\
+\hline
+Avg. TTL per domain in a cluster\\
+\hline
+Network prefix diversity = ratio between the number of distinct\\ /16 network prefixes and the total \\
+\hline
+number of IPs (measures the scattering)\\
+\hline
+Number of distinct domain names that resolved to at least one of \\the IP addresses in the considered cluster\\
+\hline
+IP Growth Ratio. This represents the average number
+of new IP\\ addresses discovered per each DNS response related to any domain\\
+\hline
+\end{tabular}
+\\\\
+Then the active ones:\\\\
+\begin{tabular}{|l|}
+\hline
+Autonomous System (AS) diversity (ratio between the number of distinct\\ ASs where the IPs of a cluster reside and the total number of resolved IPs. \\Same for the following diversities)\\
+\hline
+BGP prefix diversity\\
+\hline
+Organization diversity\\
+\hline
+Country Code diversity\\
+\hline
+Dynamic IP ratio (ratio of dynamic vs total IPs using keywords in reverse\\ DNS lookups)\\
+\hline
+Average Uptime Index (average uptime for the IPs in a cluster,\\ Uptime tested through probing)\\
+\hline
+\end{tabular}
+\\\\
+They use these features on a Decision Tree classifier (efficient, easy to interpret and auto pruning of useless features) to classify malicious and legit FF networks.\\
+
+In the following paper\cite{ff3}, they propose some novel features compared to the other papers. To avoid redundancy, only the features not explored in previous papers will be detailed. In the paper they present the restrictions FFSNs face compared to CDNs: FFSN cannot choose the location which makes the IP address very scattered and no Uptime garantee. Possible distinctions: the lack of control results in number of unique A records returned different and the number of NS records in a single lookup (because the NS can be hosted inside the FFSN and return many NS records whereas legitimate CDNs return a very small set of NS records). The IP diversity restriction brings another feature which is the number of unique ASNs. Legitimate CDNs tend to return a single ASN for all their A records where FFSN are dispersed.\\
+They decide not to include TTLs as a feature because both CDNs and FFSN have low TTLs. Finally,  they introduce functions of the different features above to classify FFSN and CDNs.\\
+\textbf{Fluxiness} is the total of unique A records for a domain divided by the number of A records returned for each lookup. This measures consistency in the unique A records returned. \\
+\textbf{Flux-score} an hyperplane that separates benign from malicious fast flux where $ x = (n_A,n_{ASN},n_{NS})$ (unique A records, ASN and SN records) and the plane is defined as follows\\
+%\begin{equation}
+%F(x) = 
+%\begin{cases}
+%	w^Tx-b > 0  & \text{x is a FFSN}\\
+%	w^Tx-b \leq 0 & \text{x is CDN}\\
+%\end{cases}
+%\end{equation}
+From $F(x)$ they induce a metric $f(x) = w^Tx$ with w the weight of the vector and b a bias. $f(x) > b$ would mean x is a FFSN. By empirically testing this on a labelled dataset they determined the value of w and b. $w = (1.32,18.54,0)$ and $b =142.38$. We can notice that $n_{NS}$ does not have any impact. It could be argued that FFSN will try to mimic CDNs to have the same metrics, but as argued earlier, the metrics used take into account the restrictions FFSN have. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites.\\
+
+%Detection of Fast-flux Networks using Various DNS Feature Sets
+This paper\cite{ff5} regroups the large majority of features encountered in the other papers accompanied with to some novel additions resulting a long list of 16 features: \\\\
+\begin{tabular}{c|l}
+Type & Features\\
+\hline
+ & Number of unique A records\\
+DNS Answer-based &  Number of NS records\\
+ & DNS packet size\\
+ & TC (Tnmcated) Flag is set\\
+\hline
+ & Edit Distance\\
+Domain name-based & KL (Kullback-Leibler) Divergence (unigrams and bigrams)\\
+ & Jaccard Index (unigrams and bigrams)\\
+\hline
+ & Time Zone Entropy of A records\\
+Spatial-based & Time Zone Entropy of NS records\\
+ & Minimal service distances (mean and standard deviation)\\
+\hline
+ & Number of distinct autonomous systems\\
+Network-based & Number of distinct networks\\
+ \hline
+ & Round Trip Time of DNS request\\
+Timing-based & Network delay (mean and standard deviation)\\
+& Processing delay (mean and standard deviation)\\
+& Document fetch delay (mean and standard deviation)\\
+\end{tabular}
+\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsubsection{DNS tunnelling}
+%memoire
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In \cite{tunn1}, use of TXT RR with segmented and encrypted data.
+Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy".Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead.
+
+The complete list of features for the Rdata:
+\begin{itemize}
+\item number of distinct byte values in m
+\item minimum byte value in m
+\item maximum byte value in m
+\item number of ASCII capital letters (byte values 65-90) in m
+\item number of ASCII digits (byte values 48-57) in m
+\item length of m in bytes
+\item absolute difference of the statistical byte entropy at given length of m and the entropy of m
+\item size of all Rdata messages
+\end{itemize}
+They expect these behavioural communication features to be effective enough in order to extend a classifier based on the rdata features.
+\\\\
+In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunnelling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunnelling. The features are:
+\begin{itemize}
+\item x-axis: destination IP
+\item y-axis: character count
+\item radius: hostname length
+\item colour: request type
+\end{itemize}
+
+
+%(cf Detecting DNS tunnelling)
+%DNS has been used as a communication method by malware. Known malware
+%using DNS include: Feederbot (Dietrich, 2011) and Moto (Mullaney, 2011). Both of
+%these malware examples use DNS TXT records for command and control.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsubsection{Behavioral}
+
+
 
 
