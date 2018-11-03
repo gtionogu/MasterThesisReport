@@ -18,8 +18,8 @@ Here are some of these enormous entities: \textbf{Flashback} with 600k compromis
 
 %source 6 (A survey of botnet detection based on DNS) 
 The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavours criminals bring to the market.
+\subsection{Definition}
 
-\subsection{Botnet definition}  
 %memoire1
 A botnet is a network of infected machines called bots, owned and controlled by a remote attacker called the botmaster. These bots usually infect these machines without their owners' knowledge or consent\cite{Botnet1}. The control of such bots is done through the Command and Control (C2) server. Through the C2 server, the master issues commands to and receives responses from individual bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data, etc.
 
@@ -35,7 +35,6 @@ A clear distinction between a bot agent and a common piece of malware lies withi
 %J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007.
 Command and Control (CnC) CnC servers is what differentiates Botnets from other malware.
 
-\subsection{Botnet purpose and actions/attacks}
 Note: mix attacks and purpose together\\
 % [Botnet Tracking Tools] SANS Institute 
 The goals of an attacker in terms of bot recruitment can be categorized into two
@@ -89,12 +88,8 @@ applications run or terminate programs download and execute files perform scan (
 rename files simulate key presses DDos attacks
 
 
-\subsection{Type of attacks}
-
-% Therefore, understanding the botnet life cycle and their architecture may yield to better detection mechanisms.
-
-\subsection{Botnets Lifecycle}
-
+\subsection{Structure}
+\subsubsection{Lifecycle}
 %A survey of botnet detection based on DNS
 Botnet Lifecycle
 exploitation phase: source 25,26,16 This is where the infection happens by exploiting a
@@ -117,153 +112,14 @@ searches until finds an alive peer 4) phase 1: update of peer list + download an
 based on STORM but similar for all P2P botnets 
 % source S. Stover, D. Dittrich, J. Hernandez, and S.Dietrich, "Analysis of the storm and nugache trojans: P2p is here," The USENIX Magazine, vol. 32,
 pp. 18-27, Dec. 2007.
-\subsection{Botnets CnC Channel}
+
+\subsubsection{Channel}
 TODO: after presenting the botnet structure we focus on the part where botmasters have turned their focus in evading detection and becoming more resilitent. In this section we want to discuss how the CnC channel works.
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 Means of receiving and sending commands and information between the botmaster and the zombies. Typical protocols: IRC, HTTP – HTTPS, DNS, etc\\
 Protocols imply (to an extent) a botnet’s communication topology.
         The topology provides trades-off in terms of bandwidth, affectivity, stealth, and so forth.
         
-
-%http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
-
-
-
-\subsection{Botnet architecture}
-[sources]\\
-%[A Survey on Botnet Architectures, Detection and Defences] Muhammad Mahmoud, Manjinder Paul Nir, International Journal of Network Security · January 2014 file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
-
-
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-Based on CnC channels, there are two typical botnet topologies:
-Centralized
-Decentralized (P2P)
-     Traditional botnet metrics:
-Resiliency
-A botnet ability to cope with a loss of members (zombies) or servers
-Latency
-Reliability in message transmission
-Enumeration
-An ability to accurately estimate a botnet size
-Difficulty for security analysis
-Re-sale
-A possibility to carve off sections of the botnet for lease or resale to
-other operators. 
-
-%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-Botnets come in all kinds of shapes and sizes. As a result, they employ a range of CnC
-topologies in response to commercial defenses, legal shutdowns and hijacking
-attempts. This evolution means that a criminal botnet operator has a number of wellstudied
-CnC topology options to base a new botnet upon – each of which have
-relative strengths and weaknesses
-
-Botnet CnC topologies have been optimized to minimize network chatter and system
-failures, just like commercial-grade technology tasked with remotely managing tens of
-thousands of hosts. The precise CnC topology selected by a botnet operator often
-reflects that individual’s perceived risk to continued command access and the financial
-business model of that botnet
-
-CnC topologies encountered in the wild typically match one of the following types:
-• Star
-• Multi-server
-• Hierarchical
-• Random
-
-TODO: centralized vs decentralized botnets
-TODO: metrics analyzed to choose best option: cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
-TODO: present with visuals the different topologies and their purpose.
-
-%source 
-Modeling Botnets architectures:
-diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet
-propagation using time zones,” in Proceedings of the 13 th Network and Distributed System
-Security Sym- posium NDSS, 2006
-Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in
-Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–
-123, Reston, VA, USA, Feb. 2007
-Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer
-botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–
-316, Sep. 2008 %source “The möbius tool,” Apr. 2011. (https://www.mobius.illinois.edu/)
-advanced P2P hybrid model %source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid
-peer-to-peer botnet,” in Proceedings of the first Conference on First Workshop on Hot Topics
-in Un- derstanding Botnets, pp. 2, Berkeley, CA, USA, 2007.
-
-\subsubsection{Star}
-[source]
-%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-The Star topology relies upon a single centralized CnC resource to communicate with
-all bot agents. Each bot agent is issued new instructions directly from the central CnC
-point. When a bot agent successfully breaches a victim computer, it is normally
-preconfigured to “phone home” to this central CnC, whereupon it registers itself as a
-botnet member and awaits new instructions.
-
-    Pros 
-Speed of Control
-The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly
-    Cons
-Single point of failure
-If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
-\includegraphics[scale=1]{img/star_topo.jpg}
-
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-\includegraphics[scale=1]{img/centralized_topo}
-
-\subsubsection{Multi-server}
-    Pros 
-No single point of failure
-Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents.
-Geographical optimization
-Multiple geographically distributed CnC severs can speed up communications between botnet elements.
-
-    Cons
-Requires advance planning
-Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
-\includegraphics[scale=1]{img/multi-server_topo.jpg}
-
-\subsubsection{Hierarchical}
-    Pros 
-  Botnet awareness
-Interception or hijacking of bot agents
-will not enumerate all members of the
-botnet and is unlikely to reveal the CnC
-server.
-  Ease of re-sale
-A botnet operator can easily carve off
-sections of their botnet for lease or resale
-to other operators.
-    Cons
-  Command latency
-Because commands must traverse
-multiple communication branches within
-the botnet, there can be a high degree of
-latency with updated instructions being
-received by bot agents. This delay makes
-some forms of botnet attack and
-malicious operation difficult.
-
-\subsubsection{Random(dynamic/P2P}
-    Pros 
-  Highly resilient
-Lack of a centralized CnC infrastructure
-and the many-to-many communication
-links between bot agents make it very
-resilient to shutdown.
-    Cons
-  Command latency
-The ad hoc nature of links between bot
-agents make CnC communication
-unpredictable, which can result in high
-levels of latency for some clusters of bot
-agents.
-  Botnet enumeration
-Passive monitoring of communications
-from a single bot-compromised host can
-enumerate other members of the botnet
-
-
-TODO: what was the first structure of botnets and how has it evolved?
-
-\subsection{Rallying mechanism}
 TODO: explain the different techniques used to rally bots to an IP or a Domain (how do they regroup with master?)
 % file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
 2.4.2 Command and Control Rallying Mechanisms
@@ -328,12 +184,199 @@ botnets run their own distributed DNS service at locations that are out of the r
 enforcement. Bots include the addresses of these DNS servers and contact these servers to resolve
 the IP address of CnC servers. This method provides both mobility and invisibility to their botnets.
 
+ME
+The channel resilience of a botnet is critical to ensure good communication with the CnC server. It is a crtitical component of botnets, its failure is usually the end of the botnet's life. 
+
+
+
+ME
+
+
+[source]
+%http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
+
+The ability for a bot agent to locate CnC infrastructure is a critical requirement for
+maintaining control of the entire botnet for botnets that rely upon centralized CnC. If
+the CnC cannot be found, a bot agent will not be able to receive new instructions.
+While some bot agents may opt to function in an alternative autonomous “zombie”
+mode – reverting to embedded instructions for propagation and infection – most bot
+agents will continue to harvest local host information and poll the missing CnC at
+regularly scheduled times.
+Botnet Communication Topologies
+Page 6
+Botnet operators use a number of technologies to increase the probability that bot
+agents will be able to locate the central CnC infrastructure. These tools and techniques
+also make botnets more resilient to shut-down and hijacking maneuvers.
+One key technology that enables CnC location resolution and failover resilience is
+referred to as “fluxing”. Fluxing comes in two major flavors:
+• IP Flux
+• Domain Flux
+Both technologies are used extensively by professional botnet operators
+
+
+TODO: ways of securing their communication channel: encryption, rootkit and a number of DNS evasion techniques
+
+\subsubsection{Topology}
+
+[sources]\\
+%[A Survey on Botnet Architectures, Detection and Defences] Muhammad Mahmoud, Manjinder Paul Nir, International Journal of Network Security · January 2014 file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
+
+
+%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+Based on CnC channels, there are two typical botnet topologies:
+Centralized
+Decentralized (P2P)
+     Traditional botnet metrics:
+Resiliency
+A botnet ability to cope with a loss of members (zombies) or servers
+Latency
+Reliability in message transmission
+Enumeration
+An ability to accurately estimate a botnet size
+Difficulty for security analysis
+Re-sale
+A possibility to carve off sections of the botnet for lease or resale to
+other operators. 
+
+%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+Botnets come in all kinds of shapes and sizes. As a result, they employ a range of CnC
+topologies in response to commercial defenses, legal shutdowns and hijacking
+attempts. This evolution means that a criminal botnet operator has a number of wellstudied
+CnC topology options to base a new botnet upon – each of which have
+relative strengths and weaknesses
+
+Botnet CnC topologies have been optimized to minimize network chatter and system
+failures, just like commercial-grade technology tasked with remotely managing tens of
+thousands of hosts. The precise CnC topology selected by a botnet operator often
+reflects that individual’s perceived risk to continued command access and the financial
+business model of that botnet
+
+CnC topologies encountered in the wild typically match one of the following types:
+• Star
+• Multi-server
+• Hierarchical
+• Random
+
+TODO: centralized vs decentralized botnets
+TODO: metrics analyzed to choose best option: cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
+TODO: present with visuals the different topologies and their purpose.
+
+%source 
+Modeling Botnets architectures:
+diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet
+propagation using time zones,” in Proceedings of the 13 th Network and Distributed System
+Security Sym- posium NDSS, 2006
+Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in
+Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–
+123, Reston, VA, USA, Feb. 2007
+Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer
+botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–
+316, Sep. 2008 %source “The möbius tool,” Apr. 2011. (https://www.mobius.illinois.edu/)
+advanced P2P hybrid model %source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid
+peer-to-peer botnet,” in Proceedings of the first Conference on First Workshop on Hot Topics
+in Un- derstanding Botnets, pp. 2, Berkeley, CA, USA, 2007.
+
+\paragraph{Star}
+[source]
+%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+The Star topology relies upon a single centralized CnC resource to communicate with
+all bot agents. Each bot agent is issued new instructions directly from the central CnC
+point. When a bot agent successfully breaches a victim computer, it is normally
+preconfigured to “phone home” to this central CnC, whereupon it registers itself as a
+botnet member and awaits new instructions.
+
+    Pros 
+Speed of Control
+The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly
+    Cons
+Single point of failure
+If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
+\includegraphics[scale=1]{img/star_topo.jpg}
+
+%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+\includegraphics[scale=1]{img/centralized_topo}
+
+\paragraph{Multi-server}
+    Pros 
+No single point of failure
+Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents.
+Geographical optimization
+Multiple geographically distributed CnC severs can speed up communications between botnet elements.
+
+    Cons
+Requires advance planning
+Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
+\includegraphics[scale=1]{img/multi-server_topo.jpg}
+
+\paragraph{Hierarchical}
+    Pros 
+  Botnet awareness
+Interception or hijacking of bot agents
+will not enumerate all members of the
+botnet and is unlikely to reveal the CnC
+server.
+  Ease of re-sale
+A botnet operator can easily carve off
+sections of their botnet for lease or resale
+to other operators.
+    Cons
+  Command latency
+Because commands must traverse
+multiple communication branches within
+the botnet, there can be a high degree of
+latency with updated instructions being
+received by bot agents. This delay makes
+some forms of botnet attack and
+malicious operation difficult.
+
+\paragraph{dynamic/P2P}
+    Pros 
+  Highly resilient
+Lack of a centralized CnC infrastructure
+and the many-to-many communication
+links between bot agents make it very
+resilient to shutdown.
+    Cons
+  Command latency
+The ad hoc nature of links between bot
+agents make CnC communication
+unpredictable, which can result in high
+levels of latency for some clusters of bot
+agents.
+  Botnet enumeration
+Passive monitoring of communications
+from a single bot-compromised host can
+enumerate other members of the botnet
+
+
+TODO: what was the first structure of botnets and how has it evolved?
+
+
+
+%http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
+\section{Use and abuse of DNS protocol}
 \subsection{DNS}
+%DNS
+%-------
+%Réexpliquer la base + présenter ds les requetes ce qui sera utilisé MAIS Principalement présenter la section réponse. 
+%Différents types de records (qui sont utilisé ds la detection ou l'évasion donc les présenter.)
+%Format utilisé pour le DNS OK
+%-------
+%Justifier le DNS passif comparé aux autres.
+
+%A la place des discussion of features, placer la justification du choix de détéction en utilisant les études présentées. (je dois présenter toutes les autres techniques ss forcément aller en profondeur, comme ça on peut se positionner plus facilement.)
+
 To understand these methods of evasion we must first explain how DNS works, its normal use and how the botnets abuse it.
 \subsubsection{Description}
 TODO: what is DNS, its purpose in general and different parts of the DNS
 \subsubsection{Protocol}
 TODO: Common protocol steps
+
+\subsection{Techniques abusing DNS}
+\section{Presentation of related papers}
+
+\subsection{DNS}
+
 \subsubsection{Special capabilities of the protocol}
 TODO: Explain with the growing services of the internet "new"(research if they were part of the original protocol) capabilities arisen to allow this growth.(find an article supporting that). 
 Explain Fast flux, domain flux and tunnelling used for legitimate purposes.
@@ -373,41 +416,9 @@ detection processes [17]. The attackers or botmasters use the DNS services to hi
 and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to
 another without being noticed
 
-\subsubsection{Issues with the channel}
-TODO: exploitable bits of the channel researchers have exploited: Rallying, hard to keep secre
 
 \subsubsection{Channel security/lookup resilience}
-ME
-The channel resilience of a botnet is critical to ensure good communication with the CnC server. It is a crtitical component of botnets, its failure is usually the end of the botnet's life. 
 
-
-
-ME
-
-
-[source]
-%http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
-
-The ability for a bot agent to locate CnC infrastructure is a critical requirement for
-maintaining control of the entire botnet for botnets that rely upon centralized CnC. If
-the CnC cannot be found, a bot agent will not be able to receive new instructions.
-While some bot agents may opt to function in an alternative autonomous “zombie”
-mode – reverting to embedded instructions for propagation and infection – most bot
-agents will continue to harvest local host information and poll the missing CnC at
-regularly scheduled times.
-Botnet Communication Topologies
-Page 6
-Botnet operators use a number of technologies to increase the probability that bot
-agents will be able to locate the central CnC infrastructure. These tools and techniques
-also make botnets more resilient to shut-down and hijacking maneuvers.
-One key technology that enables CnC location resolution and failover resilience is
-referred to as “fluxing”. Fluxing comes in two major flavors:
-• IP Flux
-• Domain Flux
-Both technologies are used extensively by professional botnet operators
-
-
-TODO: ways of securing their communication channel: encryption, rootkit and a number of DNS evasion techniques
 \subsection{Botnets use and abuse of DNS protocol}
 TODO: Present the different abuses of the DNS protocol to evade detection
 (use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
@@ -581,14 +592,14 @@ ME
 \subsubsection{Exposure}
 [source]
 %[EXPOSURE: a Passive DNS Analysis Service to Detect and Report Malicious Domains] Leyla Bilge, Symantec Research, France Sevil Sen, Hacettepe University, Turkey Davide Balzarotti, Eurecom, France Engin Kirda, Northeastern University, USA Christopher Kruegel, University of California - Santa Barbara, USA.
-ME
+
 \quote{EXPOSURE, a system that employs large-scale, passive DNS analysis techniques to detect domains that are involved in malicious activity. They use 15 features extracted from DNS traffic.}\\
 
-\subsubsection{Time-based}
+\paragraph{Time-based}
 When we analyse many requests to a particular domain over
 time, patterns indicative of malicious behaviour may emerge.\\
 These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 4 features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
-\subsubsection{DNS answer based}
+\paragraph{DNS answer based}
 Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
 Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
 \begin{itemize}
@@ -597,14 +608,14 @@ Malicious domains typically resolve to compromised computers that reside in diff
 \item the reverse DNS query results of the returned IP addresses
 \item the number of distinct domains that share the IP addresses that resolve to the given domain (false positive can be reduced with google reverse DNS which will have hosting providers in top answers)
 \end{itemize}
-\subsubsection{TTL value based}
+\paragraph{TTL value based}
 Low TTL and Round-Robin DNS: \\
 \begin{itemize}
 \item high availability (Content Delivery Networks (CDNs))
 \item botnets using this, makes them resistant to DNS Blacklists(DNSBL) and take downs. Often using Fast-Flux Service Networks (FFSN).
 \end{itemize}
 Because FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain, it explains the purpose of the TTL features.
-\subsubsection{Domain name based}
+\paragraph{Domain name based}
 Finally 2 simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).
 
 This can be noticed with 2 simple features:\\
@@ -614,18 +625,14 @@ This can be noticed with 2 simple features:\\
 \end{itemize}
 \includegraphics[scale=.3]{img/exposure_features.png}
 
-ME
-
-
-\subsection{Recognizing Time-efficiently Local Botnet Infections (Heuer et Al.)}
-\subsection{More to come}	
-\section{Possible approaches to provide better features}
-\subsection{Domain-flux}
-TODO: domain-flux can is mostly about analyzing domain names, here is a list of papers that attempt to do that with different metrics and features:  Detecting domain-flux botnet based on DNS traffic features in managed network Dinh-Tu Truong and Guang Cheng. https://de.wikipedia.org/wiki/Domain\_Flux, https://www.sciencedirect.com/science/article/pii/S1742287614001182, https://blog.malwarebytes.com/security-world/2016/12/explained-domain-generating-algorithm/\\
+\subsection{Possible approaches to provide better features}
+\subsubsection{Domain-flux}
+TODO: domain-flux can is mostly about analyzing domain names, here is a list of papers that attempt to do that with different metrics and features:  
+%Detecting domain-flux botnet based on DNS traffic features in managed network Dinh-Tu Truong and Guang Cheng. https://de.wikipedia.org/wiki/Domain\_Flux, https://www.sciencedirect.com/science/article/pii/S1742287614001182, https://blog.malwarebytes.com/security-world/2016/12/explained-domain-generating-algorithm/\\
 DGA specific\\
-Detecting Algorithmically Generated Malicious Domain Names, http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
-\subsection{Fast-flux}
-\subsection{DNS tunnelling}
-\subsection{Behavioral}
+Detecting Algorithmically Generated Malicious Domain Names, %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
+\subsubsection{Fast-flux}
+\subsubsection{DNS tunnelling}
+\subsubsection{Behavioral}
 
-\section{Discussion of the features selection}
+
