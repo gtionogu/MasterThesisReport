@@ -23,6 +23,23 @@ The reason botnets are still an ongoing research topic is that there isn't a com
 %memoire1
 A botnet is a network of infected machines called bots, owned and controlled by a remote attacker called the botmaster. These bots usually infect these machines without their owners' knowledge or consent\cite{Botnet1}. The control of such bots is done through the Command and Control (C2) server. Through the C2 server, the master issues commands to and receives responses from individual bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data, etc.
 
+
+%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+Botnets are the primary means for cybercriminals to carry out their malicious tasks
+\begin{itemize}
+\item sending spam mails
+\item launching denial-of-service attacks
+\item stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credentials
+\item A bot is a servant process on a compromised system (unbeknownst by owner) usually installed by a Trojan or Worm.
+\item Communicates with a handler or controller via public servers or other compromised systems. 
+\item A botmaster commands bots to perform any of an number of different functions.
+\item System of bots and controller(s) is referred to as a botnet or zombie network.
+\end{itemize}
+
+
+\paragraph{Bot}
+Bot - a small program to remotely control a computer characterized by remote control and communication (CnC) channels to command a victim. For ex., perform denial-of service attack, send spam, ... The remote commands can be use for many different purposes. For ex., update bot binary to a new version, turn on your audio, video, keystroke log. \\The spreading mechanisms to propagate it further. For ex., port scanning, email, privilege escalation
+
 %source A survey of botnet detection based on DNS
 The current trend of botnets is to hide their identities (i.e., the command and control server) using the DNS services to hinder their identification process.\\
 In fact, botnets have specific characteristics as compared to other types of malware. For instance, the botmaster can control the infected machines and send commands without directly communicating with them. There are also a lot of bots working in a coordinated way and taking instructions from the botmaster to instantiate coordinated attacks such as the distributed denial-of-service
@@ -66,19 +83,6 @@ A victim host could be infected by targeting known vulnerability or by infected 
 \item run DDoS attacks
 \end{enumerate}
 
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-Botnets are the primary means for cybercriminals to carry out their malicious tasks
-\begin{itemize}
-\item sending spam mails
-\item launching denial-of-service attacks
-\item stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credentials
-\item A bot is a servant process on a compromised system (unbeknownst by owner) usually installed by a Trojan or Worm.
-\item Communicates with a handler or controller via public servers or other compromised systems. 
-\item A botmaster commands bots to perform any of an number of different functions.
-\item System of bots and controller(s) is referred to as a botnet or zombie network.
-\end{itemize}
-\subsection{Bot}
-Bot - a small program to remotely control a computer characterized by remote control and communication (CnC) channels to command a victim. For ex., perform denial-of service attack, send spam, ... The remote commands can be use for many different purposes. For ex., update bot binary to a new version, turn on your audio, video, keystroke log. \\The spreading mechanisms to propagate it further. For ex., port scanning, email, privilege escalation
 
 %A Survey on Botnet Architectures, Detection and Defences
 After infection these are the uses cases for bots: Secure the system(close NetBIOS shares,
@@ -89,11 +93,15 @@ rename files simulate key presses DDos attacks
 
 
 \subsection{Structure}
-\subsubsection{Lifecycle}
+\subsubsection{Life cycle}
+Life cycles might differ from one bot to another but they have generally a common path
+
+
 %A survey of botnet detection based on DNS
 Botnet Lifecycle
-exploitation phase: source 25,26,16 This is where the infection happens by exploiting a
-vulnerability on the victim's host. Then the Bot's binary is downloaded onto the host. To find
+exploitation phase: source 25,26,16
+This is where the infection happens by exploiting a
+vulnerability on the victim's host. Then the binary of the bot is downloaded onto the host. To find
 this binary a DNS lookup has to be done. Which can't be avoided but can be hidden.
 rallying source 18,27
 attack execution source 17
