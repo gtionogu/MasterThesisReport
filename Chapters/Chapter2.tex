@@ -29,24 +29,31 @@ A botnet is a network of infected machines called bots, these bots owned and con
 There are many different bots, some very modular such as the Agobot others simpler ones but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like kaiten bot which makes it very easy to upload to compromised machines.
 %source http://www.honeynet.org/node/53
 
+%source A survey of botnet detection based on DNS
+In fact, botnets have specific characteristics as compared to other types of malware. For instance, the botmaster can control the infected machines and send commands without directly communicating with them. There are also a lot of bots working in a coordinated way and taking instructions from the botmaster to instantiate coordinated attacks.
+
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 % + source http://www.honeynet.org/node/52
-Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed:
+Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.\\
+
+%source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
+Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BssS) which are considered a big part of the botnet economy. This popularised botnets to be used by anyone.
+
+%memoire1
+Because botnets are a large network of infected machines, they are able to carry out large scale attacks.\\ 
+A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.
 \begin{itemize}
-\item Denial of service attacks, even Distributed DoS this is true for large botnets that can achieve important amounts of bandwidth.
-\item Distributed Denial-of-Service Attacks 
-\item Spamming
+\item Distributed Denial-of-Service Attacks. These attacks provoke a 
+\item Spam email campaigns, 
 \item Sniffing Traffic
-\item Keylogging
-\item Spreading new malware
+\item Spy through Keylogging, file monitoring, 
+\item Spreading new malware 
 \item Installing Advertisement Addons and Browser Helper Objects (BHOs)
 \item Google AdSense abuse
-\item Manipulating online polls/games
-\item Mass identity theft
-\item sending spam mails
-\item secure the system
-\item spy or steal identity
-\item send SPAM emails
+\item Manipulating online polls and games
+\item Mass identity theft, stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credentials
+%A Survey on Botnet Architectures, Detection and Defences
+\item Secure the system(close NetBIOS shares, RPCDCOM)
 \item host illegal sites
 \item redirect traffic for the botnet
 \item kill unwanted process running on the system
@@ -55,30 +62,18 @@ Cybercriminals use botnets to execute a long list of malicious activities and st
 \item run or terminate programs
 \item download and execute files
 \item perform address and port scan
-\item rename files
 \item simulate key presses
-\item run DDoS attacks
-\item stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credentials
 \item Communicates with a handler or controller via public servers or other compromised systems. 
 \item A botmaster commands bots to perform any of an number of different functions.
 \item System of bots and controller(s) is referred to as a botnet or zombie network.
+
 \end{itemize}
 
 
 
-%source A survey of botnet detection based on DNS
-The current trend of botnets is to hide their identities (i.e., the command and control server) using the DNS services to hinder their identification process.\\
-In fact, botnets have specific characteristics as compared to other types of malware. For instance, the botmaster can control the infected machines and send commands without directly communicating with them. There are also a lot of bots working in a coordinated way and taking instructions from the botmaster to instantiate coordinated attacks such as the distributed denial-of-service
-(DDoS) attacks, spam distribution and click fraud. %source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
-Also, the botnet provide these frauds as a service form botnet operator which are consider part of the botnet economy
-
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
 A clear distinction between a bot agent and a common piece of malware lies within a bot’s ability to communicate with a Command-and-Control (CnC) infrastructure. CnC allows a bot agent to receive new instructions and malicious capabilities, as dictated by a remote criminal entity. This compromised host then can be used as an unwilling participant in Internet crime as soon as it is linked into a botnet via that same CnC.
 
-%J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007.
-Command and Control (CnC) CnC servers is what differentiates Botnets from other malware.
-
-Note: mix attacks and purpose together\\
 % [Botnet Tracking Tools] SANS Institute 
 The goals of an attacker in terms of bot recruitment can be categorized into two
 broad categories. In the first case, the target of the attack is the computer that is being recruited. In the second case, the recruited bot is used to attack another target. Computers in a botnet are either the target of the attack, the perpetrator of the attack, or both. When bots are the perpetrator of the attack, the effectiveness of the attack is usually dependent upon the collective power of the botnet. Stated differently, the attacker is either after the valuable information on the computer or the storage, processing, and communication capabilities of the computer, or both. \\
@@ -89,33 +84,9 @@ Botnet rental has become a lucrative business. Botnets are rented and sold, usua
 This paper will discuss botnet detection tools and techniques. This paper gives a brief introduction, a brief background on botnet characteristics, a summary of detection techniques, an overview of the BotMiner tool, reviews of two case studies where botnets were used to characterize behavior, and a conclusion.
 
 
-%memoire1
-Because botnets are a large network of infected machines, they are able to carry out large scale attacks.\\ 
-A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.
-\begin{enumerate}
-\item secure the system
-\item spy or steal identity
-\item send SPAM emails
-\item host illegal sites
-\item redirect traffic for the botnet
-\item kill unwanted process running on the system
-\item test for virtual machines and/or debugger software
-\item add or delete auto-start applications
-\item run or terminate programs
-\item download and execute files
-\item perform address and port scan
-\item rename files
-\item simulate key presses
-\item run DDoS attacks
-\end{enumerate}
 
 
-%A Survey on Botnet Architectures, Detection and Defences
-After infection these are the uses cases for bots: Secure the system(close NetBIOS shares,
-RPCDCOM) spy or steal data send spam emails host illegal sites redirect traffic (FF chain) kill
-unwanted processes (AV, proc mngr) test for vm and dbg software add or remove autostart
-applications run or terminate programs download and execute files perform scan (IP and port)
-rename files simulate key presses DDos attacks
+
 
 
 \subsection{Structure}
@@ -150,6 +121,10 @@ pp. 18-27, Dec. 2007.
 
 \subsubsection{Channel}
 TODO: after presenting the botnet structure we focus on the part where botmasters have turned their focus in evading detection and becoming more resilitent. In this section we want to discuss how the CnC channel works.
+
+%J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007.
+Command and Control (CnC) CnC servers is what differentiates Botnets from other malware.
+
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 Means of receiving and sending commands and information between the botmaster and the zombies. Typical protocols: IRC, HTTP – HTTPS, DNS, etc\\
 Protocols imply (to an extent) a botnet’s communication topology.
@@ -383,13 +358,11 @@ Passive monitoring of communications
 from a single bot-compromised host can
 enumerate other members of the botnet
 
-
-TODO: what was the first structure of botnets and how has it evolved?
-
-
-
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
 \section{Use and abuse of DNS protocol}
+%source A survey of botnet detection based on DNS
+The current trend of botnets is to hide their channel using the DNS services to hinder their identification and rallying process.\\
+
 \subsection{DNS}
 %DNS
 %-------
