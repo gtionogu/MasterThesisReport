@@ -21,24 +21,50 @@ The reason botnets are still an ongoing research topic is that there isn't a com
 \subsection{Definition}
 
 %memoire1
-A botnet is a network of infected machines called bots, owned and controlled by a remote attacker called the botmaster. These bots usually infect these machines without their owners' knowledge or consent\cite{Botnet1}. The control of such bots is done through the Command and Control (C2) server. Through the C2 server, the master issues commands to and receives responses from individual bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data, etc.
+%source Wielogorska, Monika and O'Brien, Darragh (2017) DNS Traffic analysis for botnet detection. In: 25th Irish Conference on Artificial Intelligence and Cognitive Science, 7-8 Dec 2017, Dublin, Ireland.
+A botnet is a network of infected machines called bots, these bots owned and controlled by a remote attacker called the botmaster. Bots usually infect these machines without their owners' knowledge or consent
+. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.
 
+\paragraph{Bots} are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. Their spreading mechanisms, infection and utilization are defined in the Botnet lifecycle in the structure section. These programs are embedded with port scanning, vulnerability scanning, exploitation and payloads that allow them to spread the botnet and infect their victims.\\
+There are many different bots, some very modular such as the Agobot others simpler ones but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like kaiten bot which makes it very easy to upload to compromised machines.
+%source http://www.honeynet.org/node/53
 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-Botnets are the primary means for cybercriminals to carry out their malicious tasks
+% + source http://www.honeynet.org/node/52
+Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed:
 \begin{itemize}
+\item Denial of service attacks, even Distributed DoS this is true for large botnets that can achieve important amounts of bandwidth.
+\item Distributed Denial-of-Service Attacks 
+\item Spamming
+\item Sniffing Traffic
+\item Keylogging
+\item Spreading new malware
+\item Installing Advertisement Addons and Browser Helper Objects (BHOs)
+\item Google AdSense abuse
+\item Manipulating online polls/games
+\item Mass identity theft
 \item sending spam mails
-\item launching denial-of-service attacks
+\item secure the system
+\item spy or steal identity
+\item send SPAM emails
+\item host illegal sites
+\item redirect traffic for the botnet
+\item kill unwanted process running on the system
+\item test for virtual machines and/or debugger software
+\item add or delete auto-start applications
+\item run or terminate programs
+\item download and execute files
+\item perform address and port scan
+\item rename files
+\item simulate key presses
+\item run DDoS attacks
 \item stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credentials
-\item A bot is a servant process on a compromised system (unbeknownst by owner) usually installed by a Trojan or Worm.
 \item Communicates with a handler or controller via public servers or other compromised systems. 
 \item A botmaster commands bots to perform any of an number of different functions.
 \item System of bots and controller(s) is referred to as a botnet or zombie network.
 \end{itemize}
 
 
-\paragraph{Bot}
-Bot - a small program to remotely control a computer characterized by remote control and communication (CnC) channels to command a victim. For ex., perform denial-of service attack, send spam, ... The remote commands can be use for many different purposes. For ex., update bot binary to a new version, turn on your audio, video, keystroke log. \\The spreading mechanisms to propagate it further. For ex., port scanning, email, privilege escalation
 
 %source A survey of botnet detection based on DNS
 The current trend of botnets is to hide their identities (i.e., the command and control server) using the DNS services to hinder their identification process.\\
@@ -471,7 +497,7 @@ q\_class & Class of the request (often IN for internet) \\
 TODO: Present the different abuses of the DNS protocol to evade detection
 (use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
 
-Studies have shown that to avoid detection, botnets have been using multiple techniques utilizing the DNS protocol capabilities to reach their C2. The DNS protocol has some features that have been exploited maliciously:  DNS tunnelling, fast-flux and domain flux.
+Studies have shown that to avoid detection, botnets have been using multiple techniques utilizing the DNS protocol capabilities to reach their CnC. The DNS protocol has some features that have been exploited maliciously:  DNS tunnelling, fast-flux and domain flux.
 
 
 %%-------------------------------- THIS IS WHERE WE EXPLAIN THE DIFFERENT TYPES OF EVASIONS ------------------------------------
@@ -485,7 +511,7 @@ Explain Fast flux, domain flux and tunnelling used for legitimate purposes.
 \subsubsection{Domain flux}
 % explain  what domain flux is
 Domain-flux is a type of flux where bots are equipped with a special Domain Generation Algorithm (DGA).
-They use this algorithm to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their C2. The botmaster knows which domains are generated at a particular point in time and can register them before they are queried by
+They use this algorithm to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their CnC. The botmaster knows which domains are generated at a particular point in time and can register them before they are queried by
 the bots to be reached. This improves the resilience of botnets infrastructure a lot.
 
 
@@ -529,7 +555,7 @@ IP flux or fast flux,
 Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet detection processes [17]. The attackers or botmasters use the DNS services to hide their command and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to another without being noticed
 
 Fast-Flux Service Network (FFSN) allows for one domain name to have an unlimited number of IP addresses, short TTLs(Time to live) values and the IPs rotating in a round robin fashion. IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective
-C2 server. This process helps botnet controllers avoid detection and blacklisting. But can be confused with real traffic. It has a different categories:
+CnC server. This process helps botnet controllers avoid detection and blacklisting. But can be confused with real traffic. It has a different categories:
 \begin{enumerate}
 \item Single-flux: Multiple IP addresses are assigned to the same domain (either CNAME or A records). (low TTL, multiple autonomous system(AS) locations, proxies for master)
 \item NS flux: Multiple NS records assigned to the same domain
