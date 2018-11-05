@@ -7,10 +7,10 @@
 %PAPER of ref: https://www.researchgate.net/publication/286649850\_A\_survey\_of\_botnet\_detection\_based\_on\_DNS 
 \section{Botnets}
 %[A survey of botnet detection based on DNS]Kamal Alieyan Ammar ALmomani Ahmad Manasrah Mohammed M. Kadhum
-As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. Botnets can result in great economic damage. 
+As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage. \\
 
 %Authority of Information Security. The 2016 Vietnam Information Security Report; Authority of Information Security, MIC: New York, NY, USA, 2016.
-Botnets continuous improvement to become more resilient and powerful makes them an important threat to information security.
+Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\
 
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
 Botnets can become very lucrative and can infect very large amounts of devices resulting in scary entities.
@@ -19,25 +19,28 @@ Here are some of these enormous entities: \textbf{Flashback} with 600k compromis
 %source 6 (A survey of botnet detection based on DNS) 
 The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavours criminals bring to the market.
 \subsection{Definition}
-
+% WHAT IS A BOTNET?
 %memoire1
 %source Wielogorska, Monika and O'Brien, Darragh (2017) DNS Traffic analysis for botnet detection. In: 25th Irish Conference on Artificial Intelligence and Cognitive Science, 7-8 Dec 2017, Dublin, Ireland.
-A botnet is a network of infected machines called bots, these bots owned and controlled by a remote attacker called the botmaster. Bots usually infect these machines without their owners' knowledge or consent
-. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.
+A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.\\
 
-\paragraph{Bots} are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. Their spreading mechanisms, infection and utilization are defined in the Botnet lifecycle in the structure section. These programs are embedded with port scanning, vulnerability scanning, exploitation and payloads that allow them to spread the botnet and infect their victims.\\
-There are many different bots, some very modular such as the Agobot others simpler ones but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like kaiten bot which makes it very easy to upload to compromised machines.
+%WHAT IS A BOT?
 %source http://www.honeynet.org/node/53
+\paragraph{Bots} are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. These programs are embedded with port scanning, vulnerability scanning, exploitation kits and payloads that allow them to spread the botnet and infect their victims.\\
+There are many different families of bots, some very modular such as the Agobot others less complete but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots but there are a lot of different protocols exploited as botnets channels. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like kaiten bot which makes it very easy to upload to compromised machines.
 
-%source A survey of botnet detection based on DNS
-In fact, botnets have specific characteristics as compared to other types of malware. For instance, the botmaster can control the infected machines and send commands without directly communicating with them. There are also a lot of bots working in a coordinated way and taking instructions from the botmaster to instantiate coordinated attacks.
+%WHY BOTS PROVIDE EVEN MORE POWERFULL ATTACKS
+% S. S. Silva, R. M. Silva, R. C. Pinto, and R. M. Salles. Botnets: A survey. Eslervier, 57(2):378–403,2013
+Botnets give the control to the botmaster of two critical resources: CPU (processing power) and IP addresses (anonymity). Even if the use of CPU stays low on the infected machines, the aggregate of bots can provide power equivalent to supercomputers with the additional perk of executing traffic from different addresses instead of a single IP.
 
+% PURPOSE
+All these resources makes botnets very powerful to execute network attacks.
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 % + source http://www.honeynet.org/node/52
 Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.\\
 
 %source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
-Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BssS) which are considered a big part of the botnet economy. This popularised botnets to be used by anyone.
+Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularised botnets to be used by anyone.
 
 %memoire1
 Because botnets are a large network of infected machines, they are able to carry out large scale attacks.\\ 
@@ -97,17 +100,18 @@ Botnet Lifecycle
 %16. Manasrah AM, Hasan A, Abouabdalla OA, Ramadass S (2009) Detecting botnet activities based on abnormal DNS traffic. arXiv preprint arXiv:09110487
 exploitation phase:
 This is where the infection happens by exploiting a
-vulnerability on the victim's host. Then the binary of the bot is downloaded onto the host. To find
-this binary a DNS lookup has to be done. Which can't be avoided but can be hidden. This is the most dominant behavior throughout all botnets\\
+vulnerability on the victim's host.(25) Then the binary of the bot is downloaded onto the host. To find
+this binary a DNS lookup has to be done. Which can't be avoided but can be hidden.(26) This is the most dominant behavior throughout all botnets(16)\\
 %18. Choi H, Lee H, Lee H, Kim H (2007) Botnet detection by monitoring group activities in DNS traffic. In: 7th IEEE international conference on computer and information technology, 2007 (CIT 2007). IEEE, pp 715–720
 %27. Liu L, Chen S, Yan G, Zhang Z (2008) Bottracer: executionbased bot-like malware detection. In: Wu T-C, Lei C-L, Rijmen V, Lee D-T (eds) Information security. Springer, Berlin, Heidelberg, pp 97–113
 rallying phase:
+dd
 \\
 %17. Rodrı´guez-Go´mez RA, Macia´-Ferna´ndez G, Garcı´a-Teodoro P(2013) Survey and taxonomy of botnet research through lifecycle.ACM Comput Surv (CSUR) 45(4):45
 attack execution phase:
 \\
 % 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983
-update and maintenance:\\
+update and maintenance:
 \\
 Infection behavior 4 phases: 
 %source Z. Zhu, G. Lu, Y. Chen, Z. J. Fu, P. Roberts, and K. Han, “Botnet research survey,” in 32nd Annual IEEE International Conference on Computer Software and Applications, pp. 967–972, Aug. 2008
