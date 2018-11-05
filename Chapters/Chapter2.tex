@@ -84,11 +84,6 @@ Botnet rental has become a lucrative business. Botnets are rented and sold, usua
 This paper will discuss botnet detection tools and techniques. This paper gives a brief introduction, a brief background on botnet characteristics, a summary of detection techniques, an overview of the BotMiner tool, reviews of two case studies where botnets were used to characterize behavior, and a conclusion.
 
 
-
-
-
-
-
 \subsection{Structure}
 \subsubsection{Life cycle}
 Life cycles might differ from one bot to another but they have generally a common structure. This life cycle is composed of four steps
@@ -97,13 +92,23 @@ The exploitation/infection
 
 %A survey of botnet detection based on DNS
 Botnet Lifecycle
-exploitation phase: source 25,26,16
+%25. Abu Rajab M, Zarfoss J, Monrose F, Terzis A (2006) A multifaceted approach to understanding the botnet phenomenon. In:Proceedings of the 6th ACM SIGCOMM conference on Internet measurement. ACM, pp 41–52
+%26. Abdullah RS, Abdollah MF, Noh ZAM, Mas’ud MZ, Selamat SR, Yusof R, Melaka UTM (2013) Revealing the criterion on botnet detection technique. IJCSI Int J Comput Sci Issues 10(2):208–215
+%16. Manasrah AM, Hasan A, Abouabdalla OA, Ramadass S (2009) Detecting botnet activities based on abnormal DNS traffic. arXiv preprint arXiv:09110487
+exploitation phase:
 This is where the infection happens by exploiting a
 vulnerability on the victim's host. Then the binary of the bot is downloaded onto the host. To find
-this binary a DNS lookup has to be done. Which can't be avoided but can be hidden.
-rallying source 18,27
-attack execution source 17
-update and maintenance source 6\\
+this binary a DNS lookup has to be done. Which can't be avoided but can be hidden. This is the most dominant behavior throughout all botnets\\
+%18. Choi H, Lee H, Lee H, Kim H (2007) Botnet detection by monitoring group activities in DNS traffic. In: 7th IEEE international conference on computer and information technology, 2007 (CIT 2007). IEEE, pp 715–720
+%27. Liu L, Chen S, Yan G, Zhang Z (2008) Bottracer: executionbased bot-like malware detection. In: Wu T-C, Lei C-L, Rijmen V, Lee D-T (eds) Information security. Springer, Berlin, Heidelberg, pp 97–113
+rallying phase:
+\\
+%17. Rodrı´guez-Go´mez RA, Macia´-Ferna´ndez G, Garcı´a-Teodoro P(2013) Survey and taxonomy of botnet research through lifecycle.ACM Comput Surv (CSUR) 45(4):45
+attack execution phase:
+\\
+% 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983
+update and maintenance:\\
+\\
 Infection behavior 4 phases: 
 %source Z. Zhu, G. Lu, Y. Chen, Z. J. Fu, P. Roberts, and K. Han, “Botnet research survey,” in 32nd Annual IEEE International Conference on Computer Software and Applications, pp. 967–972, Aug. 2008
 1) Infection: vulnerability scanning \\
