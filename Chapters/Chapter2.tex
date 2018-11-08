@@ -44,20 +44,23 @@ Another reason botnets are a big threat is that criminals have started to provid
 
 %memoire1
 Because botnets are a large network of infected machines, they are able to carry out large scale attacks.\\ 
-A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.
+A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.\\
+This first list presents general use of botnets:
 \begin{itemize}
 \item Distributed Denial-of-Service Attacks. These attacks provoke a loss of service or connectivity. Used by hacktivist, criminals and companies to disturb targets for recognition, financial gain or advantage over competition respectively. (The services could be email servers, production servers, web servers but also any device reachable) %source http://www.honeynet.org/node/52
 \item Spam email campaigns. Bots are set as proxy nodes and then used to send large amounts of spam and phishing emails.%source http://www.honeynet.org/node/52
 \item Sniffing Traffic. Bots can start watching packets going through the compromised machine and start retrieving all valuable data passed in clear-text. Botnets have been even found to analyze others bots data and take over them if they belong to another botnet.
-\item Spy through Keylogging, file monitoring. Sniffing packets effectiveness is reduced by encrypted traffic. The solution is then to log the key strokes made by the users and retrieve sensitive information. This is done with a keylogger and filtering mechanism that targets specific use-cases (logins, password, ...)
-\item Spreading new malware. Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. 
-\item Installing Advertisement Addons and Browser Helper Objects (BHOs)
-\item Google AdSense abuse
-\item Manipulating online polls and games
-\item Mass identity theft, stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credentials
-%A Survey on Botnet Architectures, Detection and Defences
-\item Secure the system(close NetBIOS shares, RPCDCOM)
+\item Spy through Keylogging, file monitoring. Sniffing packets effectiveness is reduced by encrypted traffic. The solution is then to log the key strokes made by the users and retrieve sensitive information. This is done with a keylogger and filtering mechanism that targets specific use-cases (logins, password, ...)%source http://www.honeynet.org/node/52
+\item Spreading new malware. Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. They can download malware or send viruses via email, there are various methods depending of the botnet type and environment they want to spread the malware.%source http://www.honeynet.org/node/52
+\item Installing Advertisement Addons, Browser Helper Objects (BHOs) and Google AdSense abuse. These techniaues are used for financial gain instead of disruption. These are based on websites using clicking based ads. The criminals set fake sites using advertising programs and then automate the bots to click on them to create revenue. Since the bots have different IPs it is very hard to detect the fraud.
+\item Manipulating online polls and games. These are known to exist to influence decisions and are expected to be further used in the future. This is also very effective since each bot uses different IP addresses.
+\item Mass identity theft, stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks.
 \item host illegal sites
+\end{itemize}
+%A Survey on Botnet Architectures, Detection and Defences
+This second list targets activities of bots on the compromised machines to take full control:
+\begin{itemize}
+\item Secure the system(close NetBIOS shares, RPCDCOM)
 \item redirect traffic for the botnet
 \item kill unwanted process running on the system
 \item test for virtual machines and/or debugger software
@@ -68,7 +71,6 @@ A victim host could be infected by targeting known vulnerability or by infected 
 \item simulate key presses
 \item Communicates with a handler or controller via public servers or other compromised systems. 
 \item A botmaster commands bots to perform any of an number of different functions.
-\item System of bots and controller(s) is referred to as a botnet or zombie network.
 
 \end{itemize}
 
