@@ -22,28 +22,32 @@ The reason botnets are still an ongoing research topic is that there isn't a com
 % WHAT IS A BOTNET?
 %memoire1
 %source Wielogorska, Monika and O'Brien, Darragh (2017) DNS Traffic analysis for botnet detection. In: 25th Irish Conference on Artificial Intelligence and Cognitive Science, 7-8 Dec 2017, Dublin, Ireland.
-A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.\\
+\paragraph{What is a botnet?} A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.\\
 
 %WHAT IS A BOT?
 %source http://www.honeynet.org/node/53
-\paragraph{Bots} are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. These programs are embedded with port scanning, vulnerability scanning, exploitation kits and payloads that allow them to spread the botnet and infect their victims.\\
+\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. These programs are embedded with port scanning, vulnerability scanning, exploitation kits and payloads that allow them to spread the botnet and infect their victims.\\
 There are many different families of bots, some very modular such as the Agobot others less complete but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots but there are a lot of different protocols exploited as botnets channels. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like kaiten bot which makes it very easy to upload to compromised machines.
 
 %WHY BOTS PROVIDE EVEN MORE POWERFULL ATTACKS
 % S. S. Silva, R. M. Silva, R. C. Pinto, and R. M. Salles. Botnets: A survey. Eslervier, 57(2):378–403,2013
-Botnets give the control to the botmaster of two critical resources: CPU (processing power) and IP addresses (anonymity). Even if the use of CPU stays low on the infected machines, the aggregate of bots can provide power equivalent to supercomputers with the additional perk of executing traffic from different addresses instead of a single IP.
+\paragraph{Why do botnets provide more powerful attacks?} Botnets give the control to the botmaster of two critical resources: CPU (processing power) and IP addresses (anonymity). Even if the use of CPU stays low on the infected machines, the aggregate of bots can provide power equivalent to supercomputers with the additional perk of executing traffic from different addresses instead of a single IP.
 
-% PURPOSE 
-All these resources make botnets very powerful to execute network attacks. 
+% PURPOSE + CURRENT DANGERS
+\paragraph{What is the purpose of botnets?} All these resources make botnets very powerful to execute network attacks. 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 % + source http://www.honeynet.org/node/52
 Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.\\
 
+% ADVANCES IN BOTNETS
 %source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
 Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularised botnets are selled to anyone, this has made them an even bigger threat that they already were.
 
+Botnet rental has become a lucrative business. Botnets are rented and sold, usually for malicious purposes. Decentralized botnet architectures allow massive botnets to be partitioned into groups of smaller children botnets that can be parceled out for use and then reintegrated into the parent botnet after usage.
+This paper will discuss botnet detection tools and techniques. This paper gives a brief introduction, a brief background on botnet characteristics, a summary of detection techniques, an overview of the BotMiner tool, reviews of two case studies where botnets were used to characterize behavior, and a conclusion.
+
+
 %memoire1
-Because botnets are a large network of infected machines, they are able to carry out large scale attacks.\\ 
 A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.\\
 This first list presents general use of botnets:
 \begin{itemize}
@@ -60,18 +64,15 @@ This first list presents general use of botnets:
 %A Survey on Botnet Architectures, Detection and Defences
 This second list targets activities of bots on the compromised machines to take full control:
 \begin{itemize}
-\item Secure the system(close NetBIOS shares, RPCDCOM)
-\item redirect traffic for the botnet
-\item kill unwanted process running on the system
-\item test for virtual machines and/or debugger software
-\item add or delete auto-start applications
-\item run or terminate programs
-\item download and execute files
-\item perform address and port scan
-\item simulate key presses
-\item Communicates with a handler or controller via public servers or other compromised systems. 
-\item A botmaster commands bots to perform any of an number of different functions.
-
+\item Secure the system(close NetBIOS shares, RPCDCOM) to avoid infection by other criminals. This could also mean remove existing bots on the machine. Bots will make sure their host is properly hardened to avoid overtake.
+\item Redirect traffic for the botnet, depending on the topology used, bots might be used as proxies to send commands, updates, data to the rest of the bots.
+\item Kill unwanted process running on the system. This joins the hardening objective. Bots want to take full control and make sure no process is limiting their actions (usually trying to stay stealthy while doing it).
+\item Test for virtual machines and/or debugger software. Part of the resilience of botnets resides in the obscurity of the mechanism they use. Honeypots will try to capture bots and do malware analysis to understand how they work. This tests will try to prevent this analysis to happen. (By deleting themselves or not executing in these environments)
+\item Add or delete auto-start applications. To stay resilient after reboot or even fresh installs, bots have mechanisms to stay persistent on the machine after those events.
+\item Run or terminate programs. This one is obvious but after exploiting the victim, their goal is to execute actions on the machine.
+\item Download and execute files. This allows them to update their software, download exploits and payloads. It can also be used to upload normal programs used for some of the tasks they want to execute.
+\item Perform address and port scan. Another important one to pivot inside networks and expand the botnet surface.
+\item Communicates with a handler or controller via public servers or other compromised systems. This is the  main channel communication with the botmaster.
 \end{itemize}
 
 
@@ -85,8 +86,7 @@ broad categories. In the first case, the target of the attack is the computer th
 The value of information on a personal computer is often overlooked. There are
 many applications for home use, like tax preparation software, that store volumes of key personal and financial information. Browsers can cache website and account information. Email clients store contact information. Many home computers have sensitive work information on them, exposing a company's intellectual property to potential disclosure. These are just a few examples of the type of information that can be exfiltrated and abused by an attacker or sold to cyber criminals.\\A common botnet usage is the sending of spam emails. The spam emails can be used to carry malicious payloads in an attempt to infect the recipients of the spam emails. Spam can also be used to influence or manipulate user behavior such as the purchasing of advertised products, visiting of infected websites, or downloading of music or videos with malicious content.
 Most cryptographic controls just buy the user time, in hopes that by the time the control is no longer good, the protected asset no longer has value. That is the theory behind password expirations. Password lifetime is set to be less than the time it takes to discover the password by brute force or other methods. The processing capabilities of a bot can be used for cryptanalysis purposes. Password cracking, brute force key discovery, and rainbow table creation are but a few examples. The collective power of a botnet greatly reduces the time a control is effective. Data storage is another bot resource an attacker can use without permission. Anonymity is important to the attacker, so storing ill-gotten gain across the botnet keeps incriminating evidence away from the attackers' machines. Additionally, there are efficiency, redundancy, and availability benefits from having a distributed data store. Ill-gotten gains can include personal information seized, pornography, intellectual property and malware.\\
-Botnet rental has become a lucrative business. Botnets are rented and sold, usually for malicious purposes. Decentralized botnet architectures allow massive botnets to be partitioned into groups of smaller children botnets that can be parceled out for use and then reintegrated into the parent botnet after usage.
-This paper will discuss botnet detection tools and techniques. This paper gives a brief introduction, a brief background on botnet characteristics, a summary of detection techniques, an overview of the BotMiner tool, reviews of two case studies where botnets were used to characterize behavior, and a conclusion.
+
 
 
 \subsection{Structure}
