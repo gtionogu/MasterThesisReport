@@ -28,7 +28,7 @@ The reason botnets are still an ongoing research topic is that there isn't a com
 
 %WHAT IS A BOT?
 %source http://www.honeynet.org/node/53
-\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. 
+\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. The paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both. % [Botnet Tracking Tools] SANS Institute 
 
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
 A clear distinction between a bot agent and a common piece of malware lies within a bot’s ability to communicate with a Command-and-Control (CnC) infrastructure. CnC allows a bot agent to receive new instructions and malicious capabilities, as dictated by a remote criminal entity. This compromised host then can be used as an unwilling participant in Internet crime as soon as it is linked into a botnet via that same CnC.
@@ -43,8 +43,8 @@ There are many different families of bots, some very modular such as the Agobot 
 % PURPOSE + CURRENT DANGERS
 \paragraph{What is the purpose of botnets?} All these resources make botnets very powerful to execute network attacks. 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-% + source http://www.honeynet.org/node/52
 Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.\\
+% + source http://www.honeynet.org/node/52
 
 % ADVANCES IN BOTNETS
 %source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
@@ -64,10 +64,11 @@ This first list presents general use of botnets:
 \item Spreading new malware. Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. They can download malware or send viruses via email, there are various methods depending of the botnet type and environment they want to spread the malware.%source http://www.honeynet.org/node/52
 \item Installing Advertisement Addons, Browser Helper Objects (BHOs) and Google AdSense abuse. These techniaues are used for financial gain instead of disruption. These are based on websites using clicking based ads. The criminals set fake sites using advertising programs and then automate the bots to click on them to create revenue. Since the bots have different IPs it is very hard to detect the fraud.
 \item Manipulating online polls and games. These are known to exist to influence decisions and are expected to be further used in the future. This is also very effective since each bot uses different IP addresses.
-\item Mass identity theft, stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks.
+\item Mass identity theft, stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks. % [Botnet Tracking Tools] SANS Institute 
+Regarding the personal information that can be found by bots on the home desktops, this paper explains that it must not be overlooked. The amount of data that can be contained in home applications can be very important(taxes, browsers, email contacts. They warn of the sensitive information that is often stored on home computers related to their company. This could expose intellectual property that can be then sold by the criminals.
 \item Host illegal sites. Child pornography and black market sites are some examples.
 \item Cryptographic computation. This is a less expected use of botnets, but these distributed supercomputers can be used for cryptanalysis purposes. Computing rainbow tables, cracking passwords, bruteforcing keys or mining crypto currencies. With the success of cryptocurrencies in the last 2 years, this type of use for botnets has increased. The latest example is the Smominru Monero mining botnet, mining around 9000 moneros worth at the time 3 million\$.
-%https://www.proofpoint.com/us/threat-insight/post/smominru-monero-mining-botnet-making-millions-operators
+%https://www.proofpoint.com/us/threat-insight/post/smominru-monero-mining-botnet-making-millions-operators+% [Botnet Tracking Tools] SANS Institute 
 \end{itemize}
 %A Survey on Botnet Architectures, Detection and Defences
 This second list targets activities of bots on the compromised machines to take full control:
@@ -81,20 +82,8 @@ This second list targets activities of bots on the compromised machines to take 
 \item Download and execute files. This allows them to update their software, download exploits and payloads. It can also be used to upload normal programs used for some of the tasks they want to execute.
 \item Perform address and port scan. Another important one to pivot inside networks and expand the botnet surface.
 \item Communicates with a handler or controller via public servers or other compromised systems. This is the  main channel communication with the botmaster.
+\item Data storage. One of the tactics used by botmasters to keep their anonymity is to use their botnet as a distributed database and saving the data obtained on the bots, this gives more distance with the stolen data.% [Botnet Tracking Tools] SANS Institute 
 \end{itemize}
-
-% [Botnet Tracking Tools] SANS Institute 
-\paragraph{What is the goal of an attacker} This paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both.
-
-%/!\ The value of information on a personal computer is often overlooked. There are many applications for home use, like tax preparation software, that store volumes of key personal and financial information. Browsers can cache website and account information. Email clients store contact information. Many home computers have sensitive work information on them, exposing a company's intellectual property to potential disclosure /!\
-
-
-- 2 types of bots
-- target compromised to extend botnet, target compromised for its data or both
-= the attacker is after the valuable information on the compute, the storage, processing, and communication capabilities of the computer, or both
-- Personal information on home applications(ex: tax preparation software stores volumes of key personal and financial information. Browsers can cache website and account information. Email clients store contact information) overlooked + valuable sensitive work information on home pc -> exposing company (potential intellectual property disclosure). These are examples or valuable information that can be extracted and sold. 
-
- Data storage is another bot resource an attacker can use without permission. Anonymity is important to the attacker, so storing ill-gotten gain across the botnet keeps incriminating evidence away from the attackers' machines. Additionally, there are efficiency, redundancy, and availability benefits from having a distributed data store. Ill-gotten gains can include personal information seized, pornography, intellectual property and malware.\\
 
 \subsection{Structure}
 \subsubsection{Life cycle}
