@@ -87,44 +87,28 @@ This second list targets activities of bots on the compromised machines to take 
 
 \subsection{Structure}
 \subsubsection{Life cycle}
-Life cycles might differ from one bot to another but they have generally a common structure. This life cycle is composed of four steps
-The exploitation/infection 
-
-
+\paragraph{What are the steps that make up a botnet life cycle?} Life cycle execution might differ from one bot to another but they have generally a common structure. Here is te common structure presented in these studies: 
 %A survey of botnet detection based on DNS
-Botnet Lifecycle
+%[1] David Zhao, IssaTraore, BassamSayed, Wei Lu, SherifSaad, Ali Ghorbani and Dan Garant,”Botnet detection based on traffic behavior analysis and flow intervals,”Elsevier Computers & Security, vol. 39, pp. 2-16,November 2013.
+%[2] Maryam Feily, AlirezaShahrestani and SureswaranRamadass,” A survey of botnet and botnet detection,” in2009Proc.IEEE third international conference on emerging security information, systemsand technologies, pp.268-273
+%source Z. Zhu, G. Lu, Y. Chen, Z. J. Fu, P. Roberts, and K. Han, “Botnet research survey,” in 32nd Annual IEEE International Conference on Computer Software and Applications, pp. 967–972, Aug. 2008
+\begin{enumerate}
+\item \textbf{Exploitation} The first phase is the infection of the host. The bots gets access to the victim host through different possible vectors (email attachment, vulnerability scanning and exploit, obtained credentials, malicious site, ...). The next step of this phase consists on uploading to the host the binary of the bot. 
 %25. Abu Rajab M, Zarfoss J, Monrose F, Terzis A (2006) A multifaceted approach to understanding the botnet phenomenon. In:Proceedings of the 6th ACM SIGCOMM conference on Internet measurement. ACM, pp 41–52
+The bot connects to a server of the botmaster and downloads it. This step is very important for this thesis because it is the first DNS lookup the bot will perform and it has been noticed as the most consistent behavior of bots. This is where the bots are going to start to hide their DNS activity.
 %26. Abdullah RS, Abdollah MF, Noh ZAM, Mas’ud MZ, Selamat SR, Yusof R, Melaka UTM (2013) Revealing the criterion on botnet detection technique. IJCSI Int J Comput Sci Issues 10(2):208–215
 %16. Manasrah AM, Hasan A, Abouabdalla OA, Ramadass S (2009) Detecting botnet activities based on abnormal DNS traffic. arXiv preprint arXiv:09110487
-exploitation phase:
-This is where the infection happens by exploiting a
-vulnerability on the victim's host.(25) Then the binary of the bot is downloaded onto the host. To find
-this binary a DNS lookup has to be done. Which can't be avoided but can be hidden.(26) This is the most dominant behavior throughout all botnets(16)\\
+%source P. Barford and V. Yegneswaran, “An inside look at botnets,” in Advances in Information Security, vol. 27, pp. 171–191, Springer, Mar. 2007
+%source G. Gu, P. Porras, V. Yegneswaran, M. Fong, and W. Lee, “Bothunter: detecting malware infection through ids-driven dialog correlation,” in Proceedings of 16th USENIX Security Symposium on USENIX Security Symposium, pp. 1–16, Berkeley, CA, USA, 2007.
+\item \textbf{Rallying} This is the phase where the bots will establish the link with the botmaster command and control servers (CnC), join the botnet and wait for instructions. When establishing the connection with the botmaster bots have to use stealth techniques to avoid getting discovered and more importantly revealing the CnC. These techniques will be discussed in the Misuses and abuses of DNS.
 %18. Choi H, Lee H, Lee H, Kim H (2007) Botnet detection by monitoring group activities in DNS traffic. In: 7th IEEE international conference on computer and information technology, 2007 (CIT 2007). IEEE, pp 715–720
 %27. Liu L, Chen S, Yan G, Zhang Z (2008) Bottracer: executionbased bot-like malware detection. In: Wu T-C, Lei C-L, Rijmen V, Lee D-T (eds) Information security. Springer, Berlin, Heidelberg, pp 97–113
-rallying phase:
-dd
-\\
+\item \textbf{Attack/execution} From this point on the bot is ready to get the orders from the botmaster and start executing actions. This is where the different actions defined above are executed by the botnet.
 %17. Rodrı´guez-Go´mez RA, Macia´-Ferna´ndez G, Garcı´a-Teodoro P(2013) Survey and taxonomy of botnet research through lifecycle.ACM Comput Surv (CSUR) 45(4):45
-attack execution phase:
-\\
-% 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983
-update and maintenance:
-\\
-Infection behavior 4 phases: 
-%source Z. Zhu, G. Lu, Y. Chen, Z. J. Fu, P. Roberts, and K. Han, “Botnet research survey,” in 32nd Annual IEEE International Conference on Computer Software and Applications, pp. 967–972, Aug. 2008
-1) Infection: vulnerability scanning \\
-%source P. Barford and V. Yegneswaran, “An inside look at botnets,” in Advances in Information Security, vol. 27, pp. 171–191, Springer, Mar. 2007
-2) Injection: exploited + download of bot's binary code\\ 
-%source G. Gu, P. Porras, V. Yegneswaran, M. Fong, and W. Lee, “Bothunter: detecting malware infection through ids-driven dialog correlation,” in Proceedings of 16th USENIX Security Symposium on USENIX Security Symposium, pp. 1–16, Berkeley, CA, USA, 2007.
-3) connection to the cnc and start to control the host\\
-4) action on behalf of botmaster + maintain and upgrade periodically\\
-For P2P 1 and 2 are similar but in 
-% source 3) it uses a peer list instead to contact the initial peers +
-searches until finds an alive peer 4) phase 1: update of peer list + download any available updates phase 2: starts malicious activities
-based on STORM but similar for all P2P botnets 
-% source S. Stover, D. Dittrich, J. Hernandez, and S.Dietrich, "Analysis of the storm and nugache trojans: P2p is here," The USENIX Magazine, vol. 32,
-pp. 18-27, Dec. 2007.
+\item \textbf{Update and maintenance}
+This phase allows the botmaster to update periodically the software of the bots, new exploits, new attacks, the same way administrators patch their software. This final phase is a loop that goes back to the second phase where the bot contacts the CnC server to proceed to this binary upload and commands fetching. This is the second phase where the DNS request will use evasion techniques to stay hidden.
+% 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983]
+\end{enumerate}
 
 \subsubsection{Channel}
 TODO: after presenting the botnet structure we focus on the part where botmasters have turned their focus in evading detection and becoming more resilitent. In this section we want to discuss how the CnC channel works.
