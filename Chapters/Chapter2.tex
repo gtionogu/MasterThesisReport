@@ -7,34 +7,27 @@
 %PAPER of ref: https://www.researchgate.net/publication/286649850\_A\_survey\_of\_botnet\_detection\_based\_on\_DNS 
 \section{Botnets}
 %[A survey of botnet detection based on DNS]Kamal Alieyan Ammar ALmomani Ahmad Manasrah Mohammed M. Kadhum
-As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage. \\
-
+As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage.
 %Authority of Information Security. The 2016 Vietnam Information Security Report; Authority of Information Security, MIC: New York, NY, USA, 2016.
-Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\
-
+Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\\\
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
-Botnets can become very lucrative and can infect very large amounts of devices resulting in scary entities.
-Here are some of these enormous entities: \textbf{Flashback} with 600k compromised targets, \textbf{Grum} with 840k compromised devices and sending 40 Billion spam emails per month, \textbf{TDL-4} with 4.5 Million victims in first the 3 months and \textbf{Gameover ZeuS} with 1 Million infections, because of its resilience mechanisms this botnet was one of the hardest to take down.\\
-
+Botnets can become very lucrative and can infect very large amounts of devices resulting in scary entities. Here are some of these enormous entities: \textbf{Flashback} with 600k compromised targets, \textbf{Grum} with 840k compromised devices and sending 40 Billion spam emails per month, \textbf{TDL-4} with 4.5 Million victims in first the 3 months and \textbf{Gameover ZeuS} with 1 Million infections, because of its resilience mechanisms this botnet was one of the hardest to take down.\\\\
 %source 6 (A survey of botnet detection based on DNS) 
-The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavours criminals bring to the market.
+The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavors criminals bring to the market.
 \subsection{Definition}
 % WHAT IS A BOTNET?
 %memoire1
 %source Wielogorska, Monika and O'Brien, Darragh (2017) DNS Traffic analysis for botnet detection. In: 25th Irish Conference on Artificial Intelligence and Cognitive Science, 7-8 Dec 2017, Dublin, Ireland.
-\paragraph{What is a botnet?} A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.\\
-
+\paragraph{What is a botnet?} A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.
 %https://arxiv.org/pdf/1702.01132.pdf
 
 %WHAT IS A BOT?
 %source http://www.honeynet.org/node/53
 \paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. The paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both. % [Botnet Tracking Tools] SANS Institute 
-
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
-A clear distinction between a bot agent and a common piece of malware lies within a bot’s ability to communicate with a Command-and-Control (CnC) infrastructure. CnC allows a bot agent to receive new instructions and malicious capabilities, as dictated by a remote criminal entity. This compromised host then can be used as an unwilling participant in Internet crime as soon as it is linked into a botnet via that same CnC.
-
+A clear distinction between a bot agent and a common piece of malware lies within a bot's ability to communicate with a Command-and-Control (CnC) infrastructure. CnC allows a bot agent to receive new instructions and malicious capabilities, as dictated by a remote criminal entity. This compromised host then can be used as an unwilling participant in Internet crime as soon as it is linked into a botnet via that same CnC.\\
 These programs are embedded with port scanning, vulnerability scanning, exploitation kits and payloads that allow them to spread the botnet and infect their victims.\\
-There are many different families of bots, some very modular such as the Agobot others less complete but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots but there are a lot of different protocols exploited as botnets channels. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like kaiten bot which makes it very easy to upload to compromised machines.
+There are many different families of bots, some very modular such as the Agobot others less complete but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots but there are a lot of different protocols exploited as botnets channels. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like Kaiten bot which makes it very easy to upload to compromised machines.
 
 %WHY BOTS PROVIDE EVEN MORE POWERFULL ATTACKS
 % S. S. Silva, R. M. Silva, R. C. Pinto, and R. M. Salles. Botnets: A survey. Eslervier, 57(2):378–403,2013
@@ -43,50 +36,50 @@ There are many different families of bots, some very modular such as the Agobot 
 % PURPOSE + CURRENT DANGERS
 \paragraph{What is the purpose of botnets?} All these resources make botnets very powerful to execute network attacks. 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.\\
+Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.
 % + source http://www.honeynet.org/node/52
 
 % ADVANCES IN BOTNETS
 %source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
-\paragraph{What are the advances in botnets?} Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularised botnets are selled to anyone, this has made them an even bigger threat that they already were.
+\paragraph{What are the advances in botnets?} Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularized botnets are sold to anyone, this has made them an even bigger threat that they already were.
 This BaaS is possible with decentralized architectures that can subdivided into smaller botnets to sold and then reintegrated to the parent botnet after use.
 %source % [Botnet Tracking Tools] SANS Institute 
-
 
 %memoire1
 \paragraph{What types of actions are performed by botnets?} A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.\\
 This first list presents general use of botnets:
 \begin{itemize}
-\item Distributed Denial-of-Service Attacks. These attacks provoke a loss of service or connectivity. Used by hacktivist, criminals and companies to disturb targets for recognition, financial gain or advantage over competition respectively. (The services could be email servers, production servers, web servers but also any device reachable) %source http://www.honeynet.org/node/52
-\item Spam email campaigns. Bots are set as proxy nodes and then used to send large amounts of spam and phishing emails.%source http://www.honeynet.org/node/52
-\item Sniffing Traffic. Bots can start watching packets going through the compromised machine and start retrieving all valuable data passed in clear-text. Botnets have been even found to analyze others bots data and take over them if they belong to another botnet.
-\item Spy through Keylogging, file monitoring. Sniffing packets effectiveness is reduced by encrypted traffic. The solution is then to log the key strokes made by the users and retrieve sensitive information. This is done with a keylogger and filtering mechanism that targets specific use-cases (logins, password, ...)%source http://www.honeynet.org/node/52
-\item Spreading new malware. Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. They can download malware or send viruses via email, there are various methods depending of the botnet type and environment they want to spread the malware.%source http://www.honeynet.org/node/52
-\item Installing Advertisement Addons, Browser Helper Objects (BHOs) and Google AdSense abuse. These techniaues are used for financial gain instead of disruption. These are based on websites using clicking based ads. The criminals set fake sites using advertising programs and then automate the bots to click on them to create revenue. Since the bots have different IPs it is very hard to detect the fraud.
-\item Manipulating online polls and games. These are known to exist to influence decisions and are expected to be further used in the future. This is also very effective since each bot uses different IP addresses.
-\item Mass identity theft, stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks. % [Botnet Tracking Tools] SANS Institute 
+\item \textbf{Distributed Denial-of-Service Attacks} These attacks provoke a loss of service or connectivity. Used by hacktivist, criminals and companies to disturb targets for recognition, financial gain or advantage over competition respectively. (The services could be email servers, production servers, web servers but also any device reachable) %source http://www.honeynet.org/node/52
+\item \textbf{Spam email campaigns} Bots are set as proxy nodes and then used to send large amounts of spam and phishing emails.%source http://www.honeynet.org/node/52
+\item \textbf{Sniffing Traffic} Bots can start watching packets going through the compromised machine and start retrieving all valuable data passed in clear-text. Botnets have been even found to analyze others bots data and take over them if they belong to another botnet.
+\item \textbf{Spying through Keylogging and file monitoring} Sniffing packets effectiveness is reduced by encrypted traffic. The solution is then to log the key strokes made by the users and retrieve sensitive information. This is done with a keylogger and filtering mechanism that targets specific use-cases (logins, password, ...)%source http://www.honeynet.org/node/52
+\item \textbf{Spreading new malware} Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. They can download malware or send viruses via email, there are various methods depending of the botnet type and environment they want to spread the malware.%source http://www.honeynet.org/node/52
+\item \textbf{Installing Advertisement Addons, Browser Helper Objects (BHOs) and Google AdSense abuse} These techniques are used for financial gain instead of disruption. These are based on websites using clicking based ads. The criminals set fake sites using advertising programs and then automate the bots to click on them to create revenue. Since the bots have different IPs it is very hard to detect the fraud.
+\item \textbf{Manipulating online polls and games} These are known to exist to influence decisions and are expected to be further used in the future. This is also very effective since each bot uses different IP addresses.
+\item \textbf{Mass identity theft} Stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks. % [Botnet Tracking Tools] SANS Institute 
 Regarding the personal information that can be found by bots on the home desktops, this paper explains that it must not be overlooked. The amount of data that can be contained in home applications can be very important(taxes, browsers, email contacts. They warn of the sensitive information that is often stored on home computers related to their company. This could expose intellectual property that can be then sold by the criminals.
-\item Host illegal sites. Child pornography and black market sites are some examples.
-\item Cryptographic computation. This is a less expected use of botnets, but these distributed supercomputers can be used for cryptanalysis purposes. Computing rainbow tables, cracking passwords, bruteforcing keys or mining crypto currencies. With the success of cryptocurrencies in the last 2 years, this type of use for botnets has increased. The latest example is the Smominru Monero mining botnet, mining around 9000 moneros worth at the time 3 million\$.
+\item \textbf{Host illegal sites} Child pornography and black market sites are some examples.
+\item \textbf{Computation for cryptanalysis} This is a less expected use of botnets, but these distributed supercomputers can be used for cryptanalysis purposes. Computing rainbow tables, cracking passwords, bruteforcing keys or mining crypto currencies. With the success of cryptocurrencies in the last 2 years, this type of use for botnets has increased. The latest example is the Smominru Monero mining botnet, mining around 9000 moneros worth at the time 3 million\$.
 %https://www.proofpoint.com/us/threat-insight/post/smominru-monero-mining-botnet-making-millions-operators+% [Botnet Tracking Tools] SANS Institute 
 \end{itemize}
 %A Survey on Botnet Architectures, Detection and Defences
 This second list targets activities of bots on the compromised machines to take full control:
 \begin{itemize}
-\item Secure the system(close NetBIOS shares, RPCDCOM) to avoid infection by other criminals. This could also mean remove existing bots on the machine. Bots will make sure their host is properly hardened to avoid overtake.
-\item Redirect traffic for the botnet, depending on the topology used, bots might be used as proxies to send commands, updates, data to the rest of the bots.
-\item Kill unwanted process running on the system. This joins the hardening objective. Bots want to take full control and make sure no process is limiting their actions (usually trying to stay stealthy while doing it).
-\item Test for virtual machines and/or debugger software. Part of the resilience of botnets resides in the obscurity of the mechanism they use. Honeypots will try to capture bots and do malware analysis to understand how they work. This tests will try to prevent this analysis to happen. (By deleting themselves or not executing in these environments)
-\item Add or delete auto-start applications. To stay resilient after reboot or even fresh installs, bots have mechanisms to stay persistent on the machine after those events.
-\item Run or terminate programs. This one is obvious but after exploiting the victim, their goal is to execute actions on the machine.
-\item Download and execute files. This allows them to update their software, download exploits and payloads. It can also be used to upload normal programs used for some of the tasks they want to execute.
-\item Perform address and port scan. Another important one to pivot inside networks and expand the botnet surface.
-\item Communicates with a handler or controller via public servers or other compromised systems. This is the  main channel communication with the botmaster.
-\item Data storage. One of the tactics used by botmasters to keep their anonymity is to use their botnet as a distributed database and saving the data obtained on the bots, this gives more distance with the stolen data.% [Botnet Tracking Tools] SANS Institute 
+\item \textbf{Secure the system(close NetBIOS shares, RPCDCOM) to avoid infection by other criminals} This could also mean remove existing bots on the machine. Bots will make sure their host is properly hardened to avoid overtake.
+\item \textbf{Redirect traffic for the botnet} Depending on the topology used, bots might be used as proxies to send commands, updates, data to the rest of the bots.
+\item \textbf{Kill unwanted process running on the system} This joins the hardening objective. Bots want to take full control and make sure no process is limiting their actions (usually trying to stay stealthy while doing it).
+\item \textbf{Test for virtual machines and/or debugger software} Part of the resilience of botnets resides in the obscurity of the mechanism they use. Honeypots will try to capture bots and do malware analysis to understand how they work. This tests will try to prevent this analysis to happen. (By deleting themselves or not executing in these environments)
+\item \textbf{Add or delete auto-start applications} To stay resilient after reboot or even fresh installs, bots have mechanisms to stay persistent on the machine after those events.
+\item \textbf{Run or terminate programs} This one is obvious but after exploiting the victim, their goal is to execute actions on the machine.
+\item \textbf{Download and execute files} This allows them to update their software, download exploits and payloads. It can also be used to upload normal programs used for some of the tasks they want to execute.
+\item \textbf{Perform address and port scan} Another important one to pivot inside networks and expand the botnet surface.
+\item \textbf{Communicates with a handler or controller via public servers or other compromised systems} This is the  main channel communication with the botmaster.
+\item \textbf{Data storage} One of the tactics used by botmasters to keep their anonymity is to use their botnet as a distributed database and saving the data obtained on the bots, this gives more distance with the stolen data.% [Botnet Tracking Tools] SANS Institute 
 \end{itemize}
 
-\subsection{Structure}
-\subsubsection{Life cycle}
+%\subsection{Structure}
+%\subsubsection{Life cycle}
+\subsection{Life cycle}
 \paragraph{What are the steps that make up a botnet life cycle?} Life cycle execution might differ from one bot to another but they have generally a common structure. Here is te common structure presented in these studies: 
 %A survey of botnet detection based on DNS
 %[1] David Zhao, IssaTraore, BassamSayed, Wei Lu, SherifSaad, Ali Ghorbani and Dan Garant,”Botnet detection based on traffic behavior analysis and flow intervals,”Elsevier Computers & Security, vol. 39, pp. 2-16,November 2013.
@@ -110,106 +103,45 @@ This phase allows the botmaster to update periodically the software of the bots,
 % 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983]
 \end{enumerate}
 
-\subsubsection{Channel}
-\paragraph{What does it mean to join the botnet?}
+\subsection{Channel}
+\paragraph{What does it mean to join the botnet?} The bots will rarely directly connect to the Cnc servers, they will go through proxies or peers, (structural nodes of the botnet) to obtain commands and updates. The knowledge of these nodes and the techniques used to communicate with them are the channel of a botnet.
+\paragraph{What are the channels used by botnets?} The channel resilience of a botnet is critical to ensure good communication with the CnC server. It is a crtitical component of botnets, its failure is usually the end of the botnet's life.
 
-\paragraph{What is a botnet channel?}
+Ways of securing their communication channel: encryption, rootkit and a number of DNS evasion techniques
 
+\paragraph{What are the goals of these different channels?}
 %J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007.
 Command and Control (CnC) CnC servers is what differentiates Botnets from other malware. 
 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 Means of receiving and sending commands and information between the botmaster and the zombies. Typical protocols: IRC, HTTP – HTTPS, DNS, etc\\
-Protocols imply (to an extent) a botnet’s communication topology.
-        The topology provides trades-off in terms of bandwidth, affectivity, stealth, and so forth.
-        
-TODO: explain the different techniques used to rally bots to an IP or a Domain (how do they regroup with master?)
-% file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
-2.4.2 Command and Control Rallying Mechanisms
-According to Choi et al. [20], botmasters want their bots
-to be invisible but portable, therefore they use different
-methods for bots rallying. They stated that not all bots
-can have mobility and invisibility at the same time. They
-described three rallying methods, namely; hard-coded IP
-address, dynamic DNS, and distributed DNS.
-In hard-coded IP address method; the bot binary has a
-hard-coded IP address of its CnC server, the server can be
-detected through reverse engineering, and the botmaster
-can be quarantined or the botnet can be suspended. As
-hard-coded IP address cannot be changed, this method
-cannot provide mobility and does not make the botnet
-invisible as well. On the other hand, in dynamic DNS
-botnets migrate their CnC server frequently, upon the
-instruction of botmaster. Using a list of servers provided
-in the bot binary, a botmaster uses several CnC servers.
-It uses dynamic DNS in order not to be detected or suspended,
-and to keep the botnet portable. When connection
-to the CnC server fails or shutdown, the bots will
-perform DNS queries and will be redirected to a new CnC
-server [2]. This redirection behavior of botnets is known
-as “herding”. This method provides mobility and some
-invisibility to the botnets. Finally, with distributed DNS,
-botnets run their own distributed DNS service at locations
-that are out of the reach of law enforcement. Bots
-include the addresses of these DNS servers and contact
-these servers to resolve the IP address of CnC servers
-[2]. This method provides both mobility and invisibility
-to their botnets.
-In summary, while the hard-coded IP botnet makes
-very easy for the newly infected nodes to join the botnet,
-it also makes easy for law enforcement to track and
-shutdown the botnet. On the other hand, using DNS to
-migrate CnC servers make it harder for the newly infected
-nodes to join the botnet. Some infected nodes might never
-be able to join the botnet -in case they stay offline long
-enough for all the addresses in the initial communication
-list to be obsolete, however, it gives the botnet the flexibility
-to hide its CnC severs.
+Protocols imply (to an extent) a botnet’s communication topology. The topology provides trades-off in terms of bandwidth, affectivity, stealth, and so forth.
 
-Rallying mechanism %source H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by
-monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Computer
-and Information Technology, pp. 715–720, Oct. 2007.
-Objective for bots: invisible but portable -> different methods fo bot rallying: - ip hardcoded: the bot
-binary has a hard-coded IP address of its CnC server, the server can be detected through reverse
-engineering, and the botmaster can be quarantined or the botnet can be suspended. As hard-coded
-IP address cannot be changed, this method cannot provide mobility and does not make the botnet
-invisible as well.
-dynamic DNS %source “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
-botnets migrate their CnC server frequently, upon the instruction of botmaster. Using a list of
-servers provided in the bot binary, a botmaster uses several CnC servers. It uses dynamic DNS in
-order not to be detected or suspended, and to keep the botnet portable. When connection to the
-CnC server fails or shutdown, the bots will perform DNS queries and will be redirected to a new
-CnC server. This redirection behavior of botnets is known as “herding”. This method provides
-mobility and some invisibility to the botnets.
+
+
+% file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
+2.4.2 Command and Control Rallying Mechanisms 
+According to Choi et al. [20], botmasters want their bots to be invisible but portable, therefore they use different methods for bots rallying. They stated that not all bots can have mobility and invisibility at the same time. They described three rallying methods, namely; hard-coded IP address, dynamic DNS, and distributed DNS. In hard-coded IP address method; the bot binary has a hard-coded IP address of its CnC server, the server can be detected through reverse engineering, and the botmaster can be quarantined or the botnet can be suspended. As hard-coded IP address cannot be changed, this method cannot provide mobility and does not make the botnet invisible as well. On the other hand, in dynamic DNS botnets migrate their CnC server frequently, upon the instruction of botmaster. Using a list of servers provided in the bot binary, a botmaster uses several CnC servers. It uses dynamic DNS in order not to be detected or suspended, and to keep the botnet portable. When connection to the CnC server fails or shutdown, the bots will perform DNS queries and will be redirected to a new CnC server [2]. This redirection behavior of botnets is known as “herding”. This method provides mobility and some invisibility to the botnets. Finally, with distributed DNS, botnets run their own distributed DNS service at locations that are out of the reach of law enforcement. Bots include the addresses of these DNS servers and contact these servers to resolve the IP address of CnC servers [2]. This method provides both mobility and invisibility to their botnets. In summary, while the hard-coded IP botnet makes very easy for the newly infected nodes to join the botnet, it also makes easy for law enforcement to track and shutdown the botnet. On the other hand, using DNS to migrate CnC servers make it harder for the newly infected nodes to join the botnet. Some infected nodes might never be able to join the botnet -in case they stay offline long enough for all the addresses in the initial communication list to be obsolete, however, it gives the botnet the flexibility to hide its CnC severs. 
+
+Rallying mechanism 
+%source H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Computer and Information Technology, pp. 715–720, Oct. 2007.
+Objective for bots: invisible but portable -> different methods fo bot rallying: - ip hardcoded: the bot binary has a hard-coded IP address of its CnC server, the server can be detected through reverse engineering, and the botmaster can be quarantined or the botnet can be suspended. As hard-coded IP address cannot be changed, this method cannot provide mobility and does not make the botnet
+invisible as well. dynamic DNS 
+%source “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
+botnets migrate their CnC server frequently, upon the instruction of botmaster. Using a list of servers provided in the bot binary, a botmaster uses several CnC servers. It uses dynamic DNS in order not to be detected or suspended, and to keep the botnet portable. When connection to the CnC server fails or shutdown, the bots will perform DNS queries and will be redirected to a new CnC server. This redirection behavior of botnets is known as “herding”. This method provides mobility and some invisibility to the botnets. 
+
 distributed DNS 
 %source “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
-botnets run their own distributed DNS service at locations that are out of the reach of law
-enforcement. Bots include the addresses of these DNS servers and contact these servers to resolve
-the IP address of CnC servers. This method provides both mobility and invisibility to their botnets.
-
-ME
-The channel resilience of a botnet is critical to ensure good communication with the CnC server. It is a crtitical component of botnets, its failure is usually the end of the botnet's life. 
-
-
-
-ME
-
+botnets run their own distributed DNS service at locations that are out of the reach of law enforcement. Bots include the addresses of these DNS servers and contact these servers to resolve the IP address of CnC servers. This method provides both mobility and invisibility to their botnets.
 
 [source]
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
 
-The ability for a bot agent to locate CnC infrastructure is a critical requirement for
-maintaining control of the entire botnet for botnets that rely upon centralized CnC. If
-the CnC cannot be found, a bot agent will not be able to receive new instructions.
-While some bot agents may opt to function in an alternative autonomous “zombie”
-mode – reverting to embedded instructions for propagation and infection – most bot
-agents will continue to harvest local host information and poll the missing CnC at
-regularly scheduled times.
+The ability for a bot agent to locate CnC infrastructure is a critical requirement for maintaining control of the entire botnet for botnets that rely upon centralized CnC. If the CnC cannot be found, a bot agent will not be able to receive new instructions. While some bot agents may opt to function in an alternative autonomous “zombie” mode – reverting to embedded instructions for propagation and infection – most bot agents will continue to harvest local host information and poll the missing CnC at regularly scheduled times. 
+
 Botnet Communication Topologies
-Page 6
-Botnet operators use a number of technologies to increase the probability that bot
-agents will be able to locate the central CnC infrastructure. These tools and techniques
-also make botnets more resilient to shut-down and hijacking maneuvers.
+
+Botnet operators use a number of technologies to increase the probability that bot agents will be able to locate the central CnC infrastructure. These tools and techniques also make botnets more resilient to shut-down and hijacking maneuvers.
 One key technology that enables CnC location resolution and failover resilience is
 referred to as “fluxing”. Fluxing comes in two major flavors:
 • IP Flux
@@ -217,9 +149,9 @@ referred to as “fluxing”. Fluxing comes in two major flavors:
 Both technologies are used extensively by professional botnet operators
 
 
-TODO: ways of securing their communication channel: encryption, rootkit and a number of DNS evasion techniques
 
-\subsubsection{Topology}
+
+\subsection{Topology}
 \paragraph{How are the channels used ?}
 
 \paragraph{What are the different topologies used by botnets?}
