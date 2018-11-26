@@ -103,80 +103,57 @@ This phase allows the botmaster to update periodically the software of the bots,
 % 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983]
 \end{enumerate}
 
-\subsection{Channel}
+\subsection{The Channel}
 \paragraph{What does it mean to join the botnet?} The bots will rarely directly connect to the CnC servers, they will go through proxies or peers bots, (structural nodes of the botnet) to obtain commands and updates. The knowledge of these nodes and the techniques used to communicate with them are the channel of a botnet.
-\paragraph{What are the channels used by botnets?} The channel's resilience of a botnet is critical to ensure good communication with the CnC server. It is also a critical component because its failure is usually the end of the botnet's life. There are multiple ways of securing their communication channel: protocols, encryption, DNS evasion techniques.
+\paragraph{What are the channels used by botnets?} The channel's resilience of a botnet is critical to ensure good communication with the CnC server. It is also a critical component because its failure is usually the end of the botnet's life. There are multiple ways of securing and hiding their communication channel: tunneling through protocols, encryption, DNS evasion techniques.
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-The typical protocols that are used by bots to reach their CnC are these: IRC, HTTP, HTTPS, DNS, MAIL (TODO: THERE ARE MORE). The use of different protocols implies there are a botnet's communication topology. The different topologies provide trade-offs in terms of bandwidth, rallying, stealth, ...
-
+The typical protocols that are used by bots to reach their CnC are these: IRC, HTTP, HTTPS, DNS, MAIL, SSH, etc. The use of different protocols implies there are a multiple botnet's communication topologies. The different topologies provide trade-offs in terms of bandwidth, rallying, stealth, ...
 
 \paragraph{What are the goals of these different channels?}
-%J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007.
-Command and Control (CnC) servers are really what differentiates botnets from other malware. 
-% file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
-
-As mentioned, the goal for the channels are to be invisible and can run on any system without dependency issues.
-3 rallying methods: 
-- hard-coded IP address = the bot binary has a hard-coded IP address of its CnC server. Vulnerable to reverse engineering and blacklisting of the address.
-- dynamic DNS
-- distributed DNS
-
-Rallying mechanism 
-%source H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Computer and Information Technology, pp. 715–720, Oct. 2007.
-Objective for bots: invisible but portable -> different methods fo bot rallying: - ip hardcoded: the bot binary has a hard-coded IP address of its CnC server, the server can be detected through reverse engineering, and the botmaster can be quarantined or the botnet can be suspended. As hard-coded IP address cannot be changed, this method cannot provide mobility and does not make the botnet
-invisible as well. dynamic DNS
-
-2.4.2 Command and Control Rallying Mechanisms 
-According to Choi et al. [20], botmasters want their bots to be invisible but portable, therefore they use different methods for bots rallying. They stated that not all bots can have mobility and invisibility at the same time. They described three rallying methods, namel y; hard-coded IP address, dynamic DNS, and distributed DNS. In hard-coded IP address method; the bot binary has a hard-coded IP address of its CnC server, the server can be detected through reverse engineering, and the botmaster can be quarantined or the botnet can be suspended. As hard-coded IP address cannot be changed, this method cannot provide mobility and does not make the botnet invisible as well. On the other hand, in dynamic DNS botnets migrate their CnC server frequently, upon the instruction of botmaster. Using a list of servers provided in the bot binary, a botmaster uses several CnC servers. It uses dynamic DNS in order not to be detected or suspended, and to keep the botnet portable. When connection to the CnC server fails or shutdown, the bots will perform DNS queries and will be redirected to a new CnC server [2]. This redirection behavior of botnets is known as “herding”. This method provides mobility and some invisibility to the botnets. Finally, with distributed DNS, botnets run their own distributed DNS service at locations that are out of the reach of law enforcement. Bots include the addresses of these DNS servers and contact these servers to resolve the IP address of CnC servers [2]. This method provides both mobility and invisibility to their botnets. In summary, while the hard-coded IP botnet makes very easy for the newly infected nodes to join the botnet, it also makes easy for law enforcement to track and shutdown the botnet. On the other hand, using DNS to migrate CnC servers make it harder for the newly infected nodes to join the botnet. Some infected nodes might never be able to join the botnet -in case they stay offline long enough for all the addresses in the initial communication list to be obsolete, however, it gives the botnet the flexibility to hide its CnC severs. 
-
-
-
-%source “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
-botnets migrate their CnC server frequently, upon the instruction of botmaster. Using a list of servers provided in the bot binary, a botmaster uses several CnC servers. It uses dynamic DNS in order not to be detected or suspended, and to keep the botnet portable. When connection to the CnC server fails or shutdown, the bots will perform DNS queries and will be redirected to a new CnC server. This redirection behavior of botnets is known as “herding”. This method provides mobility and some invisibility to the botnets. 
-
-distributed DNS 
-%source “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
-botnets run their own distributed DNS service at locations that are out of the reach of law enforcement. Bots include the addresses of these DNS servers and contact these servers to resolve the IP address of CnC servers. This method provides both mobility and invisibility to their botnets.
-
-[source]
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
-
-The ability for a bot agent to locate CnC infrastructure is a critical requirement for maintaining control of the entire botnet for botnets that rely upon centralized CnC. If the CnC cannot be found, a bot agent will not be able to receive new instructions. While some bot agents may opt to function in an alternative autonomous “zombie” mode – reverting to embedded instructions for propagation and infection – most bot agents will continue to harvest local host information and poll the missing CnC at regularly scheduled times. 
-
-Botnet Communication Topologies
-
-Botnet operators use a number of technologies to increase the probability that bot agents will be able to locate the central CnC infrastructure. These tools and techniques also make botnets more resilient to shut-down and hijacking maneuvers.
-One key technology that enables CnC location resolution and failover resilience is
-referred to as “fluxing”. Fluxing comes in two major flavors:
-• IP Flux
-• Domain Flux
-Both technologies are used extensively by professional botnet operators
-
-
-
+The main goal of the botnet channel is to provide a vector for bots to reach their CnC servers and maintain a connection with it. This is the only way the botmaster is able to keep control his botnet. This is why the means of communication are built around these main needs. If bots aren't able to reach the botnet or their CnC, they won't be able to update their software and receive commands.\\ 
+Reaching and locating the CnC servers is the first challenge the channel needs to handle. Failing to do so will leave the bot unusable for the botmaster or left in a sleeping mode. In this state, the bot keeps on with the harvesting of the victim host and retry the missed CnC regularly. \\
+The second challenge being its ability to maintain the channel. This is where resilient techniques have evolved to achieve this goal. These technologies will be detailed in the abuses of DNS section. CnC servers and their channels are really what differentiates botnets from other malware. 
+%ABOVE: J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007. file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
+	
+\paragraph{How do botnets achieve such channels?}
+%BELOW: H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Computer and Information Technology, pp. 715–720, Oct. 2007.
+%BELOW: “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
+To stay invisible and persistent channels have gone through different methods, here are the main ones: 
+\begin{itemize}
+\item \textbf{Hardcoded IP}: The bot software has the IP address of the CnC server hardcoded somewhere in its binary. The server can be found through reverse engineering and the botnet could be stopped or suspended for a certain period.
+\item \textbf{Dynamic DNS}: This is a solution to the hardcoded IPs. In this case the botnet will have multiple CnC servers migrating frequently on its will. In addition to using a dynamic list of servers, it uses dynamic DNS in order to avoid detection or suspension and keep the botnet portable. This allows the queries to be redirected if they were to fail. This behavior is known as herding, it provides mobility and stealth.
+\item \textbf{Distributed DNS}: To avoid law, botmaster locate their DNS servers outside of the law's jurisdiction. Bots have the addresses of the DNS servers and contact them to resolve the IP address of the CnC servers.
+\end{itemize}
 
 \subsection{Topology}
 \paragraph{How are the channels used ?}
-
+Now that we know the purpose of channels and what they provide to botnets we are going to explore the different topologies used by botmasters using different channels and architectures.
+%----------------------------
 \paragraph{What are the different topologies used by botnets?}
-[sources]\\
 %[A Survey on Botnet Architectures, Detection and Defences] Muhammad Mahmoud, Manjinder Paul Nir, International Journal of Network Security · January 2014 file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
-The differences of these topologies will usually be related to protocols of communication. Their structure will result as mentioned above in trade-offs for its different specifications.
+The differences between topologies are related to protocols of communication. Their structure will result as mentioned above in trade-offs for its different specifications.
 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-Based on CnC channels, there are two typical botnet topologies:
-Centralized
-Decentralized (P2P)
-     Traditional botnet metrics:
-Resiliency
-A botnet ability to cope with a loss of members (zombies) or servers
-Latency
-Reliability in message transmission
-Enumeration
-An ability to accurately estimate a botnet size
+As explained in this paper, there are two typical botnet topologies which all the other topologies are built on:
+\begin{itemize}
+\item Centralized
+\item Decentralized
+\end{itemize}
+
+\paragraph{What are the metrics used to assess these topologies?}
+The important metrics for a botnet are a combination of the above sections:
+\begin{itemize}
+\item
+\item
+\item
+\item
+\end{itemize}
+Resiliency: A botnet ability to cope with a loss of members (zombies) or servers
+Latency: Reliability in message transmission
+Enumeration: An ability to accurately estimate a botnet size
 Difficulty for security analysis
-Re-sale
-A possibility to carve off sections of the botnet for lease or resale to
+Re-sale: A possibility to carve off sections of the botnet for lease or resale to
 other operators. 
 
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
@@ -191,14 +168,16 @@ failures, just like commercial-grade technology tasked with remotely managing te
 thousands of hosts. The precise CnC topology selected by a botnet operator often
 reflects that individual’s perceived risk to continued command access and the financial
 business model of that botnet
-
+\paragraph{What are the different topologies?}
 CnC topologies encountered in the wild typically match one of the following types:
-• Star
-• Multi-server
-• Hierarchical
-• Random
+\begin{itemize}
 
-TODO: centralized vs decentralized botnets
+\end{itemize}
+Star
+Multi-server
+Hierarchical
+Random
+
 TODO: metrics analyzed to choose best option: cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
 TODO: present with visuals the different topologies and their purpose.
 
