@@ -153,17 +153,10 @@ The important metrics for a botnet are a combination of the above sections:
 \item Financially: Its potential to be partitioned and sold into sub-botnets. 
 \end{itemize}
 
-Botnets come in all kinds of shapes and sizes. As a result, they employ a range of CnC
-topologies in response to commercial defenses, legal shutdowns and hijacking
-attempts. This evolution means that a criminal botnet operator has a number of wellstudied
-CnC topology options to base a new botnet upon – each of which have
-relative strengths and weaknesses
+Botnets come in all kinds of shapes and sizes. As a result, they employ a range of CnC topologies in response to commercial defenses, legal shutdowns and hijacking
+attempts. This evolution means that a criminal botnet operator has a number of wellstudied CnC topology options to base a new botnet upon – each of which have
+relative strengths and weaknesses. Botnet CnC topologies have been optimized to minimize network chatter and system failures, just like commercial-grade technology tasked with remotely managing tens of thousands of hosts. The precise CnC topology selected by a botnet operator often reflects that individual's perceived risk to continued command access and the financial business model of that botnet.
 
-Botnet CnC topologies have been optimized to minimize network chatter and system
-failures, just like commercial-grade technology tasked with remotely managing tens of
-thousands of hosts. The precise CnC topology selected by a botnet operator often
-reflects that individual’s perceived risk to continued command access and the financial
-business model of that botnet
 \paragraph{What are the different topologies?}
 CnC topologies encountered in the wild typically match one of the following types:
 \begin{itemize}
@@ -281,6 +274,11 @@ The current trend of botnets is to hide their channel using the DNS services to 
 %A la place des discussion of features, placer la justification du choix de détéction en utilisant les études présentées. (je dois présenter toutes les autres techniques ss forcément aller en profondeur, comme ça on peut se positionner plus facilement.)
 
 Most of the time users send DNS requests with a particular question for the DNS server. The server will the reply a DNS responses, similar to the request with the "answer" field filled with the information requested. Here is the structure of the packets transmitted to help with the understanding of the sections used as features later on.
+\subsubsection{The DNS protocol}
+\paragraph{What is the Domain Name System protocol?}
+\paragraph{How are addresses resolved?}
+\paragraph{What are the most common use cases of the DNS?}
+
 \newpage
 \subsubsection{Normal DNS message structure}
 \begin{verbatim}
@@ -297,7 +295,7 @@ Most of the time users send DNS requests with a particular question for the DNS 
     +---------------------+
 
 \end{verbatim}
-
+TODO: explain the section that will be particularly relevant for botnets.
 \subsubsection{Header section}
 Here is a detailed description of the header of the DNS packets. 
 \begin{verbatim}
@@ -508,35 +506,13 @@ classification: passive and active
 - global correlated behavior: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
 %source H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Com- puter and Information Technology, pp. 715–720, Oct. 2007. 
 
-"4.1.3 DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et
-al. [20] proposed botnet detecdetection mechanism by monitoring their DNS traffic. According to the
-authors, bots use DNS queries either to connect or to migrate to another CnC server. The DNS
-traffic has a unique feature that they define as group activity. Bots can be detected by using the
-group activity property of botnet DNS traffic while bots are connecting to their server or migrating
-to another server. There are three factors that help in distinguishing botnet DNS queries from
-legitimate DNS queries [20]; (1) queries to CnC servers come only from botnet members (fixed IP
-address space size), (2) botnet members migrate and act at the same time, which leads to temporary
-and synchronized DNS queries, (3) botnets usually use DDNS for CnC servers. For a botmaster to
-keep its bot hidden and portable, it relies on DNS to rally infected hosts. In botnets, DNS queries
-can appear for many reasons. They appear during rallying process after infection, during malicious
-activities like spam or DoS attacks, during CnC server migration, during CnC server IP address
-change, or after CnC server or network link failure. Based on the aforementioned five situations of
-DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which
-distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of
-the source IP address, domain name and timestamp. Then, they group DNS query data using the
-domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet
-DNS queries are detected using a numerically computed some similarity factor [20] This algorithm
-cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating
-Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this
-algorithm starts by building a database for DNS queries comprised of the source IP address, domain
-name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
-After that, it removes redundant DNS queries. The next step will be to compare IP lists of different
-domain name with same size of IP list, because bots use two different domain names for the CnC
-server during migration [20]. These algorithms are protocol and structure independent and are
-capable of detecting unknown and encrypted botnets. However, these are not for real-time
-detections and have low accuracy for small networks. Furthermore, they are very sensitive to
-threshold values which need to be chosen very carefully to balance false positives and false negative
-rates.
+"4.1.3 DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
+(1) queries to CnC servers come only from botnet members (fixed IP address space size), 
+(2) botnet members migrate and act at the same time, which leads to temporary and synchronized DNS queries, 
+(3) botnets usually use DynamicDNS (DDNS) for CnC servers. 
+For a botmaster to keep its bots hidden and portable, he relies on DNS to rally infected hosts. In botnets, DNS queries can appear for many reasons. They appear during rallying process after infection, during malicious activities like spam or DoS attacks, during CnC server migration, during CnC server IP address change, or after CnC server or network link failure. Based on the aforementioned five situations of DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, they group DNS query data using the domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet
+DNS queries are detected using a numerically computed some similarity factor [20] This algorithm cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
+After that, it removes redundant DNS queries. The next step will be to compare IP lists of different domain name with same size of IP list, because bots use two different domain names for the CnC server during migration [20]. These algorithms are protocol and structure independent and are capable of detecting unknown and encrypted botnets. However, these are not for real-time detections and have low accuracy for small networks. Furthermore, they are very sensitive to threshold values which need to be chosen very carefully to balance false positives and false negative rates.
 
 
 % ========================================================================================
