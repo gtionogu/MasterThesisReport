@@ -245,24 +245,24 @@ The direct communication between the CnC and the bot agent means that instructio
 \includegraphics[scale=1]{img/centralized_topo}
 
 \paragraph{Multi-server}
-    Pros 
-No single point of failure
-Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents.
-Geographical optimization
-Multiple geographically distributed CnC severs can speed up communications between botnet elements.
+\begin{tabular}{|p{7cm}|p{7cm}|}
+Pros & Cons \\
+No single point of failure & Requires advance planning\\
+Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents. & Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
+Geographical optimization & \\
+Multiple geographically distributed CnC severs can speed up communications between botnet elements.\\
+\end{tabular}
 
-    Cons
-Requires advance planning
-Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
 \includegraphics[scale=1]{img/multi-server_topo.jpg}
 
 \paragraph{Hierarchical}
+\begin{tabular}{|p{7cm}|p{7cm}|}
+Pros & Cons \\
+Botnet awareness & Ease of re-sale\\
+\end{tabular}
+
     Pros 
-  Botnet awareness
-Interception or hijacking of bot agents
-will not enumerate all members of the
-botnet and is unlikely to reveal the CnC
-server.
+
   Ease of re-sale
 A botnet operator can easily carve off
 sections of their botnet for lease or resale
@@ -278,14 +278,10 @@ some forms of botnet attack and
 malicious operation difficult.
 
 \paragraph{dynamic/P2P}
-    Pros 
-  Highly resilient
-Lack of a centralized CnC infrastructure
-and the many-to-many communication
-links between bot agents make it very
-resilient to shutdown.
-    Cons
-  Command latency
+    Pros & Cons\\
+  Highly resilient & Command latency
+Lack of a centralized CnC infrastructure and the many-to-many communication links between bot agents make it very resilient to shutdown.    
+  
 The ad hoc nature of links between bot
 agents make CnC communication
 unpredictable, which can result in high
