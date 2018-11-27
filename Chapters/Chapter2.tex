@@ -137,12 +137,80 @@ The differences between topologies are related to protocols of communication. Th
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 As explained in this paper, there are two typical botnet topologies which all the other topologies are built on:
 \begin{itemize}
-\item Centralized
-\item Decentralized
+\item \textbf{Centralized}
+\item \textbf{Decentralized}
 \end{itemize}
-TODO: ADD MORE EXPLANATIONS ON THOSE MAIN STRUCTURES
-
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+1) Centralized Model: The oldest and easiest type of
+methodology is centralized model. The Central point CnC is
+responsible for exchanging commands and data between
+Botmaster and Bots. In centralized model BotMaster chooses
+a host-usually high bandwidth computer- to be the central
+point (Command-and-Control) server of all the Bots.
+Generally this CnC server runs certain network services such
+as IRC or HTTP. The main advantage of this model is small
+message latency which cause BotMaster easily arranges
+Botnet and launch attacks. As all connection happens through
+CnC it is a critical point in this model. It is also weak point
+as somebody manages to discover and eliminate CnC server,
+the entire botnet will be worthless and ineffective. IRC and
+HTTP are two common protocols that CnC server used for
+communication.
+	a) Botnet based on IRC: The IRC is a form of real-time
+Internet text messaging or synchronous conferencing. The
+protocol is based on the Client-Server model, which can be
+used on many computers in distributed networks. Advantages
+that encourages botmaster to use IRC as its CnC like, Low
+latency communication, Anonymous real-time
+communication, Ability of Group (many-to-many) and
+Private (one-to-one) communication, simple to setup, simple
+commands, flexibility in communication. Some famous IRC
+based botnet are, Agobot, SDBot, Spybot, and GT Bot.
+Fig.3 IRC Botnet
+	b) Botnet based on HTTP: HTTP is another popular protocol
+used by CnC server. As IRC Botnet detection technique is
+famous for researcher, attacker started using alternative that
+is HTTP as CnC. The main advantage of using the HTTP
+protocol is hiding Botnets traffics in normal web traffics, so it
+can easily bypasses firewalls with port-based filtering
+mechanisms and avoid IDS detection. Some known Bots
+using the HTTP protocol are Bobax, ClickBot, Rustock and
+the most famous one Blackenergy aswll. Guet al pointed out
+that the HTTP protocol is in a “pull” style and the IRC is in a
+“push” style.
+2) Decentralized Model: The main disadvantage of
+centralized CnC is, if researcher mitigate CnC then whole
+botnet will be down. So attackers started to develop an
+alternative which would be much harder to discover and
+destroy. As result, the P2P communication as CnC pattern
+which is more resilient against detection. In P2P model as
+shown in fig. 5 there is not any centralized point for control.
+Each Bot keeps some connections to the other Bots of the
+Botnet. Bots act as both Clients and servers. A new Bot must
+know some addresses of the Botnet to connect there. If Bots
+in the Botnet are taken offline, the Botnet can still continue to
+operate under the control of BotMaster
+The famous P2P botnets are, slapper, Sinit, Phatbot,
+Nugache, storm etc.
+Fast-flux Networks:
+The DNS records of a real website point to the computers of
+Fast-flux networks. The network uses a combination of
+round-robin IP addresses and a very short Time-To-Live
+(TTL) for any given particular DNS Resource Record (RR)
+to distribute a user’s request to a large number of
+compromised computers. The Fast-flux motherships are the
+controlling parts of the fast-flux service networks. It is very
+similar to the command and a control (CnC) system found in
+conventional botnets but provides more features. It is
+observed that these nodes are always hosting both DNS and
+HTTP services, for being able to manage the content
+availability for thousands of domains simultaneously on a
+single host. They collected information on the IP addresses 
+
+assigned to the domain name and how those IP addresses (A
+and NS records) changed over time
+
+%cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
 \paragraph{What are the metrics used to assess these architectures?}
 The important metrics for a botnet are a combination of the above sections:
 \begin{itemize}
@@ -153,40 +221,28 @@ The important metrics for a botnet are a combination of the above sections:
 \item Financially: Its potential to be partitioned and sold into sub-botnets. 
 \end{itemize}
 
-Botnets come in all kinds of shapes and sizes. As a result, they employ a range of CnC topologies in response to commercial defenses, legal shutdowns and hijacking
-attempts. This evolution means that a criminal botnet operator has a number of wellstudied CnC topology options to base a new botnet upon – each of which have
-relative strengths and weaknesses. Botnet CnC topologies have been optimized to minimize network chatter and system failures, just like commercial-grade technology tasked with remotely managing tens of thousands of hosts. The precise CnC topology selected by a botnet operator often reflects that individual's perceived risk to continued command access and the financial business model of that botnet.
+Botnets have followed the evolution of the defenses they were up against, for this is reason botnet operators have now a large choice of architectures when it comes to create one. Botnets topologies have been optimized to sustain most defenses and allow for large remote oversee. The choice of topology will be largely influenced by the business model the botnet operator has in mind.
 
 \paragraph{What are the different topologies?}
 CnC topologies encountered in the wild typically match one of the following types:
 \begin{itemize}
-\item empty
+\item Star
+\item Multi-server
+\item Hierarchical
+\item Random
 \end{itemize}
-Star
-Multi-server
-Hierarchical
-Random
-
-TODO: metrics analyzed to choose best option: cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
 TODO: present with visuals the different topologies and their purpose.
 
 %source 
 Modeling Botnets architectures:
-diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet
-propagation using time zones,” in Proceedings of the 13 th Network and Distributed System
-Security Sym- posium NDSS, 2006
-Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in
-Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–
-123, Reston, VA, USA, Feb. 2007
-Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer
-botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–
-316, Sep. 2008 %source “The möbius tool,” Apr. 2011. (https://www.mobius.illinois.edu/)
-advanced P2P hybrid model %source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid
-peer-to-peer botnet,” in Proceedings of the first Conference on First Workshop on Hot Topics
-in Un- derstanding Botnets, pp. 2, Berkeley, CA, USA, 2007.
+diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet propagation using time zones,” in Proceedings of the 13 th Network and Distributed System Security Symposium NDSS, 2006
+Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–123, Reston, VA, USA, Feb. 2007
+Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–316, Sep. 2008 
+%source “The möbius tool,” Apr. 2011. (https://www.mobius.illinois.edu/)
+advanced P2P hybrid model 
+%source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in Proceedings of the first Conference on First Workshop on Hot Topics in Un- derstanding Botnets, pp. 2, Berkeley, CA, USA, 2007.
 
 \paragraph{Star}
-[source]
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
 The Star topology relies upon a single centralized CnC resource to communicate with
 all bot agents. Each bot agent is issued new instructions directly from the central CnC
