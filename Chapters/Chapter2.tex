@@ -137,24 +137,11 @@ The differences between topologies are related to protocols of communication. Th
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 As explained in this paper, there are two typical botnet topologies which all the other topologies are built on:
 \begin{itemize}
-\item \textbf{Centralized}
+\item \textbf{Centralized}: This is the easiest methodology. The CnC is the center of the architecture, responsible directly of the data and command exchanges with the bots. This central unit operates the whole botnet. The main advantages are low latency, this is great for tasks such  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \item \textbf{Decentralized}
 \end{itemize}
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-1) Centralized Model: The oldest and easiest type of
-methodology is centralized model. The Central point CnC is
-responsible for exchanging commands and data between
-Botmaster and Bots. In centralized model BotMaster chooses
-a host-usually high bandwidth computer- to be the central
-point (Command-and-Control) server of all the Bots.
-Generally this CnC server runs certain network services such
-as IRC or HTTP. The main advantage of this model is small
-message latency which cause BotMaster easily arranges
-Botnet and launch attacks. As all connection happens through
-CnC it is a critical point in this model. It is also weak point
-as somebody manages to discover and eliminate CnC server,
-the entire botnet will be worthless and ineffective. IRC and
-HTTP are two common protocols that CnC server used for
+1) Centralized Model: The oldest and easiest type of methodology is centralized model. The Central point CnC is responsible for exchanging commands and data between Botmaster and Bots. In centralized model BotMaster chooses a host-usually high bandwidth computer- to be the central point (Command-and-Control) server of all the Bots. Generally this CnC server runs certain network services such as IRC or HTTP. The main advantage of this model is small message latency which cause BotMaster easily arranges Botnet and launch attacks. As all connection happens through CnC it is a critical point in this model. It is also weak point as somebody manages to discover and eliminate CnC server, the entire botnet will be worthless and ineffective. IRC and HTTP are two common protocols that CnC server used for
 communication.
 	a) Botnet based on IRC: The IRC is a form of real-time
 Internet text messaging or synchronous conferencing. The
@@ -244,18 +231,14 @@ advanced P2P hybrid model
 
 \paragraph{Star}
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-The Star topology relies upon a single centralized CnC resource to communicate with
-all bot agents. Each bot agent is issued new instructions directly from the central CnC
-point. When a bot agent successfully breaches a victim computer, it is normally
-preconfigured to “phone home” to this central CnC, whereupon it registers itself as a
-botnet member and awaits new instructions.
+The Star topology relies upon a single centralized CnC resource to communicate with all bot agents. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent successfully breaches a victim computer, it is normally preconfigured to “phone home” to this central CnC, whereupon it registers itself as a botnet member and awaits new instructions.
 
-    Pros 
-Speed of Control
-The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly
-    Cons
-Single point of failure
-If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
+\begin{tabular}{|p{7cm}|p{7cm}|}
+Pros & Cons \\
+Speed of Control & Single point of failure\\
+The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly & If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
+\end{tabular}
+
 \includegraphics[scale=1]{img/star_topo.jpg}
 
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
@@ -333,6 +316,7 @@ Most of the time users send DNS requests with a particular question for the DNS 
 \subsubsection{The DNS protocol}
 \paragraph{What is the Domain Name System protocol?}
 \paragraph{How are addresses resolved?}
+%https://blog.superuser.com/2012/02/16/what-is-dns-and-which-server-do-i-choose/
 \paragraph{What are the most common use cases of the DNS?}
 
 \newpage
