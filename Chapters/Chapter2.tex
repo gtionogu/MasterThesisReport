@@ -177,10 +177,7 @@ CnC topologies encountered in the wild typically match one of the following type
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
 The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and await for new instructions. The main problem with this topology is the single point of failure that constitutes the CnC server.
 
-\includegraphics[scale=1]{img/star_topo.jpg}
-
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
-\includegraphics[scale=1]{img/centralized_topo}
 
 \paragraph{Multi-server}
 Multi-server is the logical follow up of the star topology, it is the combination of star CnC botnets joined together with the CnC servers connected to eachother. This is close to what is done in cluster database management with multiple servers deployed for load balancing and data replication. This ensures that if a CnC server is removed from the botnet, the other CnC servers will take its load and manage the bots that were connected to it. This topology is more complicated to setup, botmasters can even add a geographical component by having these CnC servers in the countries with bots deployed to improve speed and improve resistance to legal shutdowns.
@@ -191,7 +188,7 @@ Hierarchical topology is a tree based structure where any part of the tree can b
 \paragraph{Random - P2P}
 This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
 
-\paragraph{How to choose}, here is a summary of the features taken into account when creating a botnet.\\
+\paragraph{What design to pick ?} Here is a summary of the features taken into account when creating a botnet.\\
 \begin{tabular}{|p{7cm}|p{7cm}|}
 \hline
 Pros & Cons \\
@@ -224,6 +221,8 @@ The decentralized infrastructure and the many-to-many communication links betwee
 & The analysis of a bot and its exchanges reveals a lot about the botnet structure and components.\\
 \hline
 \end{tabular}
+
+\newpage
 
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
 \section{Use and abuse of DNS protocol}
