@@ -175,7 +175,7 @@ CnC topologies encountered in the wild typically match one of the following type
 
 \paragraph{Star}
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and wait for new instructions.
+The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and await for new instructions. The main problem with this topology is the single point of failure that constitutes the CnC server.
 
 \includegraphics[scale=1]{img/star_topo.jpg}
 
@@ -190,7 +190,7 @@ Hierarchical topology is a tree based structure where any part of the tree can b
 
 \paragraph{Random - P2P}
 This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
-   
+
 \paragraph{How to choose}, here is a summary of the features taken into account when creating a botnet.\\
 \begin{tabular}{|p{7cm}|p{7cm}|}
 \hline
@@ -198,33 +198,30 @@ Pros & Cons \\
 \hline
 \multicolumn{2}{|c|}{Star}\\
 \hline
-Speed of Control & Single point of failure\\
-The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly & If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
+\textbf{Speed of Control} &\textbf{ Single point of failure}\\
+The direct communication between the CnC and the bots allows data to be transferred rapidly & CnC blocked or otherwise disabled results in the botnet rendered ineffective.\\
 \hline
 \multicolumn{2}{|c|}{Multi-server}\\
 \hline
-No single point of failure & Requires advance planning\\
-Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents. & Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
-Geographical optimization & Multiple geographically distributed CnC severs can speed up communications between botnet elements.\\
-
+\textbf{No single point of failure} & \textbf{Requires advance planning}\\
+Load balancing and replication prevents it from happening and maintains control of the botnet. & To achieve an infrastructure that is resilient and balanced such as multi-servers demands further preparation.\\
+\textbf{Geographical optimization} & \\
+Geographical location of severs speeds up communications between bots where the CnC servers are situated and help with law take downs.&\\
 \hline
 \multicolumn{2}{|c|}{Hierarchical}\\
 \hline
-Ease of re-sale & Command latency\\
-A botnet operator can easily carve off
-sections of their botnet for lease or resale
-to other operators. & Because commands must traverse
-multiple communication branches within
-the botnet, there can be a high degree of
-latency with updated instructions being
-received by bot agents. This delay makes
-some forms of botnet attack and
-malicious operation difficult.\\
+\textbf{Re-sale} & \textbf{Command latency}\\
+The botnet's owner can segment the sections of their botnet for lease or resale to other criminals. & Because commands must traverse
+multiple communication branches within the botnet, there can be a high degree of latency with updated instructions being received by bot agents. This delay makes some forms of botnet attack and malicious operation difficult.\\
+\textbf{Hidden topology} &\\
+Compromised bots don't know the structure of the botnet therefore they are unable to leak much information.& \\
 \hline
 \multicolumn{2}{|c|}{Random}\\
 \hline
-Highly resilient & Command latency\\
-Lack of a centralized CnC infrastructure and the many-to-many communication links between bot agents make it very resilient to shutdown. & The ad hoc nature of links between bot agents make CnC communication unpredictable, which can result in high levels of latency for some clusters of bot agents.\\
+\textbf{Highly resilient} & \textbf{Command latency}\\
+The decentralized infrastructure and the many-to-many communication links between bot agents make it very resilient to shutdown. & The random nature of communication links between bots adds unpredictability to the system which can result in high levels of latency for some clusters of bot agents.\\
+& \textbf{Enumeration}\\
+& The analysis of a bot and its exchanges reveals a lot about the botnet structure and components.\\
 \hline
 \end{tabular}
 
