@@ -143,30 +143,13 @@ As explained in this paper, there are two typical botnet topologies which all th
 \end{itemize}
 
 
-Fast-flux Networks:
-The DNS records of a real website point to the computers of
-Fast-flux networks. The network uses a combination of
-round-robin IP addresses and a very short Time-To-Live
-(TTL) for any given particular DNS Resource Record (RR)
-to distribute a user’s request to a large number of
-compromised computers. The Fast-flux motherships are the
-controlling parts of the fast-flux service networks. It is very
-similar to the command and a control (CnC) system found in
-conventional botnets but provides more features. It is
-observed that these nodes are always hosting both DNS and
-HTTP services, for being able to manage the content
-availability for thousands of domains simultaneously on a
-single host. They collected information on the IP addresses 
-assigned to the domain name and how those IP addresses (A
-and NS records) changed over time
-
 %cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
 \paragraph{What are the metrics used to assess these architectures?}
 The important metrics for a botnet are a combination of the above sections:
 \begin{itemize}
 \item Resiliency: The ability to resist different events such as the loss of nodes in the botnet, loss of a CnC, blacklisting of domain names, federal investigations, etc.
 \item Latency: Reliability on the transmission of messages. The botnet provides the bots a protocol to ensure the transmission of messages without.
-\item Enumeration: Accurately predict the botnet's size
+\item Enumeration: Accurately predict the botnet's size.
 \item Defense: protection mechanisms against reverse engineering, static and dynamic analysis, virtual environment execution.
 \item Financially: Its potential to be partitioned and sold into sub-botnets. 
 \end{itemize}
@@ -181,26 +164,18 @@ CnC topologies encountered in the wild typically match one of the following type
 \item Hierarchical
 \item Random
 \end{itemize}
-TODO: present with visuals the different topologies and their purpose.
-
 %source 
-Modeling Botnets architectures:
-diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet propagation using time zones,” in Proceedings of the 13 th Network and Distributed System Security Symposium NDSS, 2006
-Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–123, Reston, VA, USA, Feb. 2007
-Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–316, Sep. 2008 
+%Modeling Botnets architectures:
+%diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet propagation using time zones,” in Proceedings of the 13 th Network and Distributed System Security Symposium NDSS, 2006
+%Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–123, Reston, VA, USA, Feb. 2007
+%Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–316, Sep. 2008 
 %source “The möbius tool,” Apr. 2011. (https://www.mobius.illinois.edu/)
-advanced P2P hybrid model 
+%advanced P2P hybrid model 
 %source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in Proceedings of the first Conference on First Workshop on Hot Topics in Un- derstanding Botnets, pp. 2, Berkeley, CA, USA, 2007.
 
 \paragraph{Star}
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-The Star topology relies upon a single centralized CnC resource to communicate with all bot agents. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent successfully breaches a victim computer, it is normally pre-configured to "phone home" to this central CnC, where upon it registers itself as a botnet member and awaits new instructions.
-
-\begin{tabular}{|p{7cm}|p{7cm}|}
-Pros & Cons \\
-Speed of Control & Single point of failure\\
-The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly & If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
-\end{tabular}
+The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and wait for new instructions.
 
 \includegraphics[scale=1]{img/star_topo.jpg}
 
@@ -208,6 +183,8 @@ The direct communication between the CnC and the bot agent means that instructio
 \includegraphics[scale=1]{img/centralized_topo}
 
 \paragraph{Multi-server}
+Multi-server is the logical follow up of the star topology, it is the combination of star CnC botnets joined together with the CnC servers connected to eachother. This is close to what is done in cluster database management with multiple servers deployed for load balancing and data replication. This ensures that if a CnC server is removed from the botnet, the other CnC servers will take its load and manage the bots that were connected to it. This topology is more complicated to setup, botmasters can even add a geographical component by having these CnC servers in the countries with bots deployed to improve speed and improve resistance to legal shutdowns.
+
 \begin{tabular}{|p{7cm}|p{7cm}|}
 Pros & Cons \\
 No single point of failure & Requires advance planning\\
@@ -219,6 +196,8 @@ Multiple geographically distributed CnC severs can speed up communications betwe
 \includegraphics[scale=1]{img/multi-server_topo.jpg}
 
 \paragraph{Hierarchical}
+Hierarchical topology is a tree based structure where any part of the tree can be used as a botnet on its own. In this topology, bots can proxy the CnC commands and instructions to the rest of the tree. Another interesting aspect of this architecture is that bots do not know the location of the rest of the botnet. They are aware of parts of it. This allows makes it harder to take down the botnet and allows to segment it for selling or leasing. The downside of it is the latency of the botnet introduced by its branching rendering certain attacks difficult.
+
 \begin{tabular}{|p{7cm}|p{7cm}|}
 Pros & Cons \\
 Botnet awareness & Ease of re-sale\\
@@ -254,6 +233,25 @@ agents.
 Passive monitoring of communications
 from a single bot-compromised host can
 enumerate other members of the botnet
+
+\paragraph{Summary of topologies}
+%star
+\begin{tabular}{|p{7cm}|p{7cm}|}
+Pros & Cons \\
+Speed of Control & Single point of failure\\
+The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly & If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
+\end{tabular}
+
+%multi
+\begin{tabular}{|p{7cm}|p{7cm}|}
+Pros & Cons \\
+No single point of failure & Requires advance planning\\
+Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents. & Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
+Geographical optimization & \\
+Multiple geographically distributed CnC severs can speed up communications between botnet elements.\\
+\end{tabular}
+
+
 
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
 \section{Use and abuse of DNS protocol}
@@ -425,6 +423,26 @@ Very resilient: Domain flux
 
 
 \subsubsection{IP flux}
+%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+Fast-flux Networks:
+The DNS records of a real website point to the computers of
+Fast-flux networks. The network uses a combination of
+round-robin IP addresses and a very short Time-To-Live
+(TTL) for any given particular DNS Resource Record (RR)
+to distribute a user’s request to a large number of
+compromised computers. The Fast-flux motherships are the
+controlling parts of the fast-flux service networks. It is very
+similar to the command and a control (CnC) system found in
+conventional botnets but provides more features. It is
+observed that these nodes are always hosting both DNS and
+HTTP services, for being able to manage the content
+availability for thousands of domains simultaneously on a
+single host. They collected information on the IP addresses 
+assigned to the domain name and how those IP addresses (A
+and NS records) changed over time
+
+
+
 IP flux or fast flux, 
 
 %Survey on Botnets on DNS detection
