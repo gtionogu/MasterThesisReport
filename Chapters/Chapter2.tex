@@ -185,26 +185,31 @@ The Star topology relies upon a single centralized CnC server to communicate wit
 \paragraph{Multi-server}
 Multi-server is the logical follow up of the star topology, it is the combination of star CnC botnets joined together with the CnC servers connected to eachother. This is close to what is done in cluster database management with multiple servers deployed for load balancing and data replication. This ensures that if a CnC server is removed from the botnet, the other CnC servers will take its load and manage the bots that were connected to it. This topology is more complicated to setup, botmasters can even add a geographical component by having these CnC servers in the countries with bots deployed to improve speed and improve resistance to legal shutdowns.
 
-\begin{tabular}{|p{7cm}|p{7cm}|}
-Pros & Cons \\
-No single point of failure & Requires advance planning\\
-Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents. & Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
-Geographical optimization & \\
-Multiple geographically distributed CnC severs can speed up communications between botnet elements.\\
-\end{tabular}
-
-\includegraphics[scale=1]{img/multi-server_topo.jpg}
-
 \paragraph{Hierarchical}
 Hierarchical topology is a tree based structure where any part of the tree can be used as a botnet on its own. In this topology, bots can proxy the CnC commands and instructions to the rest of the tree. Another interesting aspect of this architecture is that bots do not know the location of the rest of the botnet. They are aware of parts of it. This allows makes it harder to take down the botnet and allows to segment it for selling or leasing. The downside of it is the latency of the botnet introduced by its branching rendering certain attacks difficult.
 
+\paragraph{Random - P2P}
+This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
+   
+\paragraph{How to choose}, here is a summary of the features taken into account when creating a botnet.\\
 \begin{tabular}{|p{7cm}|p{7cm}|}
+\hline
 Pros & Cons \\
-Botnet awareness & Ease of re-sale\\
-\end{tabular}
+\hline
+\multicolumn{2}{|c|}{Star}\\
+\hline
+Speed of Control & Single point of failure\\
+The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly & If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
+\hline
+\multicolumn{2}{|c|}{Multi-server}\\
+\hline
+No single point of failure & Requires advance planning\\
+Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents. & Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
+Geographical optimization & Multiple geographically distributed CnC severs can speed up communications between botnet elements.\\
 
-\begin{tabular}{|p{7cm}|p{7cm}|}
-Pros & Cons\\
+\hline
+\multicolumn{2}{|c|}{Hierarchical}\\
+\hline
 Ease of re-sale & Command latency\\
 A botnet operator can easily carve off
 sections of their botnet for lease or resale
@@ -214,44 +219,14 @@ the botnet, there can be a high degree of
 latency with updated instructions being
 received by bot agents. This delay makes
 some forms of botnet attack and
-malicious operation difficult.
-\end{tabular}
-
-\paragraph{dynamic/P2P}
-\begin{tabular}{|p{7cm}|p{7cm}|}
-Pros & Cons\\
+malicious operation difficult.\\
+\hline
+\multicolumn{2}{|c|}{Random}\\
+\hline
 Highly resilient & Command latency\\
 Lack of a centralized CnC infrastructure and the many-to-many communication links between bot agents make it very resilient to shutdown. & The ad hoc nature of links between bot agents make CnC communication unpredictable, which can result in high levels of latency for some clusters of bot agents.\\
+\hline
 \end{tabular}
-   
-The ad hoc nature of links between bot
-agents make CnC communication
-unpredictable, which can result in high
-levels of latency for some clusters of bot
-agents.
-  Botnet enumeration
-Passive monitoring of communications
-from a single bot-compromised host can
-enumerate other members of the botnet
-
-\paragraph{Summary of topologies}
-%star
-\begin{tabular}{|p{7cm}|p{7cm}|}
-Pros & Cons \\
-Speed of Control & Single point of failure\\
-The direct communication between the CnC and the bot agent means that instructions (and stolen data) can be transferred rapidly & If the central CnC is blocked or otherwise disabled, the botnet is effectively neutered.\\
-\end{tabular}
-
-%multi
-\begin{tabular}{|p{7cm}|p{7cm}|}
-Pros & Cons \\
-No single point of failure & Requires advance planning\\
-Should any single CnC server be disabled, the botnet operator can still maintain control over all bot agents. & Additional preparation effort is required to construct a multi-sever CnC infrastructure.\\
-Geographical optimization & \\
-Multiple geographically distributed CnC severs can speed up communications between botnet elements.\\
-\end{tabular}
-
-
 
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
 \section{Use and abuse of DNS protocol}
