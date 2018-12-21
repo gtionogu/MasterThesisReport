@@ -190,6 +190,7 @@ Hierarchical topology is a tree based structure where any part of the tree can b
 \paragraph{Random - P2P}
 This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
 
+TODO
 \paragraph{Hybrid}
 \paragraph{P2P}
 
@@ -257,8 +258,9 @@ TODO: add a figure showing the protocol
 (use %https://blog.superuser.com/2012/02/16/what-is-dns-and-which-server-do-i-choose/)
 \paragraph{What are the most common use cases of the DNS?}
 %http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml
-The most know use case for DNS is the resolution of hostnames and domain names. DNS can ask a lot of different information related a domain, this information is called Resource Record(RR). The common translation of a hostname into an IP address is the "A" RR.\\ Here is a list of the main RR and what they look for.\\
+The most know use case for DNS is the resolution of hostnames and domain names. DNS can ask a lot of different information related to a domain, this information is called Resource Record(RR).\\ Here is a list of the main RR and what they query.\\
 \begin{itemize}[noitemsep]
+\item \textbf{A}: translation of a hostname into an IP address.\\
 \item \textbf{MX}: information regarding the mail servers of the domain queried (ex: DNS request for google.com with RR$=$MX could return mail.google.com) \\
 \item \textbf{NS}: information about the DNS server used by that domain.\\
 \item \textbf{TXT}: Text description of the domain queried.
@@ -279,7 +281,7 @@ The most know use case for DNS is the resolution of hostnames and domain names. 
     +---------------------+
 
 \end{verbatim}
-The format of a DNS message is the same for a request or a response but parts of the message will be filled differently. In the request, the client will fill the Question section with the information that needs to be resolved:
+The format of a DNS message is the same for a request or a response but parts of the message will be filled differently. In the request, the client will fill the \textbf{Question section} with the information that needs to be resolved:
 \begin{verbatim}
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
@@ -293,14 +295,17 @@ The format of a DNS message is the same for a request or a response but parts of
     |                     QCLASS                    |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 \end{verbatim}
-Here the client fills the values \\
+Here the client fills the values: \\
+
 \begin{tabular}{c|l}
 value & explanation\\
 \hline
 q\_name  & Domain name requested (domain to be asked) \\
-
+\hline
 q\_type  & Type of RR record requested (A,AAAA,CNAME,MX,NS,PTR,...) \\
+\hline
 q\_class & Class of the request (often IN for internet) \\
+\hline
 \end{tabular}
 
 \paragraph{what is provided in the header section ?}
@@ -350,10 +355,6 @@ additional\_count  & Number of RR in the additional section\\
 \hline
 \end{tabular}
 
-TODO
-\paragraph{Why do we focus on DNS}
-Because new botnets use these technologies
-
 \subsection{Botnets abusing DNS}
 TODO: Present the different abuses of the DNS protocol to evade detection
 (use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
@@ -370,8 +371,14 @@ Domain-flux is a type of DNS feature where bots are equipped with a special Doma
 \paragraph{There are the 2 techniques used to achieve domain fluxing}
 TODO: rephrase this section
 \begin{itemize}[noitemsep]
-\item Domain Wildcarding abuses native DNS functionality to wildcard (e.g., *) a higher domain such that all FQDN’s point to the same IP address. For example, *.damballa.com could encapsulate both mypc.atl.damballa.com and myserver.damballa.com. This technique is most commonly associated with botnets that deliver spam and phishing content – whereby the wildcarded information that appears random (e.g. “asdkjlkwer” of asdkjlkwer.atl.damballa) is  Botnet Communication Topologies used by the botnet operator to uniquely identify a victim, track success using various delivery techniques, and bypass anti-spam technologies.
-\item Domain Generation Algorithms are a more recent addition to bot agents. They create a dynamic list of multiple FQDN’s each day, which are then polled by the bot agent as it tries to locate the CnC infrastructure. Since the created domain names are dynamically generated in volume and typically have a life of only a single day, the rapid turnover makes it very difficult to investigate or block every possible domain name.
+%https://kb.iu.edu/d/aiuv
+\item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. For a rule defined by *.example.com we would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarting is typical for phishing and spamming botnets, this allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the new node (russia01.example.com, asdasdk.example.com).
+\item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate domain names based on a seed (this is the changing factor in the algorithm, ex: current time) chosen by the botmaster. This creates a list of FQDN that changes constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and point them to his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains.
+
+TODO: add
+In this github repository, they have compiled some examples of DGA.
+
+. They create a dynamic list of multiple FQDN’s each day, which are then polled by the bot agent as it tries to locate the CnC infrastructure. Since the created domain names are dynamically generated in volume and typically have a life of only a single day, the rapid turnover makes it very difficult to investigate or block every possible domain name.
 \end{itemize}
 
 \subsubsection{IP flux}
@@ -450,7 +457,7 @@ afin d permettre le lecteur de comprendre.
 
 ->elements de compréhension + preuve de la connaissance. 
 
-
+% Botnet Detection Based On Machine Learning Techniques Using DNS Query Data, Xuan Dau Hoang and Quynh Chi Nguyen,  18 May 2018, MDPI, future internet
 \section{Machine learning approach}
 \paragraph{why use machine learning for botnet detection}
 \paragraph{How will ML be implemented for this Thesis}
@@ -468,7 +475,7 @@ A number of botnet, detection measures, such as honeynet-based and Intrusion Det
 proposed. However, IDS-based solutions that use signatures seem to be ineffective because recent
 botnets are equipped with sophisticated code update and evasion techniques
 
-Botnet detection and defence
+Botnet detection and defense
 Early bots detected through signature 
 %source “SNORT,” Mar. 2006. (https://www.snort.org/)
 -> vulnerable to any new botnet, but useful for old ones
