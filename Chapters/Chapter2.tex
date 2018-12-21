@@ -373,35 +373,18 @@ TODO: rephrase this section
 \begin{itemize}[noitemsep]
 %https://kb.iu.edu/d/aiuv
 \item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. For a rule defined by *.example.com we would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarting is typical for phishing and spamming botnets, this allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the new node (russia01.example.com, asdasdk.example.com).
-\item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate domain names based on a seed (this is the changing factor in the algorithm, ex: current time) chosen by the botmaster. This creates a list of FQDN that changes constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and point them to his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains.
-
-TODO: add
-In this github repository, they have compiled some examples of DGA.
-
-. They create a dynamic list of multiple FQDN’s each day, which are then polled by the bot agent as it tries to locate the CnC infrastructure. Since the created domain names are dynamically generated in volume and typically have a life of only a single day, the rapid turnover makes it very difficult to investigate or block every possible domain name.
+\item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate domain names based on a seed (this is the changing factor in the algorithm, ex: current time) chosen by the botmaster. This creates a list of FQDN that changes constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and point them to his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains.\\
+% https://github.com/andrewaeva/DGA/tree/master/dga_algorithms
+In this github repository, they have compiled some examples of DGA. As expected, the algorithms have 2 main functions, one that gets the seed (from input to the algorithm or using dynamic values such as date and time), the second is the domain generation, which will usually choose a TLD and then append the result obtained from the random function with the dynamic seed.
 \end{itemize}
 
 \subsubsection{IP flux}
 %http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
-Fast-flux Networks:
-The DNS records of a real website point to the computers of
-Fast-flux networks. The network uses a combination of
-round-robin IP addresses and a very short Time-To-Live
-(TTL) for any given particular DNS Resource Record (RR)
-to distribute a user’s request to a large number of
-compromised computers. The Fast-flux motherships are the
-controlling parts of the fast-flux service networks. It is very
-similar to the command and a control (CnC) system found in
-conventional botnets but provides more features. It is
-observed that these nodes are always hosting both DNS and
-HTTP services, for being able to manage the content
-availability for thousands of domains simultaneously on a
-single host. They collected information on the IP addresses 
-assigned to the domain name and how those IP addresses (A
-and NS records) changed over time
+\paragraph{What is the concept of IP/Fast-flux networks?} A Fast-Flux Service Network (FFSN) allows to link a list IP addresses to 1 domain name. These addresses have a very short Time-To-Live(TTL) and are presented by packets in a Round-Robin fashion. The idea that DNS had behind this concept was to enable load balancing for Content Delivery Networks(CDN) to be able to point customers towards other nodes in the network to obtain the content sought. \\
+    The network uses a combination of round-robin IP addresses and a very short  for any given particular DNS Resource Record (RR) to distribute a user’s request to a large number of compromised computers. The Fast-flux motherships are the controlling parts of the fast-flux service networks. It is very similar to the command and a control (CnC) system found in conventional botnets but provides more features. It is observed that these nodes are always hosting both DNS and HTTP services, for being able to manage the content availability for thousands of domains simultaneously on a single host. They collected information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) changed over time
 
 %Survey on Botnets on DNS detection
-Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet detection processes [17]. The attackers or botmasters use the DNS services to hide their command and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to another without being noticed
+\paragraph{why is IP flux so effective?} Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet detection processes [17]. The attackers or botmasters use the DNS services to hide their command and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to another without being noticed
 %-----
 Fast-Flux Service Network (FFSN) allows for one domain name to have an unlimited number of IP addresses, short TTLs(Time to live) values and the IPs rotating in a round robin fashion. IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective
 CnC server. This process helps botnet controllers avoid detection and blacklisting. But can be confused with real traffic. It has a different categories:
@@ -459,7 +442,9 @@ afin d permettre le lecteur de comprendre.
 
 % Botnet Detection Based On Machine Learning Techniques Using DNS Query Data, Xuan Dau Hoang and Quynh Chi Nguyen,  18 May 2018, MDPI, future internet
 \section{Machine learning approach}
-\paragraph{why use machine learning for botnet detection}
+\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. Classification algorithms are very effective when it comes to detection problems, predictions, filtering.
+\paragraph{why use machine learning for botnet detection?}
+Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. Supervised classification means that we have data that is labeled, in our case we have traffic that is know to be normal or malicious. On the other hand, for cases where the data isn't labeled we can group data that have common features(clustering) or detect anomalies in data that has features different from most of the group. 
 \paragraph{How will ML be implemented for this Thesis}
 \paragraph{What approach are we going to focus on and why}
 \paragraph{What algorithms will be used }
