@@ -1,4 +1,4 @@
-zzzzz% Chapter 1
+% Chapter 1
 
 \chapter{State of the art}
 
@@ -109,6 +109,8 @@ This phase allows the botmaster to update periodically the software of the bots,
 %https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
 The typical protocols that are used by bots to reach their CnC are these: IRC, HTTP, HTTPS, DNS, MAIL, SSH, etc. The use of different protocols implies there are a multiple botnet's communication topologies. The different topologies provide trade-offs in terms of bandwidth, rallying, stealth, ...
 
+\paragraph{What are these different protocols ?}
+
 \paragraph{What are the goals of these different channels?}
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
 The main goal of the botnet channel is to provide a vector for bots to reach their CnC servers and maintain a connection with it. This is the only way the botmaster is able to keep control his botnet. This is why the means of communication are built around these main needs. If bots aren't able to reach the botnet or their CnC, they won't be able to update their software and receive commands.\\ 
@@ -188,6 +190,9 @@ Hierarchical topology is a tree based structure where any part of the tree can b
 \paragraph{Random - P2P}
 This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
 
+\paragraph{Hybrid}
+\paragraph{P2P}
+
 \paragraph{What design to pick ?} Here is a summary of the features taken into account when creating a botnet.\\
 \begin{tabular}{|p{7cm}|p{7cm}|}
 \hline
@@ -258,7 +263,7 @@ The most know use case for DNS is the resolution of hostnames and domain names. 
 \item \textbf{NS}: information about the DNS server used by that domain.\\
 \item \textbf{TXT}: Text description of the domain queried.
 \end{itemize}
-\subsubsection{Normal DNS message structure}
+\subsubsection{DNS message structure}
 \paragraph{What is the format for the DNS messages exchanges between DNS clients and DNS servers ?}
 \begin{verbatim}
     +---------------------+
@@ -345,6 +350,10 @@ additional\_count  & Number of RR in the additional section\\
 \hline
 \end{tabular}
 
+TODO
+\paragraph{Why do we focus on DNS}
+Because new botnets use these technologies
+
 \subsection{Botnets abusing DNS}
 TODO: Present the different abuses of the DNS protocol to evade detection
 (use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
@@ -355,7 +364,7 @@ Looking up the CnC servers of a botnet is an essential part in the lifecycle of 
 Because of the growth of the internet, content providers have built complex infrastructures to sustain the load of the traffic and provide the best services. Some of the things implemented are load balancers, data replication, encryption, etc. To do so DNS has features that allow you to make the best of these types of architectures. These features have inspired the following misuses: fast-flux, domain flux and DNS tunnelling.
 
 \subsubsection{Domain flux}
-Domain-flux is a type of flux where bots are equipped with a special Domain Generation Algorithm (DGA). They use this algorithm to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their CnC. The botmaster knows which domains are generated at a particular point in time and can register them before they are queried by the bots to be reached. This improves the resilience of botnets infrastructure a lot.
+Domain-flux is a type of DNS feature where bots are equipped with a special Domain Generation Algorithm (DGA). This is then used to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their CnC. The botmaster knows which domains are generated at a particular point in time since that is the seed of the algorithm and can register them before they are queried by the bots to be reached. This improves the resilience of botnets infrastructure a lot.
 
 %http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
 \paragraph{There are the 2 techniques used to achieve domain fluxing}
@@ -412,23 +421,19 @@ subset of active flux-agents. After that, the flux-agent relays the client’s r
 The key factor in FFSN is the combination of a very short TTL and the round-robin answer from a
 large pool of active agents
 %source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in
-Proceedings of the first Conference on First Workshop on Hot Topics in Un- derstanding Botnets, pp.
+Proceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp.
 2, Berkeley, CA, USA, 2007.
 Some features for FF detection: nb of A records returned: 1-3 normal, 5 or more ff nb of NS: normal
 -> small, ff -> several NS + several A records for the NS AS: small nb of A from 1 AS -> normal,
 located in different AS -> ff Hardware and IP: range of IP is diverged -> ff No physical agent -> ff no
-garantee uptime.
+guarantee uptime.
 FIGURE NORMAL FF AND BAD FF (single and double)
 
-DNS is an Internet service which translates names of sites into their numeric IP addresses. For
-every host, DNS has a list of A records each with a given Timeto- Live (TTL) value (normally from 1
-to 5 days). DNS returns these A records in round-robin way.
+DNS returns these A records in round-robin way.
 CDN use a lower TTL to provide their content more efficiently
 Fast-Flux Service Network (FFSN) is a distributed proxy network -built on compromised machines
 (flux-agents)- that direct incoming DNS requests to the botnet’s desired address on the fly.
 %source J. Nazario and T. Holz, “As the net churns: Fast-flux botnet observations,” in The 3rd International Con- ference on Malicious and Unwanted Software, pp. 24– 31, Oct. 2008.
-
-
 
 \subsubsection{DNS tunnelling}
 DNS tunnelling implies the act of tunnelling other protocols or data through DNS, for example using the TXT as q\_type and using the requests to actually send data. This has been done to avoid restrictions but is now also used to hide malicious traffic from botnets. They can also use DNS tunnelling to remain undetected while exfiltrating data. \cite{Botnet1}
@@ -437,9 +442,18 @@ DNS tunnelling implies the act of tunnelling other protocols or data through DNS
 %[A Review Paper on Botnet and Botnet Detection Techniques in Cloud Computing] Shahid Anwar, Jasni Mohamad Zain, Mohamad Fadli Zolkipli, Zakira Inayat! Conference: ISCI 2014, September 2014
 \includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
 
+
+
+TODO: Approches de base ML (classification, features selection,)
+concepts généraux de machine learning qui vont être utilisés plus tard
+afin d permettre le lecteur de comprendre. 
+
+->elements de compréhension + preuve de la connaissance. 
+
+
 \section{Machine learning approach}
 \paragraph{why use machine learning for botnet detection}
-\paragraph{How will ML be implemented for this Thesis}\\
+\paragraph{How will ML be implemented for this Thesis}
 \paragraph{What approach are we going to focus on and why}
 \paragraph{What algorithms will be used }
 \paragraph{what is the ML workflow}
@@ -544,7 +558,7 @@ ME
 
 \subsection{All-in solutions}
 \subsubsection{Exposure}
-[source]
+
 %[EXPOSURE: a Passive DNS Analysis Service to Detect and Report Malicious Domains] Leyla Bilge, Symantec Research, France Sevil Sen, Hacettepe University, Turkey Davide Balzarotti, Eurecom, France Engin Kirda, Northeastern University, USA Christopher Kruegel, University of California - Santa Barbara, USA.
 
 \quote{EXPOSURE, a system that employs large-scale, passive DNS analysis techniques to detect domains that are involved in malicious activity. They use 15 features extracted from DNS traffic.}\\

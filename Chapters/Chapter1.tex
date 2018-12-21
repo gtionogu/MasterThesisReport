@@ -29,10 +29,12 @@ This is a compilation of Botnet news by Trend Micro: %\href{https://www.trendmic
 Compilation of Botnets variants: %\href{https://www.cyber.nj.gov/threat-profiles/botnet-variants/}
 %\href{https://www.theregister.co.uk/2018/06/01/mirai_respun_in_new_botnets/}
 \section{Research question}
-My research question is : "\textbf{How can we detect Botnets through passive traffic analysis?}"
+My research question is : "\textbf{How can we detect Botnets through passive DNS traffic analysis?}"
 TODO: define proper sub-questions that build the paper.
 With the following sub-questions:
 \begin{itemize}
+\item what are the best features to detect botnets ?
+\item what are the most effective machine learning algorithms for the features used?
 \item What are the current trends of Evasion and detection?
 \item Can we create a solution that detects effectively all botnets ?
 \item Can I find features not yet exploited to improve detection?
@@ -41,12 +43,16 @@ With the following sub-questions:
 \end{itemize}
 \section{Thesis objective}
 The objective of this master thesis in Cyber Security is to improve the all-in solutions for botnet detection through DNS traffic analysis with a machine learning approach and acquire along the way correctly conduct a research process and learn machine learning techniques to solve interesting problems. Different papers haven't always provided a deep study of the choice of features or provided a model adapted to certain environments which we will try to do and see if this can improve the existing models.\\
-
-[source]\\
+\\
 %[Recognising Botnets in Organisations] Barry Weymes, Master thesis, Department of Computer Science, Radboud University, August 2012
 The objective of this thesis is to answer the research questions above. This will be done by reviewing the current (scientific) literature on botnets, in particular with relation to DNS, Honeypots, Law and future threats. The authors technical experience will also be used to answer the research questions. It is hoped that others can benefit from the knowledge that this thesis provides to implement
 better security measures within their own organisations. The information provided in this thesis will provide the reader with in depth knowledge on the subject of botnets, and how they the threat of them within an organisation can be migrated.
 \\
-TODO: Description of the thesis (chapter by chapter)
+
+\paragraph{Why did we decide to focus on the DNS protocol to detect botnets?}
+The objective of this thesis is to improve the detection of botnets. Botnets use a lot of different protocols but papers on botnets have shown that most modern botnets use the DNS protocol to evade detection. Therefore, we think the most efficient way to detect botnets is to actually analyze their evasion system. This is why we have decided to focus on studying the DNS traffic for botnet detection.
+
+TODO
+%After this introduction, we will define the state of the art regarding the topics discussed in this thesis. First an analysis on botnets, 
 
 %----------------------------------------------------------------------------------------
