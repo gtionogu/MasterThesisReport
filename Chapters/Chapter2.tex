@@ -237,38 +237,26 @@ The latest trend of botnet hide their channel through the DNS protocol. They use
 
 \subsection{The DNS protocol}
 \paragraph{What is the DNS protocol ?}
-DNS stands for Domain Network System which main purpose is to provide the IP address of a domain name (i.e. google.com).
-//
+DNS stands for Domain Network System which main purpose is to provide the IP address of a domain name (i.e. google.com).\\
+
 \paragraph{How does the DNS work ?}
 When an application tries to reach a certain domain, it send a DNS requests for the resolution of the domain name to the DNS server. \\
 The server replies with a DNS response that contains the "answer" requested or additional information on how to obtain it.\\
 
-\paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packets structure.
-
-%https://ns1.com/resources/dns-protocol
-When a client (user or device) tries to reach mail.google.com it sends a DNS request for that domain name from a \textbf{DNS client}.\\
-The \textbf{DNS server} that receives the request will look in its records if he has it. If it does then it will send the address IP to the DNS client. Otherwise it will contact DNS name servers that could have the domain in their records following a specific logic in its search.\\
-It will start by querying the \textbf{Root DNS servers} that will give it directions through the branches of the DNS tree hierarchy to the \textbf{Top Level Domains} DNS servers(TLD). It will first look for the TLDs resolving .com, then the name server that resolves google.com, down to the name server that will resolve mail.google.com to its IP address. The DNS server that received the first request will receive the response and send it to the client finally.\\
-Finally, the client can now connect to the server using the resolved IP address.\\
-\paragraph{Are there different methods to obtain the requested RR}
-There are 2 methods of searching through the different DNS server from the \textbf{authoritative DNS} (DNS server assigned to or by the client DNS that will be queried first). It can be recursive or iterative. \textbf{Iterative mode} is an interaction between the authoritative DNS and all the other DNS servers where all request are initialized by it and all responses come back to it. \textbf{Recursive mode} is an interaction between DNS servers relaying the request and then coming back with the final answer. \\The Root DNS servers are always iterative, this has been set to avoid a DoS of those servers which could be caused if the were recursive. These servers are the backbone of the internet.\\
-\\
 \paragraph{What is the original purpose of DNS?}
 The idea behind the protocol was to provide a human readable domain name to servers. That way humans could identify these domains and  associate them with something concrete. The protocol simply looks for the server with the lookup table transforming them into machine readable addresses.
-TODO: show the Tree hierarchy of DNS
-TODO: add a figure showing the protocol
-(use %https://blog.superuser.com/2012/02/16/what-is-dns-and-which-server-do-i-choose/)
-\paragraph{What are the most common use cases of the DNS?}
-%http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml
-The most know use case for DNS is the resolution of hostnames and domain names. DNS can ask a lot of different information related to a domain, this information is called Resource Record(RR).\\ Here is a list of the main RR and what they query.\\
-\begin{itemize}[noitemsep]
-\item \textbf{A}: translation of a hostname into an IP address.\\
-\item \textbf{MX}: information regarding the mail servers of the domain queried (ex: DNS request for google.com with RR$=$MX could return mail.google.com) \\
-\item \textbf{NS}: information about the DNS server used by that domain.\\
-\item \textbf{TXT}: Text description of the domain queried.
-\end{itemize}
-\subsubsection{DNS message structure}
-\paragraph{What is the format for the DNS messages exchanges between DNS clients and DNS servers ?}
+%https://blog.superuser.com/2012/02/16/what-is-dns-and-which-server-do-i-choose/
+
+\paragraph{Protocol example} to understand later where the malicious actors abuse the protocol.\\
+%https://ns1.com/resources/dns-protocol
+When a client (user or device) tries to reach mail.google.com it sends a DNS request for that domain name from a \textbf{DNS client}.\\
+The \textbf{DNS server} defined by the client receives the request and searches for it in its records. If it finds it then it sends the IP address to the DNS client. Otherwise, it will contact DNS name servers that could have the domain in their records following a specific logic in its search.\\
+It will start by querying the \textbf{Root DNS servers} that will give it directions through the branches of the DNS tree hierarchy to the \textbf{Top Level Domains} DNS servers(TLD). It will first look for the TLDs resolving .com, then the name server that resolves google.com, down to the name server that will resolve mail.google.com to its IP address. The DNS server that received the first request will receive the response and send it to the client finally.\\
+Finally, the client can now connect to the server using the resolved IP address.\\
+TODO: DIAGRAM %https://www.hack2secure.com/blogs/how-dns-protocol-works
+
+\paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packets structure.
+
 \begin{verbatim}
     +---------------------+
     |        Header       |
@@ -297,7 +285,6 @@ The format of a DNS message is the same for a request or a response but parts of
     |                     QCLASS                    |
     +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 \end{verbatim}
-Here the client fills the values: \\
 
 \begin{tabular}{c|l}
 value & explanation\\
@@ -310,52 +297,101 @@ q\_class & Class of the request (often IN for internet) \\
 \hline
 \end{tabular}
 
-\paragraph{what is provided in the header section ?}
-Here is a detailed description of the header of the DNS messages. 
+% http://www.zytrax.com/books/dns/apd/rfc1035.txt
+The server will respond by filling the \textbf{Answer section}: \\
+%http://www.zytrax.com/books/dns/ch15/#answer
 \begin{verbatim}
-	                               1  1  1  1  1  1
-	 0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-	|                      ID                       |
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-	|QR|   OpCode  |AA|TC|RD|RA| Z|AD|CD|   RCODE   |
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-	|                QDCOUNT/ZOCOUNT                |
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-	|                ANCOUNT/PRCOUNT                |
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-	|                NSCOUNT/UPCOUNT                |
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-	|                    ARCOUNT                    |
-	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
+                                    1  1  1  1  1  1
+      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                                               |
+    /                                               /
+    /                      NAME                     /
+    |                                               |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      TYPE                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                     CLASS                     |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                      TTL                      |
+    |                                               |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+    |                   RDLENGTH                    |
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|
+    /                     RDATA                     /
+    /                                               /
+    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 \end{verbatim}
-\begin{tabular}{l|p{10cm}}
-value & explanation \\
-\hline
-identifier & id of request\\
-\hline
-opcode & Operation Type: 0 $\rightarrow$ query, 1 $\rightarrow$ Inverse query, 2 $\rightarrow$ DNS status\\
-\hline
-aa\_flag & Authoritative Answer: specifies if the responding server is an authoritative DNS server for the domain queried. \\
-\hline
-tc\_flag & Truncation: flag set on truncated messages due to length greater than that permitted.\\
-\hline
-rd\_flag & Recursion Desired: if set, asks the NS to pursue query recursively. This is opposed to the iterative method\\
-\hline
-ra\_flag & Recursion available: recursive query supported by NS\\
-\hline
-rcode  & Response Code: ignored in request, useful in answers to provide query information.(ex: type of errors)\\
-\hline
-questions\_count  & Number of entries in the Question section\\
-\hline
-answers\_count  & Number of RR in the Answer section\\
-\hline
-authority\_count  & Number of NameServer RR in the Authority section\\
-\hline
-additional\_count  & Number of RR in the additional section\\
-\hline
-\end{tabular}
+
+The important parts are the TTL (Time To Live) and the RDATA. TTL contains the span of time for which the Answer is valid, RDATA contains the answer to the RR requested.\\
+
+%%http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml
+Here is a list of the main RR types and what they query.\\
+\begin{itemize}[noitemsep]
+\item \textbf{A}: translation of a hostname into an IP address.\\
+\item \textbf{MX}: information regarding the mail servers of the domain queried (ex: DNS request for google.com with RR$=$MX could return mail.google.com) \\
+\item \textbf{NS}: information about the DNS server used by that domain.\\
+\item \textbf{TXT}: Text description of the domain queried.
+\end{itemize}
+
+%%%%%%%%%%%
+%The question and Answer sections have the most interesting information but the header also contains flags that are abused: 
+%\paragraph{what is provided in the header section ?}
+%Here is a detailed description of the header of the DNS messages. 
+%\begin{verbatim}
+%	                               1  1  1  1  1  1
+%	 0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%	|                      ID                       |
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%	|QR|   OpCode  |AA|TC|RD|RA| Z|AD|CD|   RCODE   |
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%	|                QDCOUNT/ZOCOUNT                |
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%	|                ANCOUNT/PRCOUNT                |
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%	|                NSCOUNT/UPCOUNT                |
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%	|                    ARCOUNT                    |
+%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+%
+%\end{verbatim}
+%\begin{tabular}{l|p{10cm}}
+%value & explanation \\
+%\hline
+%identifier & id of request\\
+%\hline
+%opcode & Operation Type: 0 $\rightarrow$ query, 1 $\rightarrow$ Inverse query, 2 $\rightarrow$ DNS status\\
+%\hline
+%aa\_flag & Authoritative Answer: specifies if the responding server is an authoritative DNS server for the domain queried. \\
+%\hline
+%tc\_flag & Truncation: flag set on truncated messages due to length greater than that permitted.\\
+%\hline
+%rd\_flag & Recursion Desired: if set, asks the NS to pursue query recursively. This is opposed to the iterative method\\
+%\hline
+%ra\_flag & Recursion available: recursive query supported by NS\\
+%\hline
+%rcode  & Response Code: ignored in request, useful in answers to provide query information.(ex: type of errors)\\
+%\hline
+%questions\_count  & Number of entries in the Question section\\
+%\hline
+%answers\_count  & Number of RR in the Answer section\\
+%\hline
+%authority\_count  & Number of NameServer RR in the Authority section\\
+%\hline
+%additional\_count  & Number of RR in the additional section\\
+%\hline
+%\end{tabular}
+
+
+\paragraph{Are there different methods to obtain the requested RR}
+There are 2 methods of searching through the different DNS server from the \textbf{authoritative DNS} (DNS server assigned to or by the client DNS that will be queried first). It can be recursive or iterative. \textbf{Iterative mode} is an interaction between the authoritative DNS and all the other DNS servers where all request are initialized by it and all responses come back to it. \textbf{Recursive mode} is an interaction between DNS servers relaying the request and then coming back with the final answer. \\The Root DNS servers are always iterative, this has been set to avoid a DoS of those servers which could be caused if the were recursive. These servers are the backbone of the internet.\\
+\\
+
+\paragraph{What are the most common use cases of the DNS?}
+
+
+
 
 \subsection{Botnets abusing DNS}
 TODO: Present the different abuses of the DNS protocol to evade detection
