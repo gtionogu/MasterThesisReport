@@ -231,18 +231,20 @@ The decentralized infrastructure and the many-to-many communication links betwee
 \newpage
 
 %http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
-\section{Use and abuse of DNS protocol}
+\section{Uses and abuses of DNS protocol}
 %source A survey of botnet detection based on DNS
-The current trend of botnets is to hide their channel using the DNS services to hinder their identification and rallying process.\\
+The latest trend of botnet hide their channel through the DNS protocol. They use it to hinder their identification and rallying process.\\
 
-\subsection{DNS}
+\subsection{The DNS protocol}
 \paragraph{What is the DNS protocol ?}
-The Domain Network System helps any device on the internet looking the location of a hostname (google.com) by providing its address (IP address).
+DNS stands for Domain Network System which main purpose is to provide the IP address of a domain name (i.e. google.com).
+//
+\paragraph{How does the DNS work ?}
+When an application tries to reach a certain domain, it send a DNS requests for the resolution of the domain name to the DNS server. \\
+The server replies with a DNS response that contains the "answer" requested or additional information on how to obtain it.\\
 
+\paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packets structure.
 
-Most of the time users send DNS requests with a particular question for the DNS server. The server will the reply a DNS responses, similar to the request with the "answer" field filled with the information requested. Here is the structure of the packets transmitted to help with the understanding of the sections used as features later on.
-\subsubsection{The DNS protocol}
-\paragraph{How does DNS work ?}
 %https://ns1.com/resources/dns-protocol
 When a client (user or device) tries to reach mail.google.com it sends a DNS request for that domain name from a \textbf{DNS client}.\\
 The \textbf{DNS server} that receives the request will look in its records if he has it. If it does then it will send the address IP to the DNS client. Otherwise it will contact DNS name servers that could have the domain in their records following a specific logic in its search.\\
