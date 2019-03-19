@@ -4,65 +4,65 @@
 
 \label{State of the art}
 
-%PAPER of ref: https://www.researchgate.net/publication/286649850\_A\_survey\_of\_botnet\_detection\_based\_on\_DNS 
+\cite{survey1}
 \section{Botnets}
-%[A survey of botnet detection based on DNS]Kamal Alieyan Ammar ALmomani Ahmad Manasrah Mohammed M. Kadhum
+\cite{survey2}
 As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage.
-%Authority of Information Security. The 2016 Vietnam Information Security Report; Authority of Information Security, MIC: New York, NY, USA, 2016.
+\cite{report1} 
 Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\\\
-%http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
+\cite{pheonix} 
 Botnets can become very lucrative and can infect very large amounts of devices resulting in scary entities. Here are some of these enormous entities: \textbf{Flashback} with 600k compromised targets, \textbf{Grum} with 840k compromised devices and sending 40 Billion spam emails per month, \textbf{TDL-4} with 4.5 Million victims in first the 3 months and \textbf{Gameover ZeuS} with 1 Million infections, because of its resilience mechanisms this botnet was one of the hardest to take down.\\\\
-%source 6 (A survey of botnet detection based on DNS) 
+\cite{survey2}
 The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavors criminals bring to the market.
 \subsection{Definition}
 % WHAT IS A BOTNET?
-%memoire1
-%source Wielogorska, Monika and O'Brien, Darragh (2017) DNS Traffic analysis for botnet detection. In: 25th Irish Conference on Artificial Intelligence and Cognitive Science, 7-8 Dec 2017, Dublin, Ireland.
+\cite{memoire1}
+\cite{detection1}
 \paragraph{What is a botnet?} A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below.
-%https://arxiv.org/pdf/1702.01132.pdf
+\cite{survey3}
 
 %WHAT IS A BOT?
-%source http://www.honeynet.org/node/53
-\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. The paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both. % [Botnet Tracking Tools] SANS Institute 
-%http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
+\cite{honeynet}
+\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. The paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both. \cite{tracking}
+\cite{bot-com}
 A clear distinction between a bot agent and a common piece of malware lies within a bot's ability to communicate with a Command-and-Control (CnC) infrastructure. CnC allows a bot agent to receive new instructions and malicious capabilities, as dictated by a remote criminal entity. This compromised host then can be used as an unwilling participant in Internet crime as soon as it is linked into a botnet via that same CnC.\\
 These programs are embedded with port scanning, vulnerability scanning, exploitation kits and payloads that allow them to spread the botnet and infect their victims.\\
 There are many different families of bots, some very modular such as the Agobot others less complete but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots but there are a lot of different protocols exploited as botnets channels. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like Kaiten bot which makes it very easy to upload to compromised machines.
 
 %WHY BOTS PROVIDE EVEN MORE POWERFULL ATTACKS
-% S. S. Silva, R. M. Silva, R. C. Pinto, and R. M. Salles. Botnets: A survey. Eslervier, 57(2):378–403,2013
+\cite{survey4}
 \paragraph{Why do botnets provide more powerful attacks?} Botnets give the control to the botmaster of two critical resources: CPU (processing power) and IP addresses (anonymity). Even if the use of CPU stays low on the infected machines, the aggregate of bots can provide power equivalent to supercomputers with the additional perk of executing traffic from different addresses instead of a single IP.
 
 % PURPOSE + CURRENT DANGERS
 \paragraph{What is the purpose of botnets?} All these resources make botnets very powerful to execute network attacks. 
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+\cite{bot-intro}
 Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed.
-% + source http://www.honeynet.org/node/52
+\cite{honeynet2}
 
 % ADVANCES IN BOTNETS
-%source Emre Y (2011) A literature survey about recent botnet trends. http://geant3.archive.geant.net/Media_Centre/Media_Library/Media%20Library/botnet_trends_M2.pdf
+\cite{survey5}
 \paragraph{What are the advances in botnets?} Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularized botnets are sold to anyone, this has made them an even bigger threat that they already were.
 This BaaS is possible with decentralized architectures that can subdivided into smaller botnets to sold and then reintegrated to the parent botnet after use.
-%source % [Botnet Tracking Tools] SANS Institute 
+\cite{tracking}
 
-%memoire1
+\cite{memoire1}
 \paragraph{What types of actions are performed by botnets?} A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.\\
 This first list presents general use of botnets:
 \begin{itemize}[noitemsep]
-\item \textbf{Distributed Denial-of-Service Attacks} These attacks provoke a loss of service or connectivity. Used by hacktivist, criminals and companies to disturb targets for recognition, financial gain or advantage over competition respectively. (The services could be email servers, production servers, web servers but also any device reachable) %source http://www.honeynet.org/node/52
-\item \textbf{Spam email campaigns} Bots are set as proxy nodes and then used to send large amounts of spam and phishing emails.%source http://www.honeynet.org/node/52
+\item \textbf{Distributed Denial-of-Service Attacks} These attacks provoke a loss of service or connectivity. Used by hacktivist, criminals and companies to disturb targets for recognition, financial gain or advantage over competition respectively. (The services could be email servers, production servers, web servers but also any device reachable) \cite{honeynet2}
+\item \textbf{Spam email campaigns} Bots are set as proxy nodes and then used to send large amounts of spam and phishing emails.\cite{honeynet2}
 \item \textbf{Sniffing Traffic} Bots can start watching packets going through the compromised machine and start retrieving all valuable data passed in clear-text. Botnets have been even found to analyze others bots data and take over them if they belong to another botnet.
-\item \textbf{Spying through Keylogging and file monitoring} Sniffing packets effectiveness is reduced by encrypted traffic. The solution is then to log the key strokes made by the users and retrieve sensitive information. This is done with a keylogger and filtering mechanism that targets specific use-cases (logins, password, ...)%source http://www.honeynet.org/node/52
-\item \textbf{Spreading new malware} Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. They can download malware or send viruses via email, there are various methods depending of the botnet type and environment they want to spread the malware.%source http://www.honeynet.org/node/52
+\item \textbf{Spying through Keylogging and file monitoring} Sniffing packets effectiveness is reduced by encrypted traffic. The solution is then to log the key strokes made by the users and retrieve sensitive information. This is done with a keylogger and filtering mechanism that targets specific use-cases (logins, password, ...) \cite{honeynet2}
+\item \textbf{Spreading new malware} Botnets growth depends on their ability to expand. Compromised targets have an important task to keep spreading the botnet. They can download malware or send viruses via email, there are various methods depending of the botnet type and environment they want to spread the malware.\cite{honeynet2}
 \item \textbf{Installing Advertisement Addons, Browser Helper Objects (BHOs) and Google AdSense abuse} These techniques are used for financial gain instead of disruption. These are based on websites using clicking based ads. The criminals set fake sites using advertising programs and then automate the bots to click on them to create revenue. Since the bots have different IPs it is very hard to detect the fraud.
 \item \textbf{Manipulating online polls and games} These are known to exist to influence decisions and are expected to be further used in the future. This is also very effective since each bot uses different IP addresses.
-\item \textbf{Mass identity theft} Stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks. % [Botnet Tracking Tools] SANS Institute 
+\item \textbf{Mass identity theft} Stealing personal data such as mail accounts, intellectual property, military secrets, embarrassing information or bank credential. This is a combination of all of the above that allow to create campaigns based on that data collected. These campaigns make this stolen data effective through fake websites and spear phishing email attacks. \cite{tracking}
 Regarding the personal information that can be found by bots on the home desktops, this paper explains that it must not be overlooked. The amount of data that can be contained in home applications can be very important(taxes, browsers, email contacts. They warn of the sensitive information that is often stored on home computers related to their company. This could expose intellectual property that can be then sold by the criminals.
 \item \textbf{Host illegal sites} Child pornography and black market sites are some examples.
 \item \textbf{Computation for cryptanalysis} This is a less expected use of botnets, but these distributed supercomputers can be used for cryptanalysis purposes. Computing rainbow tables, cracking passwords, bruteforcing keys or mining crypto currencies. With the success of cryptocurrencies in the last 2 years, this type of use for botnets has increased. The latest example is the Smominru Monero mining botnet, mining around 9000 moneros worth at the time 3 million\$.
-%https://www.proofpoint.com/us/threat-insight/post/smominru-monero-mining-botnet-making-millions-operators+% [Botnet Tracking Tools] SANS Institute 
+\cite{monero} \cite{tracking}
 \end{itemize}
-%A Survey on Botnet Architectures, Detection and Defences
+\cite{survey6}
 This second list targets activities of bots on the compromised machines to take full control:
 \begin{itemize}[noitemsep]
 \item \textbf{Secure the system(close NetBIOS shares, RPCDCOM) to avoid infection by other criminals} This could also mean remove existing bots on the machine. Bots will make sure their host is properly hardened to avoid overtake.
@@ -74,53 +74,51 @@ This second list targets activities of bots on the compromised machines to take 
 \item \textbf{Download and execute files} This allows them to update their software, download exploits and payloads. It can also be used to upload normal programs used for some of the tasks they want to execute.
 \item \textbf{Perform address and port scan} Another important one to pivot inside networks and expand the botnet surface.
 \item \textbf{Communicates with a handler or controller via public servers or other compromised systems} This is the  main channel communication with the botmaster.
-\item \textbf{Data storage} One of the tactics used by botmasters to keep their anonymity is to use their botnet as a distributed database and saving the data obtained on the bots, this gives more distance with the stolen data.% [Botnet Tracking Tools] SANS Institute 
+\item \textbf{Data storage} One of the tactics used by botmasters to keep their anonymity is to use their botnet as a distributed database and saving the data obtained on the bots, this gives more distance with the stolen data.\cite{tracking} 
 \end{itemize}
 
-%\subsection{Structure}
-%\subsubsection{Life cycle}
 \subsection{Life cycle}
-\paragraph{What are the steps that make up a botnet life cycle?} Life cycle execution might differ from one bot to another but they have generally a common structure. Here is te common structure presented in these studies: 
-%A survey of botnet detection based on DNS
-%[1] David Zhao, IssaTraore, BassamSayed, Wei Lu, SherifSaad, Ali Ghorbani and Dan Garant,”Botnet detection based on traffic behavior analysis and flow intervals,”Elsevier Computers & Security, vol. 39, pp. 2-16,November 2013.
-%[2] Maryam Feily, AlirezaShahrestani and SureswaranRamadass,” A survey of botnet and botnet detection,” in2009Proc.IEEE third international conference on emerging security information, systemsand technologies, pp.268-273
-%source Z. Zhu, G. Lu, Y. Chen, Z. J. Fu, P. Roberts, and K. Han, “Botnet research survey,” in 32nd Annual IEEE International Conference on Computer Software and Applications, pp. 967–972, Aug. 2008
+\paragraph{What are the steps that make up a botnet life cycle?} Life cycle execution might differ from one bot to another but they have generally a common structure. Here is the common structure presented in these studies: 
+\cite{survey2}
+\cite{survey7}
+\cite{survey8}
+\cite{survey9}
 \begin{enumerate}
 \item \textbf{Exploitation} The first phase is the infection of the host. The bots gets access to the victim host through different possible vectors (email attachment, vulnerability scanning and exploit, obtained credentials, malicious site, ...). The next step of this phase consists on uploading to the host the binary of the bot. 
-%25. Abu Rajab M, Zarfoss J, Monrose F, Terzis A (2006) A multifaceted approach to understanding the botnet phenomenon. In:Proceedings of the 6th ACM SIGCOMM conference on Internet measurement. ACM, pp 41–52
+\cite{bot-appr}
 The bot connects to a server of the botmaster and downloads it. This step is very important for this thesis because it is the first DNS lookup the bot will perform and it has been noticed as the most consistent behavior of bots. This is where the bots are going to start to hide their DNS activity.
-%26. Abdullah RS, Abdollah MF, Noh ZAM, Mas’ud MZ, Selamat SR, Yusof R, Melaka UTM (2013) Revealing the criterion on botnet detection technique. IJCSI Int J Comput Sci Issues 10(2):208–215
-%16. Manasrah AM, Hasan A, Abouabdalla OA, Ramadass S (2009) Detecting botnet activities based on abnormal DNS traffic. arXiv preprint arXiv:09110487
-%source P. Barford and V. Yegneswaran, “An inside look at botnets,” in Advances in Information Security, vol. 27, pp. 171–191, Springer, Mar. 2007
-%source G. Gu, P. Porras, V. Yegneswaran, M. Fong, and W. Lee, “Bothunter: detecting malware infection through ids-driven dialog correlation,” in Proceedings of 16th USENIX Security Symposium on USENIX Security Symposium, pp. 1–16, Berkeley, CA, USA, 2007.
+\cite{detection2}
+\cite{detection3}
+\cite{inside-bot}
+\cite{detection4}
 \item \textbf{Rallying} This is the phase where the bots will establish the link with the botmaster command and control servers (CnC), join the botnet and wait for instructions. When establishing the connection with the botmaster bots have to use stealth techniques to avoid getting discovered and more importantly revealing the CnC. These techniques will be discussed in the Misuses and abuses of DNS.
-%18. Choi H, Lee H, Lee H, Kim H (2007) Botnet detection by monitoring group activities in DNS traffic. In: 7th IEEE international conference on computer and information technology, 2007 (CIT 2007). IEEE, pp 715–720
-%27. Liu L, Chen S, Yan G, Zhang Z (2008) Bottracer: executionbased bot-like malware detection. In: Wu T-C, Lei C-L, Rijmen V, Lee D-T (eds) Information security. Springer, Berlin, Heidelberg, pp 97–113
+\cite{detection5}
+\cite{detection6} 
 \item \textbf{Attack/execution} From this point on the bot is ready to get the orders from the botmaster and start executing actions. This is where the different actions defined above are executed by the botnet.
-%17. Rodrı´guez-Go´mez RA, Macia´-Ferna´ndez G, Garcı´a-Teodoro P(2013) Survey and taxonomy of botnet research through lifecycle.ACM Comput Surv (CSUR) 45(4):45
+\cite{survey10} 
 \item \textbf{Update and maintenance}
 This phase allows the botmaster to update periodically the software of the bots, new exploits, new attacks, the same way administrators patch their software. This final phase is a loop that goes back to the second phase where the bot contacts the CnC server to proceed to this binary upload and commands fetching. This is the second phase where the DNS request will use evasion techniques to stay hidden.
-% 6. Karim A, Salleh RB, Shiraz M, Shah SAA, Awan I, Anuar NB (2014) Botnet detection techniques: review, future trends, and issues. J Zhejiang Univ Sci C 15(11):943–983]
+\cite{detection7}
 \end{enumerate}
-
 \subsection{The Channel}
 \paragraph{What does it mean to join the botnet?} The bots will rarely directly connect to the CnC servers, they will go through proxies or peers bots, (structural nodes of the botnet) to obtain commands and updates. The knowledge of these nodes and the techniques used to communicate with them are the channel of a botnet.
 \paragraph{What are the channels used by botnets?} The channel's resilience of a botnet is critical to ensure good communication with the CnC server. It is also a critical component because its failure is usually the end of the botnet's life. There are multiple ways of securing and hiding their communication channel: tunneling through protocols, encryption, DNS evasion techniques.
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+\cite{bot-intro}
 The typical protocols that are used by bots to reach their CnC are these: IRC, HTTP, HTTPS, DNS, MAIL, SSH, etc. The use of different protocols implies there are a multiple botnet's communication topologies. The different topologies provide trade-offs in terms of bandwidth, rallying, stealth, ...
 
 \paragraph{What are these different protocols ?}
 
 \paragraph{What are the goals of these different channels?}
-%http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
+\cite{bot-com}
 The main goal of the botnet channel is to provide a vector for bots to reach their CnC servers and maintain a connection with it. This is the only way the botmaster is able to keep control his botnet. This is why the means of communication are built around these main needs. If bots aren't able to reach the botnet or their CnC, they won't be able to update their software and receive commands.\\ 
 Reaching and locating the CnC servers is the first challenge the channel needs to handle. Failing to do so will leave the bot unusable for the botmaster or left in a sleeping mode. In this state, the bot keeps on with the harvesting of the victim host and retry the missed CnC regularly. \\
 The second challenge being its ability to maintain the channel. This is where resilient techniques have evolved to achieve this goal. These technologies will be detailed in the abuses of DNS section. CnC servers and their channels are really what differentiates botnets from other malware. 
-%ABOVE: J. Goebel and T. Holz, “Rishi: identify bot contaminated hosts by IRC nickname evaluation,” in Pro- ceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp. 8, Berkeley, CA, USA, 2007. file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
+%ABOVE 
+\cite{cont-host} %file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
 	
 \paragraph{How do botnets achieve such channels?}
-%BELOW: H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Computer and Information Technology, pp. 715–720, Oct. 2007.
-%BELOW: “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
+\cite{detection5}
+\cite{bot-threat}
 To stay invisible and persistent channels have gone through different methods, here are the main ones: 
 \begin{itemize}[noitemsep]
 \item \textbf{Hardcoded IP}: The bot software has the IP address of the CnC server hardcoded somewhere in its binary. The server can be found through reverse engineering and the botnet could be stopped or suspended for a certain period.
@@ -133,19 +131,19 @@ To stay invisible and persistent channels have gone through different methods, h
 Now that we know the purpose of channels and what they provide to botnets we are going to explore the different topologies used by botmasters using different channels and architectures.
 
 \paragraph{What are the different topologies used by botnets?}
-%[A Survey on Botnet Architectures, Detection and Defences] Muhammad Mahmoud, Manjinder Paul Nir, International Journal of Network Security · January 2014 file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
-The differences between topologies are related to protocols of communication. Their structure will result as mentioned above in trade-offs for its different specifications.
 
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+The differences between topologies are related to protocols of communication. Their structure will result as mentioned above in trade-offs for its different specifications.
+\cite{survey6}
+\cite{bot-intro}
 As explained in this paper, there are two typical botnet topologies which all the other topologies are built on:
 \begin{itemize}[noitemsep]
-%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+\cite{bot-com}
 \item \textbf{Centralized}: This is the simplest structure. The CnC is the center of the architecture, responsible directly of the data and command exchanges with the bots. This central unit operates the whole botnet. The main advantages is speed and simplicity, this makes it easier to plan attacks and arrange the botnet. The big problem is that the CnC is the single point of failure of the architecture. If it goes down, the whole botnet is rendered ineffective. The main protocols used are IRC(Internet Relay Chat) and HTTP(Hyper Text Transfer Protocol, the protocol used to communicate between browsers and web servers). IRC is a client-server application for text messaging. The reason it is used as CnC servers is because it can set communications anonymously, between one and multiple users and is very easy to setup. Using the HTTP started because IRC channels were becoming to popular and IRC detection systems were being put in place. But this isn't the only reason: HTTP allows to hide CnC servers behind normal web traffic. This is perfect to be invisible to firewalls and IDS(Intrusion Detection Systems). One of the differences between both lies in how the information is passed: with IRC CnCs bots receive flows of commands from their botmaster, HTTP CnC wait for bots action to send them the commands.
 \item \textbf{Decentralized}: To avoid the single point of failure, botnet designers decided for a peer-to-peer (P2P) communication channel. This structure is much more resilient to detection and avoids the single point of failure. All bots are interconnected with each other and each one acts as client and server. New bots only need the addresses of some bots in the botnet to start communicating with the rest of the botnet. If parts of the botnet are suddenly offline or captured by authorities, the rest can still function normally and adapts rapidly to the situation.
 \end{itemize}
 
 
-%cf slide(11)(http://www.ijcttjournal.org/Volume4/issue-1/IJCTT-V4I1P104.pdf
+\cite{ict-11}
 \paragraph{What are the metrics used to assess these architectures?}
 The important metrics for a botnet are a combination of the above sections:
 \begin{itemize}[noitemsep]
@@ -166,20 +164,22 @@ CnC topologies encountered in the wild typically match one of the following type
 \item Hierarchical
 \item Random
 \end{itemize}
-%source 
 %Modeling Botnets architectures:
-%diurnal propagation model %source D. Dagon, C. Zou, and W. Lee, “Modeling botnet propagation using time zones,” in Proceedings of the 13 th Network and Distributed System Security Symposium NDSS, 2006
-%Super botnet model % source R. Vogt, J. Aycock, and M. J. Jacobson, “Army of botnets,” in Proceedings of Network and Distributed System Security Symposium (NDSS’07), pp. 111–123, Reston, VA, USA, Feb. 2007
-%Stochastic P2P model %source E. Van Ruitenbeek and W. H. Sanders, “Modeling peer-to-peer botnets,” in Fifth International Confer- ence on Quantitative Evaluation of Systems, pp. 307–316, Sep. 2008 
-%source “The möbius tool,” Apr. 2011. (https://www.mobius.illinois.edu/)
+%diurnal propagation model 
+\cite{bot-prop}
+%Super botnet model 
+\cite{army-bot}
+%Stochastic P2P model 
+\cite{p2p-bot}
+\cite{mobius}
 %advanced P2P hybrid model 
-%source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in Proceedings of the first Conference on First Workshop on Hot Topics in Un- derstanding Botnets, pp. 2, Berkeley, CA, USA, 2007.
+\cite{hybrid}
 
 \paragraph{Star}
-%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+\cite{bot-com}
 The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and await for new instructions. The main problem with this topology is the single point of failure that constitutes the CnC server.
 
-%https://ccdcoe.org/cycon/2012/workshops/Intro_to_Botnets.pdf
+\cite{bot-intro}
 
 \paragraph{Multi-server}
 Multi-server is the logical follow up of the star topology, it is the combination of star CnC botnets joined together with the CnC servers connected to eachother. This is close to what is done in cluster database management with multiple servers deployed for load balancing and data replication. This ensures that if a CnC server is removed from the botnet, the other CnC servers will take its load and manage the bots that were connected to it. This topology is more complicated to setup, botmasters can even add a geographical component by having these CnC servers in the countries with bots deployed to improve speed and improve resistance to legal shutdowns.
@@ -230,9 +230,9 @@ The decentralized infrastructure and the many-to-many communication links betwee
 
 \newpage
 
-%http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
+\cite{phoenix}
 \section{Uses and abuses of DNS protocol}
-%source A survey of botnet detection based on DNS
+\cite{survey2}
 The latest trend of botnet hide their channel through the DNS protocol. They use it to hinder their identification and rallying process.\\
 
 \subsection{The DNS protocol}
@@ -245,15 +245,15 @@ The server replies with a DNS response that contains the "answer" requested or a
 
 \paragraph{What is the original purpose of DNS?}
 The idea behind the protocol was to provide a human readable domain name to servers. That way humans could identify these domains and  associate them with something concrete. The protocol simply looks for the server with the lookup table transforming them into machine readable addresses.
-%https://blog.superuser.com/2012/02/16/what-is-dns-and-which-server-do-i-choose/
+\cite{dns1}
 
 \paragraph{Protocol example} to understand later where the malicious actors abuse the protocol.\\
-%https://ns1.com/resources/dns-protocol
+\cite{dns2}
 When a client (user or device) tries to reach mail.google.com it sends a DNS request for that domain name from a \textbf{DNS client}.\\
 The \textbf{DNS server} defined by the client receives the request and searches for it in its records. If it finds it then it sends the IP address to the DNS client. Otherwise, it will contact DNS name servers that could have the domain in their records following a specific logic in its search.\\
 It will start by querying the \textbf{Root DNS servers} that will give it directions through the branches of the DNS tree hierarchy to the \textbf{Top Level Domains} DNS servers(TLD). It will first look for the TLDs resolving .com, then the name server that resolves google.com, down to the name server that will resolve mail.google.com to its IP address. The DNS server that received the first request will receive the response and send it to the client finally.\\
 Finally, the client can now connect to the server using the resolved IP address.\\
-TODO: DIAGRAM %https://www.hack2secure.com/blogs/how-dns-protocol-works
+TODO: DIAGRAM \cite{dns3}
 
 \paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packets structure.
 
@@ -297,9 +297,9 @@ q\_class & Class of the request (often IN for internet) \\
 \hline
 \end{tabular}
 
-% http://www.zytrax.com/books/dns/apd/rfc1035.txt
+\cite{dns4}
 The server will respond by filling the \textbf{Answer section}: \\
-%http://www.zytrax.com/books/dns/ch15/#answer
+\cite{dns5}
 \begin{verbatim}
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
@@ -324,8 +324,7 @@ The server will respond by filling the \textbf{Answer section}: \\
 \end{verbatim}
 
 The important parts are the TTL (Time To Live) and the RDATA. TTL contains the span of time for which the Answer is valid, RDATA contains the answer to the RR requested.\\
-
-%%http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml
+\cite{dns6}
 Here is a list of the main RR types and what they query.\\
 \begin{itemize}[noitemsep]
 \item \textbf{A}: translation of a hostname into an IP address.\\
@@ -385,13 +384,11 @@ Here is a list of the main RR types and what they query.\\
 
 
 \paragraph{Are there different methods to obtain the requested RR}
-There are 2 methods of searching through the different DNS server from the \textbf{authoritative DNS} (DNS server assigned to or by the client DNS that will be queried first). It can be recursive or iterative. \textbf{Iterative mode} is an interaction between the authoritative DNS and all the other DNS servers where all request are initialized by it and all responses come back to it. \textbf{Recursive mode} is an interaction between DNS servers relaying the request and then coming back with the final answer. \\The Root DNS servers are always iterative, this has been set to avoid a DoS of those servers which could be caused if the were recursive. These servers are the backbone of the internet.\\
-\\
+There are 2 methods of searching through the different DNS server from the \textbf{authoritative DNS} (DNS server assigned to or by the client DNS that will be queried first). It can be recursive or iterative. \textbf{Iterative mode} is an interaction between the authoritative DNS and all the other DNS servers where all request are initialized by it and all responses come back to it. \textbf{Recursive mode} is an interaction between DNS servers relaying the request and then coming back with the final answer. \\The Root DNS servers are always iterative, this has been set to avoid a DoS of those servers which could be caused if the were recursive. These servers are the backbone of the internet.
 
 \paragraph{What are the most common use cases of the DNS?}
 
-
-
+IMHERE
 
 \subsection{Botnets abusing DNS}
 TODO: Present the different abuses of the DNS protocol to evade detection
@@ -405,23 +402,23 @@ Because of the growth of the internet, content providers have built complex infr
 \subsubsection{Domain flux}
 Domain-flux is a type of DNS feature where bots are equipped with a special Domain Generation Algorithm (DGA). This is then used to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their CnC. The botmaster knows which domains are generated at a particular point in time since that is the seed of the algorithm and can register them before they are queried by the bots to be reached. This improves the resilience of botnets infrastructure a lot.
 
-%http://www.technicalinfo.net/papers/PDF/WP_Botnet_Communications_Primer_(2009-06-04).pdf
+\cite{bot-com}
 \paragraph{There are the 2 techniques used to achieve domain fluxing}
 TODO: rephrase this section
 \begin{itemize}[noitemsep]
-%https://kb.iu.edu/d/aiuv
+\cite{fqdn}
 \item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. For a rule defined by *.example.com we would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarting is typical for phishing and spamming botnets, this allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the new node (russia01.example.com, asdasdk.example.com).
 \item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate domain names based on a seed (this is the changing factor in the algorithm, ex: current time) chosen by the botmaster. This creates a list of FQDN that changes constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and point them to his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains.\\
-% https://github.com/andrewaeva/DGA/tree/master/dga_algorithms
+\cite{dga1}
 In this github repository, they have compiled some examples of DGA. As expected, the algorithms have 2 main functions, one that gets the seed (from input to the algorithm or using dynamic values such as date and time), the second is the domain generation, which will usually choose a TLD and then append the result obtained from the random function with the dynamic seed.
 \end{itemize}
 
 \subsubsection{IP flux}
-%http://www.technicalinfo.net/papers/PDF/WP\_Botnet\_Communications\_Primer\_(2009-06-04).pdf
+\cite{bot-com}
 \paragraph{What is the concept of IP/Fast-flux networks?} A Fast-Flux Service Network (FFSN) allows to link a list IP addresses to 1 domain name. These addresses have a very short Time-To-Live(TTL) and are presented by packets in a Round-Robin fashion. The idea that DNS had behind this concept was to enable load balancing for Content Delivery Networks(CDN) to be able to point customers towards other nodes in the network to obtain the content sought. \\
     The network uses a combination of round-robin IP addresses and a very short  for any given particular DNS Resource Record (RR) to distribute a user’s request to a large number of compromised computers. The Fast-flux motherships are the controlling parts of the fast-flux service networks. It is very similar to the command and a control (CnC) system found in conventional botnets but provides more features. It is observed that these nodes are always hosting both DNS and HTTP services, for being able to manage the content availability for thousands of domains simultaneously on a single host. They collected information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) changed over time
 
-%Survey on Botnets on DNS detection
+\cite{detection3}
 \paragraph{why is IP flux so effective?} Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet detection processes [17]. The attackers or botmasters use the DNS services to hide their command and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to another without being noticed
 %-----
 Fast-Flux Service Network (FFSN) allows for one domain name to have an unlimited number of IP addresses, short TTLs(Time to live) values and the IPs rotating in a round robin fashion. IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective
@@ -432,7 +429,7 @@ CnC server. This process helps botnet controllers avoid detection and blacklisti
 \item Double-flux: Multiple name servers are assigned to the same domain and then use single-flux for the multiple IP addresses of the master. This provides a second layer of redundancy. This also means that the TTLs are short for the A records and the NS records too.
 \end{itemize}
 
-% file:///D:/CyberSecurityMaster/Master%20Thesis/papers/Botnet_general/botnet_review.pdf
+\cite{review1}
 Normal FF\\
 \includegraphics[scale=.7]{img/normal_FF.jpg}
 single flux\\
@@ -440,7 +437,7 @@ single flux\\
 double flux\\
 \includegraphics[scale=.7]{img/double_FF.jpg}
 
-%source P. B¨acher, T. Holz, M. K¨otter, and G. Wicherski,“Know your Enemy: Tracking Botnets,” Oct. 2008. (http://www.honeynet.org/papers/bots)
+\cite{tracking2}
 This is done to allow the botnet’s domain name to have multiple IP addresses. In the meantime,
 involved DNS records are constantly changing every few minutes using a combination of round robin
 IP addresses and a very short TTL from any given particular DNS resource record.
@@ -448,9 +445,7 @@ In FFSN, the victim client first sends an address query to DNS. Then, the DNS re
 subset of active flux-agents. After that, the flux-agent relays the client’s request to the mothership3.
 The key factor in FFSN is the combination of a very short TTL and the round-robin answer from a
 large pool of active agents
-%source P.Wand, S. Sparks, and C. C. Zou, “An advanced hybrid peer-to-peer botnet,” in
-Proceedings of the first Conference on First Workshop on Hot Topics in Understanding Botnets, pp.
-2, Berkeley, CA, USA, 2007.
+\cite{hybrid}
 Some features for FF detection: nb of A records returned: 1-3 normal, 5 or more ff nb of NS: normal
 -> small, ff -> several NS + several A records for the NS AS: small nb of A from 1 AS -> normal,
 located in different AS -> ff Hardware and IP: range of IP is diverged -> ff No physical agent -> ff no
@@ -461,16 +456,14 @@ DNS returns these A records in round-robin way.
 CDN use a lower TTL to provide their content more efficiently
 Fast-Flux Service Network (FFSN) is a distributed proxy network -built on compromised machines
 (flux-agents)- that direct incoming DNS requests to the botnet’s desired address on the fly.
-%source J. Nazario and T. Holz, “As the net churns: Fast-flux botnet observations,” in The 3rd International Con- ference on Malicious and Unwanted Software, pp. 24– 31, Oct. 2008.
+\cite{ff1}
 
 \subsubsection{DNS tunnelling}
 DNS tunnelling implies the act of tunnelling other protocols or data through DNS, for example using the TXT as q\_type and using the requests to actually send data. This has been done to avoid restrictions but is now also used to hide malicious traffic from botnets. They can also use DNS tunnelling to remain undetected while exfiltrating data. \cite{Botnet1}
 
 \subsubsection{Maybe Domain shadowing (need more research)}
-%[A Review Paper on Botnet and Botnet Detection Techniques in Cloud Computing] Shahid Anwar, Jasni Mohamad Zain, Mohamad Fadli Zolkipli, Zakira Inayat! Conference: ISCI 2014, September 2014
+\cite{review2}
 \includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
-
-
 
 TODO: Approches de base ML (classification, features selection,)
 concepts généraux de machine learning qui vont être utilisés plus tard
@@ -478,7 +471,7 @@ afin d permettre le lecteur de comprendre.
 
 ->elements de compréhension + preuve de la connaissance. 
 
-% Botnet Detection Based On Machine Learning Techniques Using DNS Query Data, Xuan Dau Hoang and Quynh Chi Nguyen,  18 May 2018, MDPI, future internet
+\cite{detection4}
 \section{Machine learning approach}
 \paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. Classification algorithms are very effective when it comes to detection problems, predictions, filtering.
 \paragraph{why use machine learning for botnet detection?}
