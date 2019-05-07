@@ -7,7 +7,7 @@
 \cite{survey1}
 \section{Botnets}
 \cite{survey2}
-As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage.
+As stated in the introduction botnets are an  important problem for anyone involved somehow with the internet. They can result in great economic damage.
 \cite{report1} 
 Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\\\
 \cite{pheonix} 
@@ -233,17 +233,17 @@ The latest trend of botnet hide their channel through the DNS protocol. They use
 
 \subsection{The DNS protocol}
 \paragraph{What is the DNS protocol ?}
-DNS stands for Domain Network System which main purpose is to provide the IP address of a domain name (i.e. google.com).\\
+DNS stands for Domain Network System which main purpose is to "resolve" the IP address of a domain name (i.e. google.com).\\
 
 \paragraph{How does the DNS work ?}
 When an application tries to reach a certain domain, it send a DNS requests for the resolution of the domain name to the DNS server. \\
 The server replies with a DNS response that contains the "answer" requested or additional information on how to obtain it.\\
 
 \paragraph{What is the original purpose of DNS?}
-The idea behind the protocol was to provide a human readable domain name to servers. That way humans could identify these domains and  associate them with something concrete. The protocol simply looks for the server with the lookup table transforming them into machine readable addresses.
+The idea behind the protocol was to provide a human readable domain name to servers. That way humans could identify these domains and associate them with something concrete. The protocol simply looks for the server with the lookup table transforming them into machine readable addresses.
 \cite{dns1}
 
-\paragraph{Protocol example} to understand later where the malicious actors abuse the protocol.\\
+\paragraph{Protocol example} to present usual behavior and better understand later, where the malicious actors abuse the protocol.\\
 \cite{dns2}
 When a client (user or device) tries to reach mail.google.com it sends a DNS request for that domain name from a \textbf{DNS client}.\\
 The \textbf{DNS server} defined by the client receives the request and searches for it in its records. If it finds it then it sends the IP address to the DNS client. Otherwise, it will contact DNS name servers that could have the domain in their records following a specific logic in its search.\\
@@ -251,15 +251,17 @@ It will start by querying the \textbf{Root DNS servers} that will give it direct
 Finally, the client can now connect to the server using the resolved IP address.\\
 TODO: DIAGRAM \cite{dns3}
 
-\paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packets structure.
+\paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packet structure.
 
 \begin{verbatim}
+
+			DNS packet
     +---------------------+
     |        Header       |
     +---------------------+
     |       Question      | the question for the name server
     +---------------------+
-    |        Answer       | RRs answering the question
+    |        Answer       | Ressource Records (RRs) answering the question
     +---------------------+
     |      Authority      | RRs pointing toward an authority
     +---------------------+
@@ -323,103 +325,61 @@ The important parts are the TTL (Time To Live) and the RDATA. TTL contains the s
 \cite{dns6}
 Here is a list of the main RR types and what they query.\\
 \begin{itemize}[noitemsep]
-\item \textbf{A}: translation of a hostname into an IP address.\\
+\item \textbf{A or AAAA}: translation of a hostname into an IP address (IPv4 or IPv6).\\
 \item \textbf{MX}: information regarding the mail servers of the domain queried (ex: DNS request for google.com with RR$=$MX could return mail.google.com) \\
 \item \textbf{NS}: information about the DNS server used by that domain.\\
 \item \textbf{TXT}: Text description of the domain queried.
 \end{itemize}
 
-%%%%%%%%%%%
-%The question and Answer sections have the most interesting information but the header also contains flags that are abused: 
-%\paragraph{what is provided in the header section ?}
-%Here is a detailed description of the header of the DNS messages. 
-%\begin{verbatim}
-%	                               1  1  1  1  1  1
-%	 0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%	|                      ID                       |
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%	|QR|   OpCode  |AA|TC|RD|RA| Z|AD|CD|   RCODE   |
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%	|                QDCOUNT/ZOCOUNT                |
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%	|                ANCOUNT/PRCOUNT                |
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%	|                NSCOUNT/UPCOUNT                |
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%	|                    ARCOUNT                    |
-%	+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-%
-%\end{verbatim}
-%\begin{tabular}{l|p{10cm}}
-%value & explanation \\
-%\hline
-%identifier & id of request\\
-%\hline
-%opcode & Operation Type: 0 $\rightarrow$ query, 1 $\rightarrow$ Inverse query, 2 $\rightarrow$ DNS status\\
-%\hline
-%aa\_flag & Authoritative Answer: specifies if the responding server is an authoritative DNS server for the domain queried. \\
-%\hline
-%tc\_flag & Truncation: flag set on truncated messages due to length greater than that permitted.\\
-%\hline
-%rd\_flag & Recursion Desired: if set, asks the NS to pursue query recursively. This is opposed to the iterative method\\
-%\hline
-%ra\_flag & Recursion available: recursive query supported by NS\\
-%\hline
-%rcode  & Response Code: ignored in request, useful in answers to provide query information.(ex: type of errors)\\
-%\hline
-%questions\_count  & Number of entries in the Question section\\
-%\hline
-%answers\_count  & Number of RR in the Answer section\\
-%\hline
-%authority\_count  & Number of NameServer RR in the Authority section\\
-%\hline
-%additional\_count  & Number of RR in the additional section\\
-%\hline
-%\end{tabular}
-
-
 \paragraph{Are there different methods to obtain the requested RR}
 There are 2 methods of searching through the different DNS server from the \textbf{authoritative DNS} (DNS server assigned to or by the client DNS that will be queried first). It can be recursive or iterative. \textbf{Iterative mode} is an interaction between the authoritative DNS and all the other DNS servers where all request are initialized by it and all responses come back to it. \textbf{Recursive mode} is an interaction between DNS servers relaying the request and then coming back with the final answer. \\The Root DNS servers are always iterative, this has been set to avoid a DoS of those servers which could be caused if the were recursive. These servers are the backbone of the internet.
 
-\paragraph{What are the most common use cases of the DNS?}
+%\paragraph{What are the most common use cases of the DNS?}
 
-IMHERE
+
 
 \subsection{Botnets abusing DNS}
-TODO: Present the different abuses of the DNS protocol to evade detection
-(use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
+%TODO: Present the different abuses of the DNS protocol to evade detection
+%(use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
 
 \paragraph{why would botnets abuse the DNS protocol?}
-Looking up the CnC servers of a botnet is an essential part in the lifecycle of a bot. To make this step more resilient, botmasters searched for multiple ways to lookup hostnames or play around them. This is where certain features of the DNS protocol became handy to fulfill that goal.
+DNS is a very attractive protocol for its versatility. Because DNS is used by all machines to locate other machines, DNS traffic is very normal in any network. Furthermore, the DNS protocol offers a lot of flexibility regarding its uses and this is where attackers have started using DNS for other purposes.
+Looking up through DNS requests the CnC servers is an essential part in the lifecycle of a botnet. This has also made aware malicious actors that DNS traffic would be inspected to track them or detect them. To make the CnC lookup more resilient, botmasters searched multiple ways to lookup hostnames or play around them. This is where certain features of the DNS protocol became handy to fulfill that goal.
 \paragraph{what features did they exploit ?}
-Because of the growth of the internet, content providers have built complex infrastructures to sustain the load of the traffic and provide the best services. Some of the things implemented are load balancers, data replication, encryption, etc. To do so DNS has features that allow you to make the best of these types of architectures. These features have inspired the following misuses: fast-flux, domain flux and DNS tunnelling.
+Because of the growth of the internet, content providers have built complex infrastructures. Their goal is to sustain the load of the traffic and provide the best services. Some of the things implemented are load balancers, data fail-over, high availability through replication , security with end-to-end encryption, etc. To do so, they can use DNS features that allow to manage this type of architectures effectively. These features have inspired malicious actors with the following misuses: fast-flux, domain flux and DNS tunneling.
 
 \subsubsection{Domain flux}
-Domain-flux is a type of DNS feature where bots are equipped with a special Domain Generation Algorithm (DGA). This is then used to generate an ensemble of domains. The idea is to generate domains until one of them returns an IP address they can use to contact their CnC. The botmaster knows which domains are generated at a particular point in time since that is the seed of the algorithm and can register them before they are queried by the bots to be reached. This improves the resilience of botnets infrastructure a lot.
+Domain-flux is a type of DNS feature that allows multiple domains to point towards the same IP address, making it hard to blacklist the domains related to the botnet. Bots are equipped with a special Domain Generation Algorithm (DGA). This is used to generate an ensemble of domains from which it will try to contact to received the next update. The idea behind generating such a big amount of domains is to register the domains that will come at a particular time and only register them exactly when they want to update the botnet and do it for a certain amount of time. The botmaster knows which domains are generated at a particular point in time since that is the seed of the algorithm and can register them before they are queried, that way they control when botnets can reach their CnC. This also improves the resilience of botnets infrastructure.
+
+IMAGE: ADD picture explaining dga
 
 \cite{bot-com}
 \paragraph{There are the 2 techniques used to achieve domain fluxing}
-TODO: rephrase this section
 \begin{itemize}[noitemsep]
-\item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. For a rule defined by *.example.com we would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarting is typical for phishing and spamming botnets, this allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the new node (russia01.example.com, asdasdk.example.com).\cite{fqdn}
-\item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate domain names based on a seed (this is the changing factor in the algorithm, ex: current time) chosen by the botmaster. This creates a list of FQDN that changes constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and point them to his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains.\\
+\item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. A rule defined by "*.example.com" would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarding is typical for phishing and spamming botnets. It allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the different nodes (china01.example.com, china02.example.com).\cite{fqdn}
+\item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate pseudo-random domain names based on a seed (this is the changing factor in the algorithm, ex: current time,) chosen by the botmaster. This creates a list of FQDN that changes constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and point them to his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains through blacklisting or find the C2C servers.\\
 \cite{dga1}
-In this github repository, they have compiled some examples of DGA. As expected, the algorithms have 2 main functions, one that gets the seed (from input to the algorithm or using dynamic values such as date and time), the second is the domain generation, which will usually choose a TLD and then append the result obtained from the random function with the dynamic seed.
+In this github repository, they have compiled some examples of DGA. As expected, the algorithms have 2 main functions, one that gets the seed (from input to the algorithm or using dynamic values such as date and time), the second is the domain generation, which will usually choose a TLD and then appends the result obtained from the random function with the dynamic seed.
 \end{itemize}
 
 \subsubsection{IP flux}
-\paragraph{What is the concept of IP/Fast-flux networks?} A Fast-Flux Service Network (FFSN) allows to link a list IP addresses to 1 domain name. These addresses have a very short Time-To-Live(TTL) and are presented by packets in a Round-Robin fashion. The idea that DNS had behind this concept was to enable load balancing for Content Delivery Networks(CDN) to be able to point customers towards other nodes in the network to obtain the content sought. \\
-The network uses a combination of round-robin IP addresses and a very short  for any given particular DNS Resource Record (RR) to distribute a user's request to a large number of compromised computers. The Fast-flux motherships are the controlling parts of the fast-flux service networks. It is very similar to the command and a control (CnC) system found in conventional botnets but provides more features. It is observed that these nodes are always hosting both DNS and HTTP services, for being able to manage the content availability for thousands of domains simultaneously on a single host. They collected information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) changed over time\cite{bot-com}
+\paragraph{What is the concept of IP/Fast-flux networks?} IP-flux does the following: Associate a certain number of IP addresses to a single FQDN. One of these addresses is then presented using the round-robin algorithm when requests are made for the main FQDN. This technique is normally used for load distribution, load balancing or fault-tolerance. All these addresses potentially host the identical servers, round-robin simply decides on the order it will present them when a request is made for the FQDN.\cite{robin_dns} Round-robin slices time into small periods and presents equal blocks of these addresses in a circular order, it doesn't provide priority for any of the blocks of addresses or specific addresses.\cite{robin}\\
+Fast-Flux on the other hand, uses IP-fluxing to hide a dynamic network of malicious proxies. \cite{wiki_ff}
 
+IMHERE kinda
+
+\paragraph{What was the idea behind this feature ?} The goal was to enable IP-fluxing for Content Delivery Networks(CDN) to be able to point customers towards other nodes in the network to obtain the content sought. \\
+Botmasters use it to distribute a DNS request to a large number of compromised computers . The Fast-flux Service Network (FFSN) motherships are the controlling parts of the networks. They are very similar to the command and a control (CnC) system found in conventional botnets but provide more features. It is observed that these nodes are always hosting both DNS and HTTP services, for being able to manage the content availability for thousands of domains simultaneously on a single host. They collect information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) change over time.\cite{bot-com}
 \cite{detection3}
-\paragraph{why is IP flux so effective?} Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate one a very challenging problem [16]. Moreover,botnet owners attempt to hide their communication with the bots to obstruct any deployed botnet detection processes [17]. The attackers or botmasters use the DNS services to hide their command and control (CnC) IP address ;to make the botnet reliable and easy to migrate from server to another without being noticed
-%-----
-Fast-Flux Service Network (FFSN) allows for one domain name to have an unlimited number of IP addresses, short TTLs(Time to live) values and the IPs rotating in a round robin fashion. IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective
-CnC server. This process helps botnet controllers avoid detection and blacklisting. But can be confused with real traffic. It has a different categories:
+
+\paragraph{why is IP flux so effective?} Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate, a very challenging problem [16]. Moreover, they use techniques to hide their communication with the bots to evade any deployed botnet detection processes [17]. The  botmasters use the DNS services to hide their command and control (CnC) IP address to make the botnet reliable and easy to migrate from server to another without being noticed.
+\\
+The power of Fast-Flux Service Network (FFSN) is allowing one domain name to have an unlimited number of IP addresses. The IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective CnC server. This process helps botnet controllers avoid detection and blacklisting. Attackers have developed better techniques utilizing IP-flux over time, here are the different categories:
 \begin{itemize}[noitemsep]
 \item Single-flux: Multiple IP addresses are assigned to the same domain (either CNAME or A records). (low TTL, multiple autonomous system(AS) locations, proxies for master)
-\item NS flux: Multiple NS records assigned to the same domain
+WIKIPEDIA: "single-flux", is characterized by multiple individual nodes within the network registering and de-registering their addresses as part of the DNS A (address) record list for a single DNS name.
+
+\item NS flux: Multiple NS records assigned to the same domain.
 \item Double-flux: Multiple name servers are assigned to the same domain and then use single-flux for the multiple IP addresses of the master. This provides a second layer of redundancy. This also means that the TTLs are short for the A records and the NS records too.
 \end{itemize}
 
@@ -452,8 +412,8 @@ Fast-Flux Service Network (FFSN) is a distributed proxy network -built on compro
 (flux-agents)- that direct incoming DNS requests to the botnet’s desired address on the fly.
 \cite{ff1}
 
-\subsubsection{DNS tunnelling}
-DNS tunnelling implies the act of tunnelling other protocols or data through DNS, for example using the TXT as q\_type and using the requests to actually send data. This has been done to avoid restrictions but is now also used to hide malicious traffic from botnets. They can also use DNS tunnelling to remain undetected while exfiltrating data. \cite{Botnet1}
+\subsubsection{DNS tunneling}
+DNS tunneling implies the act of tunneling other protocols or data through DNS, for example using the TXT as q\_type and using the requests to actually send data. This has been done to avoid restrictions but is now also used to hide malicious traffic from botnets. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
 
 \subsubsection{Maybe Domain shadowing (need more research)}
 \cite{review2}
@@ -465,7 +425,7 @@ afin d permettre le lecteur de comprendre.
 
 ->elements de compréhension + preuve de la connaissance. 
 
-\cite{detection4}
+\cite{detection8}
 \section{Machine learning approach}
 \paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. Classification algorithms are very effective when it comes to detection problems, predictions, filtering.
 \paragraph{why use machine learning for botnet detection?}
@@ -481,24 +441,24 @@ Because the botnet detection challenge presents itself as a great candidate for 
 \subsection{classification of botnet research and detection}
 In this section related to papers focused on Botnet detection, we are going to present the classifications of botnets and what part of the research we have decided to focus on.
 
-%[Botnet Detection Based On Machine Learning Techniques Using DNS Query Data]
+\cite{bot-ml} 
 A number of botnet, detection measures, such as honeynet-based and Intrusion Detection System (IDS)-based, have been
 proposed. However, IDS-based solutions that use signatures seem to be ineffective because recent
 botnets are equipped with sophisticated code update and evasion techniques
 
 Botnet detection and defense
 Early bots detected through signature 
-%source “SNORT,” Mar. 2006. (https://www.snort.org/)
+\cite{snort}
 -> vulnerable to any new botnet, but useful for old ones
 
-%source D. Plohmann, E. Gerhards-Padilla, and F. Leder, “Botnets: measurement, detection, disinfection and defence,” in ENISA Workshop (Giles Hogben, ed.), Mar. 2011. botnet detection
+\cite{detection9}
 classification: passive and active
-%source “Taxonomy of botnet threats,” white paper, Trend Micro Incorporated, Nov. 2006. (http://www.cs.ucsb.edu/ kemm/courses/cs595G/TM06.pdf)
+\cite{bot-threat1} 
 3 types of behavior: 
 - network based behavior: observable network traffic between botmaster and bots, can be used to detect individual bots and their CnC server. 
-- host based beavior: observable calls on the systems infected by botnets. 
+- host based behavior: observable calls on the systems infected by botnets. 
 - global correlated behavior: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
-%source H. Choi, H. Lee, H. Lee, and H. Kim, “Botnet detection by monitoring group activities in dns traffic,” in The 7th IEEE International Conference on Com- puter and Information Technology, pp. 715–720, Oct. 2007. 
+\cite{detection5} 
 
 "4.1.3 DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
 (1) queries to CnC servers come only from botnet members (fixed IP address space size), 
@@ -511,33 +471,31 @@ After that, it removes redundant DNS queries. The next step will be to compare I
 
 % ========================================================================================
 
-%source Botnet_Detection_Based_On_Machine_Learning_Techniques_Using_DNS_Query_Data
+\cite{bot-ml}
 Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to
 scale, limited interactions + can be reverted by hackers to learn new evasion techniques.
 IDS: monitor and look for signs 2 types: signature or anomaly based through DNS analysis(most
-promising) %source [ Botnet Detection Technology Based on DNS] Xingguo Li , JunfengWang ,and Xiaosong Zhang 
-%source [A survey of botnet detection based on DNS] Kamal Alieyan • Ammar ALmomani • Ahmad Manasrah • Mohammed M. Kadhum
+promising) \cite{detection10}
+\cite{survey11}
 Anomaly detection approaches that work: 
 - DNS Blacklist (for malware, botnets and spambots) 
-%source [Revealing botnet membership using DNSBL counter-intelligence] Ramachandran, A.;Feamster, N.; Dagon, D.*
+\cite{dnsbl} 
 - detect botnets when they try to communicate with their CnC:
 NXDomains 
-%source: Villamari-Salomo, R.; Brustoloni, J.C. Identifying botnets using anomaly detection techniques applied to DNS traffic.
-%source http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.131.1318&rep=rep1&type=pdf
-- recursive DNS queries detecting botnet related services %source: Perdisci, R.; Corona, I.; Dagon, D.; Lee, W. Detecting malicious flux service networks through passive analysis of recursive DNS traces
+\cite{detection11}
+- recursive DNS queries detecting botnet related services \cite{detection12}
 - DGA 
-1) Main DGA %source: Yadav, S.; Reddy, A.K.K.; Reddy, A.; Ranjan, S. Detecting algorithmically generated malicious domain names. 
+1) Main DGA \cite{dga2}
 2) Decision tree + Bayes for DGA classification 
-%source: Stalmans, E.; Irwin, B. A framework for DNS based detection and mitigation of malware infections on a network
+\cite{detection13} 
 - Kopis = high level DNS query analysis (upper hierarchy)
-%source: Antonakakis, M.; Perdisci, R.; Lee, W.; Vasiloglou, N., II; Dagon, D. Detecting malware domains at the upper NS hierarchy
+\cite{detection14}
 - Exposure 
-%source Bilge, L.; Kirda, E.; Kruegel, C.; Balduzzi, M. Exposure: Finding Malicious Domains Using Passive DNS Analysis
+\cite{passive-dns}
 graph analysis 
-%source Jiang, N.; Cao, J.; Jin, Y.; Li, L.; Zhang, Z.L. Identifying suspicious activities through DNS failure graph analysis.
+\cite{dns-fail}
 - reputation system 
-% source Manos Antonakakis, Roberto Perdisci, David Dagon, Wenke Lee, and Nick Feamster. Building a Dynamic Reputation System for DNS
-
+\cite{reputation} 
 TODO: In the beginning we explain the detection classification proposed by the large survey. Then we explain what we have researched and how we'll use it in our work. Keep in mind that it isn't a list of papers, it is a list of information that will be used or not later in the paper, that has to cover that topics current research state and that we need to argue on reasons we want to keep articles or not and what information we'll use.
 \\\\
 After this presentation on the techniques used by Botmaster to set their botnets into certain topologies and evading the best they can current detection systems. We are now presenting the research papers that have tried to detect botnets using this different evasion techniques. Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
@@ -551,7 +509,7 @@ Active monitoring: explain in more detail the rest of the approaches.
 The part that our study focus on because "explain a valid reason for this part having more weight then the other ones, explain that our study could be a model combining different steps of the classification."
 Finally explain the different passive approaches: 
 \\
-Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunnelling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
+Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
 \\
 The first step in the research was to find the models that would be the current baseline for all-in solutions: Here we can start with 2 already gathered ones, and used the survey papers to find all-in solutions (if there are more than EXPOSURE), present them completely (features, dataset, model, purpose). 
 IDEA: use the survey study chart to show strengths and weaknesses of papers.
@@ -570,7 +528,7 @@ After this part we are supposed to be done with the research, we have a last dis
 \subsection{All-in solutions}
 \subsubsection{Exposure}
 
-%[EXPOSURE: a Passive DNS Analysis Service to Detect and Report Malicious Domains] Leyla Bilge, Symantec Research, France Sevil Sen, Hacettepe University, Turkey Davide Balzarotti, Eurecom, France Engin Kirda, Northeastern University, USA Christopher Kruegel, University of California - Santa Barbara, USA.
+\cite{exposure}
 
 \quote{EXPOSURE, a system that employs large-scale, passive DNS analysis techniques to detect domains that are involved in malicious activity. They use 15 features extracted from DNS traffic.}\\
 
@@ -607,11 +565,10 @@ This can be noticed with 2 simple features:\\
 \subsection{related papers}
 \subsubsection{Domain-flux}
 TODO: domain-flux can is mostly about analyzing domain names, here is a list of papers that attempt to do that with different metrics and features:  
-%Detecting domain-flux botnet based on DNS traffic features in managed network Dinh-Tu Truong and Guang Cheng. https://de.wikipedia.org/wiki/Domain\_Flux, https://www.sciencedirect.com/science/article/pii/S1742287614001182, https://blog.malwarebytes.com/security-world/2016/12/explained-domain-generating-algorithm/\\
+\cite{dns-traffic}\\
 DGA specific\\
-%Detecting Algorithmically Generated Malicious Domain Names, http://dimva2014.isg.rhul.ac.uk/slides/phoenix-talk.pdf
+\cite{phoenix}
 
-%
 Domain flux is mainly used with DGAs and so here are some papers that have proposed an approach to detect it.
 
 In \cite{dga}, they analyse the basic features that are common to most domain generated by DGA. The first is the length that can be an identifier because DGAs have long domain name. Recent DGAs have shown to have shorter lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics. They end with 2 more advanced features that cover the shortcomings of the primitive ones. They propose these features to detect DGAs:\\\\
@@ -746,7 +703,7 @@ Timing-based & Network delay (mean and standard deviation)\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsubsection{DNS tunnelling}
+\subsubsection{DNS tunneling}
 %memoire
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In \cite{tunn1}, use of TXT RR with segmented and encrypted data.
@@ -765,7 +722,7 @@ The complete list of features for the Rdata:
 \end{itemize}
 They expect these behavioural communication features to be effective enough in order to extend a classifier based on the rdata features.
 \\\\
-In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunnelling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunnelling. The features are:
+In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. The features are:
 \begin{itemize}[noitemsep]
 \item x-axis: destination IP
 \item y-axis: character count
@@ -773,11 +730,8 @@ In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunnel
 \item colour: request type
 \end{itemize}
 
+\cite{dns-tun}
 
-%(cf Detecting DNS tunnelling)
-%DNS has been used as a communication method by malware. Known malware
-%using DNS include: Feederbot (Dietrich, 2011) and Moto (Mullaney, 2011). Both of
-%these malware examples use DNS TXT records for command and control.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Behavioral}

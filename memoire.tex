@@ -42,10 +42,10 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{enumitem}
 \usepackage{mathpazo} % Use the Palatino font by default
+%\usepackage{biblatex}
+\usepackage[backend=bibtex,style=numeric, natbib=false, sorting=none]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
-\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
-
-\addbibresource{example.bib} % The filename of the bibliography
+\addbibresource{biblio.bib} % The filename of the bibliography
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
@@ -123,7 +123,7 @@ headsepline, % Uncomment to get a line under the header
  
 \vfill
 
-\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
 %\textit{in the}\\[0.4cm]
 %\groupname
 %\\
@@ -171,7 +171,6 @@ headsepline, % Uncomment to get a line under the header
 \vspace*{0.2\textheight}
 
 \noindent\enquote{\itshape The Domain Name Server is the Achilles heel of the Web. The important thing is that it's managed responsibly.}\bigbreak
-
 \hfill Tim Berners-Lee
 
 %----------------------------------------------------------------------------------------
@@ -182,7 +181,7 @@ headsepline, % Uncomment to get a line under the header
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
 The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
 
-keywords:botnet detection; botnet detection model; machine learning-based botnet detection;
+keywords:botnet detection; botnet detection model; machine learning-based botnet detection;\cite{ref1}
 domain generation algorithm botnet detection; fast flux botnet detection
 \end{abstract}
 
@@ -217,7 +216,7 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 \textbf{IRC} & \textbf{Internet Relay Chat}\\
 \textbf{HTTP} & \textbf{Hyper Text Transfer Protocol}\\
 \textbf{IDS} & \textbf{Intrusion Detection System}\\
-\textbf{RR} & \textbf{Resource Record}\\
+\textbf{RR} & \textbf{Resource Record(DNS)}\\
 \textbf{DNS} & \textbf{Domain Name System}\\
 \textbf{TLD} & \textbf{Top Level Domain}\\
 \textbf{TTL} & \textbf{Time-to-Live}\\
