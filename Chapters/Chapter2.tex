@@ -174,7 +174,6 @@ CnC topologies encountered in the wild typically match one of the following type
 \paragraph{Star}
 \cite{bot-com}
 The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and await for new instructions. The main problem with this topology is the single point of failure that constitutes the CnC server.
-
 \cite{bot-intro}
 
 \paragraph{Multi-server}
@@ -223,6 +222,8 @@ The decentralized infrastructure and the many-to-many communication links betwee
 & The analysis of a bot and its exchanges reveals a lot about the botnet structure and components.\\
 \hline
 \end{tabular}
+
+IMAGE topologies (cf folder)
 
 \newpage
 
@@ -334,10 +335,6 @@ Here is a list of the main RR types and what they query.\\
 \paragraph{Are there different methods to obtain the requested RR}
 There are 2 methods of searching through the different DNS server from the \textbf{authoritative DNS} (DNS server assigned to or by the client DNS that will be queried first). It can be recursive or iterative. \textbf{Iterative mode} is an interaction between the authoritative DNS and all the other DNS servers where all request are initialized by it and all responses come back to it. \textbf{Recursive mode} is an interaction between DNS servers relaying the request and then coming back with the final answer. \\The Root DNS servers are always iterative, this has been set to avoid a DoS of those servers which could be caused if the were recursive. These servers are the backbone of the internet.
 
-%\paragraph{What are the most common use cases of the DNS?}
-
-
-
 \subsection{Botnets abusing DNS}
 %TODO: Present the different abuses of the DNS protocol to evade detection
 %(use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
@@ -367,7 +364,8 @@ In this github repository\cite{dga1}, they have compiled some examples of DGA us
 IMAGE: IP flux
 
 \paragraph{How do botnets exploit this feature ?}
-Fast-Flux is mostly used by botmasters to hide a malicious network behind a large amount of dynamic proxies. These proxies are picked behind an immense list of rotating addresses associated with the same FQDN.\cite{wiki_ff} Behind the curtain of redirections created by the network of proxies, botmasters use it to distribute updates or host malicious content. The Fast-flux Service Network (FFSN) motherships are the controlling parts of the networks. They are very similar to the command and a control (CnC) system found in conventional botnets but provide more features. It is observed that these nodes are managed as CDN servers with the same traits (high availability, load-balancing,...). To manage this complex network they collect all the information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) change over time.\cite{bot-com}\cite{detection3}
+Fast-Flux is mostly used by botmasters to hide a malicious network behind a large amount of dynamic proxies(flux-agents).\cite{ff1} When a bot tries to connect with the CnC his request to the FQDN goes through a DNS server that returns one of these proxies which is picked from an immense list of rotating addresses. After that, the flux-agent relays the client's request to the mothership.\cite{wiki_ff} Behind the curtain of redirections created by the network of proxies, botmasters use it to distribute updates or host malicious content. They key elements for FFSN strength are very short TTLs and the round-robin answer from a large list of agents\cite{hybrid}\cite{tracking2}.
+The Fast-flux Service Network (FFSN) motherships are the controlling parts of the networks. They are very similar to the command and a control (CnC) system found in conventional botnets but provide more features. It is observed that these nodes are managed as CDN servers with the same traits (high availability, load-balancing,...). To manage this complex network they collect all the information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) change over time.\cite{bot-com}\cite{detection3}
 
 SOLVE biblio Issue
 
@@ -376,7 +374,7 @@ SOLVE biblio Issue
 The power of FFSN is allowing one domain name to have an unlimited number of IP addresses. The IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective CnC server. This process helps botnet controllers avoid detection and blacklisting. Attackers have developed better techniques utilizing IP-flux over time, here are the different categories:
 \begin{itemize}[noitemsep]
 \item \textbf{Single-flux}: Multiple IP addresses are assigned to the same domain (either CNAME or A records). The IP addresses of the bots are constantly registered and unregistered to the domain record. They have low TTL and most are proxies for master servers.\cite{wiki_ff}.
-\item \textbf{NS flux}: Multiple NS records assigned to the same domain. This an additional layer of redirection. (making the request go through multiples DNS servers before it reaches one that actually resolves the domain.)
+\item \textbf{NS flux}: Multiple NS records assigned to the same domain. This an additional layer of redirection, making the request go through multiples DNS servers before it reaches one that actually resolves the domain.)
 \item \textbf{Double-flux}: Multiple name servers are assigned to the same domain and then use single-flux for the multiple IP addresses of the master. This provides a second layer of redundancy. This also means that the TTLs are short for the A records and the NS records too.
 \end{itemize}
 
@@ -389,33 +387,19 @@ single flux\\
 double flux\\
 \includegraphics[scale=.7]{img/double_FF.jpg}
 
-\cite{tracking2}
-This is done to allow the botnet’s domain name to have multiple IP addresses. In the meantime,
-involved DNS records are constantly changing every few minutes using a combination of round robin
-IP addresses and a very short TTL from any given particular DNS resource record.
-In FFSN, the victim client first sends an address query to DNS. Then, the DNS returns the IPs of a
-subset of active flux-agents. After that, the flux-agent relays the client’s request to the mothership3.
-The key factor in FFSN is the combination of a very short TTL and the round-robin answer from a
-large pool of active agents
-\cite{hybrid}
-Some features for FF detection: nb of A records returned: 1-3 normal, 5 or more ff nb of NS: normal
--> small, ff -> several NS + several A records for the NS AS: small nb of A from 1 AS -> normal,
-located in different AS -> ff Hardware and IP: range of IP is diverged -> ff No physical agent -> ff no
-guarantee uptime.
-FIGURE NORMAL FF AND BAD FF (single and double)
-
-DNS returns these A records in round-robin way.
-CDN use a lower TTL to provide their content more efficiently
-Fast-Flux Service Network (FFSN) is a distributed proxy network -built on compromised machines
-(flux-agents)- that direct incoming DNS requests to the botnet’s desired address on the fly.
-\cite{ff1}
 
 \subsubsection{DNS tunneling}
-DNS tunneling implies the act of tunneling other protocols or data through DNS, for example using the TXT as q\_type and using the requests to actually send data. This has been done to avoid restrictions but is now also used to hide malicious traffic from botnets. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
+DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type and using the requests to actually send data or  using the subdomain value to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
+What is positive about this abuse is that there are almost no legitimate reasons for this application, making obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
+
+IMAGE tunneling (cf /img)
+
 
 \subsubsection{Maybe Domain shadowing (need more research)}
 \cite{review2}
 \includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
+
+
 
 TODO: Approches de base ML (classification, features selection,)
 concepts généraux de machine learning qui vont être utilisés plus tard
@@ -613,6 +597,19 @@ Different countries for the IPs of linked to the same domain\\
 Short Time-To-Live (TTL)\\
 \hline
 \end{tabular}
+
+also 
+
+Some features for FF detection: 
+nb of A records returned: 1-3 normal, 5 or more ff 
+nb of NS: normal -> small, ff -> several NS
+several A records for the NS AS: small nb of A from 1 AS -> normal,
+located in different AS -> ff 
+Hardware and IP: range of IP is diverged -> ff 
+No physical agent -> ff 
+no guarantee uptime -> ff
+\cite{ff1}
+
 \\\\\\
 \includegraphics[scale=.7]{img/ff_features.jpg}\\
 \includegraphics[scale=.6]{img/ff_features_2.png}
