@@ -397,11 +397,9 @@ IMAGE tunneling (cf /img)
 
 \subsubsection{Maybe Domain shadowing (need more research)}
 \cite{review2}
-\includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
 
 
-
-TODO: Approches de base ML (classification, features selection,)
+TODO: Approches de base ML (classification, features selection)
 concepts généraux de machine learning qui vont être utilisés plus tard
 afin d permettre le lecteur de comprendre. 
 
@@ -409,11 +407,19 @@ afin d permettre le lecteur de comprendre.
 
 \cite{detection8}
 \section{Machine learning approach}
-\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. Classification algorithms are very effective when it comes to detection problems, predictions, filtering.
+\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
+
+\paragraph{What are the different machine learning categories of algorithms?}
+There are three mains categories of algorithms in machine learning: supervised learning, unsupervised learning and semi-supervised learning.\\
+These categories are based on the training data used for the algorithms. Supervised algorithms are provided labeled data, they analyze the features of the labels given and learn what characteristics are proper to each label. This is how the classifiers are build to predict labels for new data.\\
+Unsupervised algorithms use unlabeled data for training. The algorithm usually provides clustering of the data, predicting which cluster new data belongs to.\\
+Semi-supervised algorithms is the combination of both, where the training data is partially labeled.
+
 \paragraph{why use machine learning for botnet detection?}
+Classification algorithms are very effective when it comes to detection problems, predictions, filtering.
 Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. Supervised classification means that we have data that is labeled, in our case we have traffic that is know to be normal or malicious. On the other hand, for cases where the data isn't labeled we can group data that have common features(clustering) or detect anomalies in data that has features different from most of the group. 
 \paragraph{How will ML be implemented for this Thesis}
-
+\paragraph{What are some of the supervised algorithms used?}
 \paragraph{What approach are we going to focus on and why}
 \paragraph{What algorithms will be used }
 \paragraph{what is the ML workflow}
@@ -422,6 +428,10 @@ Because the botnet detection challenge presents itself as a great candidate for 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
 In this section related to papers focused on Botnet detection, we are going to present the classifications of botnets and what part of the research we have decided to focus on.
+
+\subsubsection{Taxonomy of Botnets}
+test
+\includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
 
 \cite{bot-ml} 
 A number of botnet, detection measures, such as honeynet-based and Intrusion Detection System (IDS)-based, have been
@@ -609,8 +619,6 @@ Hardware and IP: range of IP is diverged -> ff
 No physical agent -> ff 
 no guarantee uptime -> ff
 \cite{ff1}
-
-\\\\\\
 \includegraphics[scale=.7]{img/ff_features.jpg}\\
 \includegraphics[scale=.6]{img/ff_features_2.png}
 \\We present now the different features and approaches proposed to distinguish the CDNs from FFSN.\\
@@ -652,7 +660,7 @@ Dynamic IP ratio (ratio of dynamic vs total IPs using keywords in reverse\\ DNS 
 Average Uptime Index (average uptime for the IPs in a cluster,\\ Uptime tested through probing)\\
 \hline
 \end{tabular}
-\\\\
+
 They use these features on a Decision Tree classifier (efficient, easy to interpret and auto pruning of useless features) to classify malicious and legit FF networks.\\
 
 In the following paper\cite{ff3}, they propose some novel features compared to the other papers. To avoid redundancy, only the features not explored in previous papers will be detailed. In the paper they present the restrictions FFSNs face compared to CDNs: FFSN cannot choose the location which makes the IP address very scattered and no Uptime garantee. Possible distinctions: the lack of control results in number of unique A records returned different and the number of NS records in a single lookup (because the NS can be hosted inside the FFSN and return many NS records whereas legitimate CDNs return a very small set of NS records). The IP diversity restriction brings another feature which is the number of unique ASNs. Legitimate CDNs tend to return a single ASN for all their A records where FFSN are dispersed.\\
