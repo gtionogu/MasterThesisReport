@@ -407,21 +407,29 @@ afin d permettre le lecteur de comprendre.
 
 \cite{detection8}
 \section{Machine learning approach}
-\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
+\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem wwhere the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
 
 \paragraph{What are the different machine learning categories of algorithms?}
-There are three mains categories of algorithms in machine learning: supervised learning, unsupervised learning and semi-supervised learning.\\
-These categories are based on the training data used for the algorithms. Supervised algorithms are provided labeled data, they analyze the features of the labels given and learn what characteristics are proper to each label. This is how the classifiers are build to predict labels for new data.\\
-Unsupervised algorithms use unlabeled data for training. The algorithm usually provides clustering of the data, predicting which cluster new data belongs to.\\
-Semi-supervised algorithms is the combination of both, where the training data is partially labeled.
+There are three mains categories of algorithms in machine learning based on the learning stage: supervised learning, unsupervised learning and semi-supervised learning.
+These categories are based on the training data given to the algorithms. \textbf{Supervised algorithms} are provided labeled data, they analyze the features and learn what characteristics are proper to each label. This is how the classifiers build models to predict the labels for new data.
+\textbf{Unsupervised algorithms} use unlabeled data for training. This type of algorithm will group data based on similar values for different features.
+Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
 
 \paragraph{why use machine learning for botnet detection?}
-Classification algorithms are very effective when it comes to detection problems, predictions, filtering.
-Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. Supervised classification means that we have data that is labeled, in our case we have traffic that is know to be normal or malicious. On the other hand, for cases where the data isn't labeled we can group data that have common features(clustering) or detect anomalies in data that has features different from most of the group. 
-\paragraph{How will ML be implemented for this Thesis}
+The goal in botnet detection is to distinguish which traffic is normal and which is malicious. This is a clear problem of classification which is a very common use of the machine learning algorithms. Classification algorithms are very effective when it comes to detection problems, predictions, filtering, clustering, abnormal behavior.
+Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. In our case, we have multiple of these cases: we have traffic with labeled data as normal or malicious and we have data that isn't labeled where unsupervised algorithms will come to play.
+
+IDEA: USE CLUSTERING AS A WAY TO FIND NEW FEATURES?
+
+\paragraph{How will machine learning be implemented for this Thesis}
+The algorithms we will use for detection is an important part, an even more important part is to chose the data provided to the algorithms. This data consists of the features, values we have chosen for our algorithm to model. The classifiers will make their decisions based on the values they have analyzed. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model but sufficient enough so the amount of feature doesn't create noise. A big part of the thesis will be focused on analyzing what features other papers have presented to detect botnets, do our on testing on different groupings of different features and pick the ones we consider most effective. 
+CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
+
 \paragraph{What are some of the supervised algorithms used?}
 \paragraph{What approach are we going to focus on and why}
 \paragraph{What algorithms will be used }
+
+
 \paragraph{what is the ML workflow}
 %https://cdn-images-1.medium.com/max/2000/1*KzmIUYPmxgEHhXX7SlbP4w.jpeg
 
