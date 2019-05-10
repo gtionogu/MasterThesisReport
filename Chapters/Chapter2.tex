@@ -423,9 +423,13 @@ IDEA: USE CLUSTERING AS A WAY TO FIND NEW FEATURES?
 
 \paragraph{How will machine learning be implemented for this Thesis}
 The algorithms we will use for detection is an important part, an even more important part is to chose the data provided to the algorithms. This data consists of the features, values we have chosen for our algorithm to model. The classifiers will make their decisions based on the values they have analyzed. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model but sufficient enough so the amount of feature doesn't create noise. A big part of the thesis will be focused on analyzing what features other papers have presented to detect botnets, do our on testing on different groupings of different features and pick the ones we consider most effective. 
+
+TO BE IMPROVED
+
 CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
 
 \paragraph{What are some of the supervised algorithms used?}
+
 \paragraph{What approach are we going to focus on and why}
 \paragraph{What algorithms will be used }
 
@@ -436,23 +440,19 @@ CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
 In this section related to papers focused on Botnet detection, we are going to present the classifications of botnets and what part of the research we have decided to focus on.
-
+We will start by presenting the taxonomy of botnets, then explain the current state of the art regarding botnet detection
 \subsubsection{Taxonomy of Botnets}
-test
+
+THIS GRAPH DOES NOT EVEN TALK ABOUT DNS...
 \includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
 
-\cite{bot-ml} 
-A number of botnet, detection measures, such as honeynet-based and Intrusion Detection System (IDS)-based, have been
-proposed. However, IDS-based solutions that use signatures seem to be ineffective because recent
-botnets are equipped with sophisticated code update and evasion techniques
+\paragraph{An obvious problem} A big trend among companies for a long time has been to use a signature based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these techniques have shown to be ineffective against bots that are constantly getting update with new code and evasion techniques but furthermore, they are ineffective against any new type of botnet emerging. IDS are great for known botnets but vulnerable to any new ones\cite{snort}.
 
-Botnet detection and defense
-Early bots detected through signature 
-\cite{snort}
--> vulnerable to any new botnet, but useful for old ones
+\paragraph{What are the types of approaches for detection?}
+They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs.\textbf{Active detection}.
 
-\cite{detection9}
-classification: passive and active
+IMHERE
+
 \cite{bot-threat1} 
 3 types of behavior: 
 - network based behavior: observable network traffic between botmaster and bots, can be used to detect individual bots and their CnC server. 
