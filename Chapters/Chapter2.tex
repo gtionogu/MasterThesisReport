@@ -451,18 +451,18 @@ THIS GRAPH DOES NOT EVEN TALK ABOUT DNS...
 \paragraph{An obvious problem} A big trend among companies for a long time has been to use a signature based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these techniques have shown to be ineffective against bots that are constantly getting update with new code and evasion techniques but furthermore, they are ineffective against any new type of botnet emerging. IDS are great for known botnets but vulnerable to any new ones\cite{snort}.
 
 \paragraph{What are the types of approaches for detection?}
-They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it.
-\textbf{Active detection}.
+They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis, honeypots. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which a hardware/software technique after some reverse engineering of the malicious code allows to set wiretapping or take control over the botnet from the inside. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
 
 IMHERE
 
- 
-3 types of behavior\cite{bot-threat1}: 
-- network based behavior: observable network traffic between botmaster and bots, can be used to detect individual bots and their CnC server. 
-- host based behavior: observable calls on the systems infected by botnets. 
-- global correlated behavior: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
-\cite{detection5} 
+These 2 approaches are the result of 3 types of behaviors observed from bots\cite{bot-threat1}: 
+\begin{itemize}
+\item network based behavior: observable network traffic between botmaster and bots, can be used to detect individual bots and their CnC server. 
+\item host based behavior: observable calls on the systems infected by botnets. 
+\item global correlated behavior: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
+\end{itemize}
 
+\cite{detection5} 
 "DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
 (1) queries to CnC servers come only from botnet members (fixed IP address space size), 
 (2) botnet members migrate and act at the same time, which leads to temporary and synchronized DNS queries, 
