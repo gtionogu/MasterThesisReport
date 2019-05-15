@@ -423,15 +423,26 @@ CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
 
 \paragraph{What are some of the supervised algorithms used?}
 
-\paragraph{What approach are we going to focus on and why}
+\paragraph{What approach are we going to focus on and wh?}
 The most successful one usually implies supervised learning, so the focus will be put to this approach, but other type of algorithms will be used as well to gather different information(type of botnet, unknown clustering features).
 \paragraph{What algorithms will be used }
 
+CHECK LAURENT PAPER TO UNDERSTAND THIS PROCESS 
 
-\paragraph{what is the ML workflow}
+\paragraph{What is the ML workflow?}
 %https://cdn-images-1.medium.com/max/2000/1*KzmIUYPmxgEHhXX7SlbP4w.jpeg
-There are 5 steps in the machine learning workflow\cite{ml-worflow}: 
-The Machine learning workflow starts by obtaining the dataset that will be used to learn and create the model. The model dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. 
+There are 5 steps in the machine learning workflow\cite{ml-worflow}: Gathering the data, formatting the data (pre-processing), choice of model, training and testing of the model and assessment of the prediction capabilities of the model.\\
+\subparagraph{Data gathering} The Machine learning workflow starts by obtaining the dataset that will be used to learn and create the model. In our case we need to find captures of DNS traffic that are labeled as malicious or botnet. We will also look for DNS traffic captures that don't contain botnet traffic so we can decide the mix of botnet and legitimate traffic we want to study.
+
+\subparagraph{Data pre-processing concept} The raw traffic captures that we will obtain can't directly be ingested by machine learning algorithms, these can only digest 3 types of formats: numerical(300 seconds for the TTL of a record), categorical(DNS record) and ordinal (short, medium, long TTL). These formats can always be converted into numerical values because that is the only thing algorithms can use. Furthermore, we need to get rid of the noise that is contained, find missing data or inconsistency in parts of the traffic. We will need first to extract the data (features) that we want to analyze before ingesting them.
+
+\subparagraph{Data pre-processing techniques} To clean and extract the features from the raw data, there are common techniques used. The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). The second consists in dealing with missing data by either removing it or using an average for that feature not to have it influence the other data for that feature. Finally, anomalies due to human errors for example need to be discovered and corrected.
+There is also the possibility through predicting the missing data through machine learning using the data available.
+
+\subparagraph{How to chose the right model?}
+Now we have the data ready to be ingested but we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. 
+
+The model dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. 
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
@@ -561,6 +572,11 @@ This can be noticed with 2 simple features:\\
 \item length of the longest meaningful substring to length of domain name
 \end{itemize}
 \includegraphics[scale=.3]{img/exposure_features.png}
+
+
+INCLUDE A DISCUSSION OF WHY WE PRESENT THIS PAPERS (to look for new features proposed in other papers)
+
+
 
 \subsection{related papers}
 \subsubsection{Domain-flux}
