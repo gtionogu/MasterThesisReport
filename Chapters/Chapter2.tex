@@ -396,16 +396,9 @@ IMAGE tunneling (cf /img)
 
 
 \subsubsection{Maybe Domain shadowing (need more research)}
-\cite{review2}
+\cite{review2}\cite{detection8}
 
 
-TODO: Approches de base ML (classification, features selection)
-concepts généraux de machine learning qui vont être utilisés plus tard
-afin d permettre le lecteur de comprendre. 
-
-->elements de compréhension + preuve de la connaissance. 
-
-\cite{detection8}
 \section{Machine learning approach}
 \paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem wwhere the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
 
@@ -431,11 +424,14 @@ CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
 \paragraph{What are some of the supervised algorithms used?}
 
 \paragraph{What approach are we going to focus on and why}
+The most successful one usually implies supervised learning, so the focus will be put to this approach, but other type of algorithms will be used as well to gather different information(type of botnet, unknown clustering features).
 \paragraph{What algorithms will be used }
 
 
 \paragraph{what is the ML workflow}
 %https://cdn-images-1.medium.com/max/2000/1*KzmIUYPmxgEHhXX7SlbP4w.jpeg
+There are 5 steps in the machine learning workflow\cite{ml-worflow}: 
+The Machine learning workflow starts by obtaining the dataset that will be used to learn and create the model. The model dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. 
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
@@ -451,15 +447,16 @@ THIS GRAPH DOES NOT EVEN TALK ABOUT DNS...
 \paragraph{An obvious problem} A big trend among companies for a long time has been to use a signature based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these techniques have shown to be ineffective against bots that are constantly getting update with new code and evasion techniques but furthermore, they are ineffective against any new type of botnet emerging. IDS are great for known botnets but vulnerable to any new ones\cite{snort}.
 
 \paragraph{What are the types of approaches for detection?}
-They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis, honeypots. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which a hardware/software technique after some reverse engineering of the malicious code allows to set wiretapping or take control over the botnet from the inside. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
+They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis, honeypots. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
 
 IMHERE
 
-These 2 approaches are the result of 3 types of behaviors observed from bots\cite{bot-threat1}: 
+\paragraph{Where are botnets detected?} These 2 approaches mentioned above are the result of 3 types of behaviors observed from the bots\cite{bot-threat1}:
+ 
 \begin{itemize}
-\item network based behavior: observable network traffic between botmaster and bots, can be used to detect individual bots and their CnC server. 
-\item host based behavior: observable calls on the systems infected by botnets. 
-\item global correlated behavior: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
+\item \textbf{network based behavior}: observable network traffic between botmaster and bots, it is used to detect individual bots and their CnC server. 
+\item \textbf{host based behavior}: observable activity on the hosts infected by the botnets. 
+\item \textbf{global correlated behavior}: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
 \end{itemize}
 
 \cite{detection5} 
