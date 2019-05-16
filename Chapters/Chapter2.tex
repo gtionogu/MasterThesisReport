@@ -400,32 +400,10 @@ IMAGE tunneling (cf /img)
 
 
 \section{Machine learning approach}
-\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem wwhere the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
+\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
 
-\paragraph{What are the different machine learning categories of algorithms?}
-There are three mains categories of algorithms in machine learning based on the learning stage: supervised learning, unsupervised learning and semi-supervised learning.
-These categories are based on the training data given to the algorithms. \textbf{Supervised algorithms} are provided labeled data, they analyze the features and learn what characteristics are proper to each label. This is how the classifiers build models to predict the labels for new data.
-\textbf{Unsupervised algorithms} use unlabeled data for training. This type of algorithm will group data based on similar values for different features.
-Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
 
-\paragraph{why use machine learning for botnet detection?}
-The goal in botnet detection is to distinguish which traffic is normal and which is malicious. This is a clear problem of classification which is a very common use of the machine learning algorithms. Classification algorithms are very effective when it comes to detection problems, predictions, filtering, clustering, abnormal behavior.
-Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. In our case, we have multiple of these cases: we have traffic with labeled data as normal or malicious and we have data that isn't labeled where unsupervised algorithms will come to play.
 
-IDEA: USE CLUSTERING AS A WAY TO FIND NEW FEATURES?
-
-\paragraph{How will machine learning be implemented for this Thesis}
-The algorithms we will use for detection is an important part, an even more important part is to chose the data provided to the algorithms. This data consists of the features, values we have chosen for our algorithm to model. The classifiers will make their decisions based on the values they have analyzed. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model but sufficient enough so the amount of feature doesn't create noise. A big part of the thesis will be focused on analyzing what features other papers have presented to detect botnets, do our on testing on different groupings of different features and pick the ones we consider most effective. 
-
-TO BE IMPROVED
-
-CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
-
-\paragraph{What are some of the supervised algorithms used?}
-
-\paragraph{What approach are we going to focus on and wh?}
-The most successful one usually implies supervised learning, so the focus will be put to this approach, but other type of algorithms will be used as well to gather different information(type of botnet, unknown clustering features).
-\paragraph{What algorithms will be used }
 
 CHECK LAURENT PAPER TO UNDERSTAND THIS PROCESS 
 
@@ -442,7 +420,36 @@ There is also the possibility through predicting the missing data through machin
 \subparagraph{How to chose the right model?}
 Now we have the data ready to be ingested but we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. 
 
+\subparagraph{Training and Testing}
 The model dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. 
+\subparagraph{Analysis of the model's prediction abilities}
+
+\paragraph{What are the different machine learning categories of algorithms?}
+There are three mains categories of algorithms in machine learning based on the learning stage: supervised learning, unsupervised learning and semi-supervised learning.
+These categories are based on the training data given to the algorithms. \textbf{Supervised algorithms} are provided labeled data, they analyze the features and learn what characteristics are proper to each label. This is how the classifiers build models to predict the labels for new data.
+\textbf{Unsupervised algorithms} use unlabeled data for training. This type of algorithm will group data based on similar values for different features.
+Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
+
+\paragraph{why use machine learning for botnet detection?}
+The goal in botnet detection is to distinguish which traffic is normal and which is malicious. This is a clear problem of classification which is a very common use of the machine learning algorithms. Classification algorithms are very effective when it comes to detection problems, predictions, filtering, clustering, abnormal behavior.
+
+Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. In our case, we have multiple of these cases: we have traffic with labeled data as normal or malicious and we have data that isn't labeled where unsupervised algorithms will come to play.
+
+IDEA: USE CLUSTERING AS A WAY TO FIND NEW FEATURES?
+
+\paragraph{How will machine learning be implemented for this Thesis?}
+The algorithms we will use for detection is an important part, an even more important part is to chose the data provided to the algorithms. This data consists of the features, values we have chosen for our algorithm to model. The classifiers will make their decisions based on the values they have analyzed. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model but sufficient enough so the amount of feature doesn't create noise. A big part of the thesis will be focused on analyzing what features other papers have presented to detect botnets, do our on testing on different groupings of different features and pick the ones we consider most effective. 
+
+TO BE IMPROVED
+
+CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
+
+
+\paragraph{What approach are we going to focus on and why?}
+The most successful one usually implies supervised learning, so the focus will be put to this approach, but other type of algorithms will be used as well to gather different information(type of botnet, unknown clustering features).
+
+\paragraph{Algorithm selection?}
+
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
