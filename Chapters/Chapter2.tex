@@ -440,46 +440,43 @@ Now we need to decide what algorithm makes more sense to model the data in accor
 Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well to discover additional features in the \textbf{features selection} step.
 
 \subsubsection{Training and testing}
-We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10 to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
+We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation\cite{10-fold}. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10 to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
 
-ADD A CAPTION EXPLAINING
+ADD A CAPTION EXPLAINING 10-fold
 
 \subsubsection{Analysis of the model's prediction abilities}
-
-
-
-
-
-
-IDEA: USE CLUSTERING AS A WAY TO FIND NEW FEATURES?
+Finally, we need metrics that will provide us information of the experiment. A very common way to do so is using the confusion matrix. This provides 4 main metrics that can then be exploited for more detailed information. There are other metrics \cite{ml-metrics} that can be introduced as well such as: 
+\begin{enumerate}
+\item Classification Accuracy.
+\item Logarithmic Loss.
+\item Area Under ROC Curve.
+\item Classification Report.
+\end{enumerate}
+These metrics will allow us to understand what can be improved and the reason of the score obtained. From there we will adapt the features or the experiment to improve the results obtained. The goal is to reach the best results possible.
 
 \subsection{How will machine learning be implemented for this Thesis?}
-The algorithms we will use for detection is an important part, an even more important part is to chose the data provided to the algorithms. This data consists of the features, values we have chosen for our algorithm to model. The classifiers will make their decisions based on the values they have analyzed. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model but sufficient enough so the amount of feature doesn't create noise. A big part of the thesis will be focused on analyzing what features other papers have presented to detect botnets, do our on testing on different groupings of different features and pick the ones we consider most effective. 
-
-TO BE IMPROVED
-
-CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
-
-
-\subsection{What approach are we going to focus on and why?}
-The most successful one usually implies supervised learning, so the focus will be put to this approach, but other type of algorithms will be used as well to gather different information(type of botnet, unknown clustering features).
+A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection are an important part. The classifiers based on the models trained. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
 
 \subsection{Algorithm selection?}
-K-Nearest Neighbor
-Naive Bayes
-Decision Trees
-Support Vector Machine
-Logistic Regression
-XGBoost,
-AdaBoost, 
-Random forest,
-Gaussian Naive Bayes
-Neural Networks
+Here we will present a list of algorithms
+
+CHECK HOW HE PRESENTS THE ALGORITHMS
+
+\subsubsection{K-Nearest Neighbor}
+\subsubsection{Decision Trees}
+\subsubsection{Support Vector Machine}
+\subsubsection{Logistic Regression}
+\subsubsection{XGBoost}
+\subsubsection{AdaBoost}
+\subsubsection{Random forest}
+\subsubsection{Gaussian Naive Bayes}
+\subsubsection{Neural Networks}
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
-In this section related to papers focused on Botnet detection, we are going to present the classifications of botnets and what part of the research we have decided to focus on.
-We will start by presenting the taxonomy of botnets, then explain the current state of the art regarding botnet detection
+In this section, we are going to present the classifications of botnets and what part of the research we have decided to focus on.\\
+We will start by presenting the taxonomy of botnets, then explain the current state of the art regarding botnet detection and finally summarize the research on the detection methods we focus on.
+
 \subsubsection{Taxonomy of Botnets}
 
 ADD DETECTION TAXONOMY HERE
