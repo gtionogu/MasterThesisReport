@@ -400,44 +400,58 @@ IMAGE tunneling (cf /img)
 
 
 \section{Machine learning approach}
-\paragraph{Machine learning} is a mathematical study of algorithms and statistics to improve the performance of specific tasks by building models of these problems. One of the tasks that machine learning algorithms excel at is the classification problem where the algorithms receive data as input and output to what group this data belongs to. As the name implies ML has different methods of "learning".
+\subsection{Machine learning} is a mathematical study of algorithms and statistics that allow to learn and improve a certain task without being directly programmed. The goal is to improve the performance of specific tasks by building models of the problems. \cite{ml-def}
 
+\subsection{Machine learning for botnet detection}
+The goal of botnet detection is to distinguish which traffic is normal and which is malicious. We are interested in one of the tasks that machine learning algorithms excel at which is classification. After training the models, classification algorithms are able to predict the belonging of new data.
 
+TODO: ADD DIAGRAM OF THE WORKFLOW
 
-
-CHECK LAURENT PAPER TO UNDERSTAND THIS PROCESS 
-
-\paragraph{What is the ML workflow?}
+\subsection{Machine Learning workflow}
 %https://cdn-images-1.medium.com/max/2000/1*KzmIUYPmxgEHhXX7SlbP4w.jpeg
-There are 5 steps in the machine learning workflow\cite{ml-worflow}: Gathering the data, formatting the data (pre-processing), choice of model, training and testing of the model and assessment of the prediction capabilities of the model.\\
-\subparagraph{Data gathering} The Machine learning workflow starts by obtaining the dataset that will be used to learn and create the model. In our case we need to find captures of DNS traffic that are labeled as malicious or botnet. We will also look for DNS traffic captures that don't contain botnet traffic so we can decide the mix of botnet and legitimate traffic we want to study.
+Machine learning has a specific workflow that needs to be followed to obtain the best results: \cite{ml-workflow}: Gathering the data, feature extraction, choice of model, training and testing of the model, and assessment of the prediction capabilities of the model.
 
-\subparagraph{Data pre-processing concept} The raw traffic captures that we will obtain can't directly be ingested by machine learning algorithms, these can only digest 3 types of formats: numerical(300 seconds for the TTL of a record), categorical(DNS record) and ordinal (short, medium, long TTL). These formats can always be converted into numerical values because that is the only thing algorithms can use. Furthermore, we need to get rid of the noise that is contained, find missing data or inconsistency in parts of the traffic. We will need first to extract the data (features) that we want to analyze before ingesting them.
+\subsubsection{Data gathering} The machine learning algorithms need to be fed data that has information about the problem. We need data that will be able to shape and create the model. In our case, we searched for captures of DNS traffic available publicly to study botnets, preferably labeled data as malicious or botnet. This labeling is essential for the learning stage. Another step which is important when creating the dataset is to balance it out correctly between the 2 labels. If there is an imbalance, the label with the greater presence in the dataset will influence the model excessively and poorly train it. The dataset research will be detailed in \label{datasetchapter}.
 
-\subparagraph{Data pre-processing techniques} To clean and extract the features from the raw data, there are common techniques used. The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). The second consists in dealing with missing data by either removing it or using an average for that feature not to have it influence the other data for that feature. Finally, anomalies due to human errors for example need to be discovered and corrected.
-There is also the possibility through predicting the missing data through machine learning using the data available.
+\subsubsection{Data pre-processing} 
+Data pre-processing involves 2 processes: feature selection and feature extraction. The feature selection consists on deciding what elements of the data are relevant to create the model and feature extraction consists in cleaning the data and formatting it correctly to be ingested by the machine learning algorithms.\\\\
 
-\subparagraph{How to chose the right model?}
-Now we have the data ready to be ingested but we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. 
+\paragraph{Feature selection} is an important step of the workflow. The choice of the data that will be ingested is crucial and directly connected to the results we will obtain. We chose to select features based on patterns or features based on data type. Pattern based means through statistical analysis of the data and using unsupervised learning algorithms to extract new tendencies from their results. The goal is to find patterns for each label, understand the underlying reason. Data type based means that we focus on the  specific features related to the traffic from the labeled data. Most of these features have been analysed by other researchers and will be based on the nature of the traffic coming from malicious and normal labels.\label{featureselectionlabel}
 
-\subparagraph{Training and Testing}
-The model dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. 
-\subparagraph{Analysis of the model's prediction abilities}
+\paragraph{feature extraction} It is important to realize that algorithms are programs that only understand numerical data. The raw traffic captures can't directly be ingested by the algorithms, these can only digest 3 types of formats: numerical (300 seconds for the TTL of a record), categorical(DNS record types such as A, AAAA, TXT, CNAME, ...) and ordinal (short, medium, long). These formats can always be converted into numerical values which is the only thing algorithms can use. It is important to realize that only features from the data convertible into one of these formats will be able to be used. Format isn' the only thing that is important, with large datasets, we need to get rid of all the noise that they might contain as well as find missing data or inconsistency in parts of the traffic.
+This section will be detailed in \label{featureextractionlabel}
+
+\subparagraph{feature extraction techniques} To clean and extract the features from the raw data, there are common techniques used. The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). The second consists in dealing with missing data by either removing it or using an average for that feature not to have it influence the other data for that feature. Thirdly, anomalies due to human errors for example need to be discovered and corrected. Finally, we normalize the features\cite{ml-norm} by dividing them by the maximum for that feature. The goal of the normalization is to avoid features unbalanced analysis by the algorithms(i.e. TTL is around $$[300-86400]$$ and number of resolved IPs $$[0-15]$$, TTL could have more weight in the algorithm due to the scale difference of the features). 
+
+\subsubsection{How to chose the right algorithms?}
+To answer this question we first need to learn which are the differences between the available algorithms and what they look to achieve: 
 
 \paragraph{What are the different machine learning categories of algorithms?}
-There are three mains categories of algorithms in machine learning based on the learning stage: supervised learning, unsupervised learning and semi-supervised learning.
+There are three mains categories of algorithms in machine learning based on their learning method: supervised learning, unsupervised learning and semi-supervised learning.
 These categories are based on the training data given to the algorithms. \textbf{Supervised algorithms} are provided labeled data, they analyze the features and learn what characteristics are proper to each label. This is how the classifiers build models to predict the labels for new data.
-\textbf{Unsupervised algorithms} use unlabeled data for training. This type of algorithm will group data based on similar values for different features.
+\textbf{Unsupervised algorithms} use unlabeled data as input. This type of algorithm will group data based on similar values for different features.
 Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
+\\
+ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
+\\
+Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.
+\\
+\\
+Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well to discover additional features in the \textbf{features selection} step.
 
-\paragraph{why use machine learning for botnet detection?}
-The goal in botnet detection is to distinguish which traffic is normal and which is malicious. This is a clear problem of classification which is a very common use of the machine learning algorithms. Classification algorithms are very effective when it comes to detection problems, predictions, filtering, clustering, abnormal behavior.
+\subsubsection{Training and testing}
+The dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop.
 
-Because the botnet detection challenge presents itself as a great candidate for supervised and unsupervised classification algorithms. In our case, we have multiple of these cases: we have traffic with labeled data as normal or malicious and we have data that isn't labeled where unsupervised algorithms will come to play.
+\subsubsection{Analysis of the model's prediction abilities}
+
+
+
+
+
 
 IDEA: USE CLUSTERING AS A WAY TO FIND NEW FEATURES?
 
-\paragraph{How will machine learning be implemented for this Thesis?}
+\subsection{How will machine learning be implemented for this Thesis?}
 The algorithms we will use for detection is an important part, an even more important part is to chose the data provided to the algorithms. This data consists of the features, values we have chosen for our algorithm to model. The classifiers will make their decisions based on the values they have analyzed. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model but sufficient enough so the amount of feature doesn't create noise. A big part of the thesis will be focused on analyzing what features other papers have presented to detect botnets, do our on testing on different groupings of different features and pick the ones we consider most effective. 
 
 TO BE IMPROVED
@@ -445,11 +459,20 @@ TO BE IMPROVED
 CHECK WHAT HE DID AND DO IT AT YOUR SAUCE.
 
 
-\paragraph{What approach are we going to focus on and why?}
+\subsection{What approach are we going to focus on and why?}
 The most successful one usually implies supervised learning, so the focus will be put to this approach, but other type of algorithms will be used as well to gather different information(type of botnet, unknown clustering features).
 
-\paragraph{Algorithm selection?}
-
+\subsection{Algorithm selection?}
+K-Nearest Neighbor
+Naive Bayes
+Decision Trees
+Support Vector Machine
+Logistic Regression
+XGBoost,
+AdaBoost, 
+Random forest,
+Gaussian Naive Bayes
+Neural Networks
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
