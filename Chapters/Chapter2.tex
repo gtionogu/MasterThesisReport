@@ -440,7 +440,9 @@ Now we need to decide what algorithm makes more sense to model the data in accor
 Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well to discover additional features in the \textbf{features selection} step.
 
 \subsubsection{Training and testing}
-The dataset will be divided into multiple sets: the training set and the testing set. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop.
+We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10 to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
+
+ADD A CAPTION EXPLAINING
 
 \subsubsection{Analysis of the model's prediction abilities}
 
