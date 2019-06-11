@@ -474,22 +474,23 @@ CHECK HOW HE PRESENTS THE ALGORITHMS
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
-In this section, we are going to present the classifications of botnets and what part of the research we have decided to focus on.\\
-We will start by presenting the taxonomy of botnets and their detection, then explain the current state of the art regarding botnet detection and finally summarize the research on the detection methods we focus on.
+In this section, we are going to present the current state of the botnet detection taxonomy, show the weaknesses and strengths of each method and finish by showing the current state of the art of the research on passive traffic analysis for botnet detection which is the method this thesis is dedicated to.\\
 
 \subsubsection{Taxonomy of Botnets}
+\paragraph{A legacy problem} A big trend among companies for a long time has been to use a signature based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these techniques have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques but furthermore, they are ineffective against any new type of botnet emerging. IDS are great for known botnets but vulnerable to any new ones\cite{snort}. The introduction of other methods have been mostly motivated by the goal to solve this issue.
 
-ADD DETECTION TAXONOMY HERE
+\includegraphics[scale=.8]{img/Botnet-detection-taxonomy.png}
 
-THIS GRAPH DOES NOT EVEN TALK ABOUT DNS...
-\includegraphics[scale=.8]{img/botnet_taxonomy.jpg}
+HERE WE SHOULD PRESENT THE TAXONOMY
 
-\paragraph{An obvious problem} A big trend among companies for a long time has been to use a signature based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these techniques have shown to be ineffective against bots that are constantly getting update with new code and evasion techniques but furthermore, they are ineffective against any new type of botnet emerging. IDS are great for known botnets but vulnerable to any new ones\cite{snort}.
+\paragraph{Why DNS passive analysis ?}
+
+\includegraphics[scale=.8]{img/botnet_detection_techniques.jpg}
+
+HERE WE PRESENT THE DNS TAXONOMY
 
 \paragraph{What are the types of approaches for detection?}
 They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis, honeypots. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
-
-IMHERE
 
 \paragraph{Where are botnets detected?} These 2 approaches mentioned above are the result of 3 types of behaviors observed from the bots\cite{bot-threat1}:
  
@@ -498,6 +499,8 @@ IMHERE
 \item \textbf{host based behavior}: observable activity on the hosts infected by the botnets. 
 \item \textbf{global correlated behavior}: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
 \end{itemize}
+
+
 
 \cite{detection5} 
 "DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
