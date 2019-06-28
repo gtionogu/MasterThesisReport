@@ -7,11 +7,11 @@
 \cite{survey1}
 \section{Botnets}
 \cite{survey2}
-As stated in the introduction botnets are an  important problem for anyone involved somehow with the internet. They can result in great economic damage.
+As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage.
 \cite{report1} 
 Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\\\
 \cite{pheonix} 
-Botnets can become very lucrative and can infect very large amounts of devices resulting in scary entities. Here are some of these enormous entities: \textbf{Flashback} with 600k compromised targets, \textbf{Grum} with 840k compromised devices and sending 40 Billion spam emails per month, \textbf{TDL-4} with 4.5 Million victims in first the 3 months and \textbf{Gameover ZeuS} with 1 Million infections, because of its resilience mechanisms this botnet was one of the hardest to take down.\\\\
+Botnets can become very lucrative and can infect very large amount of devices resulting in scary tool. Here are some examples of the magnitude they can reach: \textbf{Flashback} with 600k compromised targets, \textbf{Grum} with 840k compromised devices and sending 40 Billion spam emails per month, \textbf{TDL-4} with 4.5 Million victims in first the 3 months and \textbf{Gameover ZeuS} with 1 Million infections, because of its resilience mechanisms this botnet was one of the hardest to take down.\\\\
 \cite{survey2}
 The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavors criminals bring to the market.
 \subsection{Definition}
@@ -389,7 +389,7 @@ double flux\\
 
 
 \subsubsection{DNS tunneling}
-DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type and using the requests to actually send data or  using the subdomain value to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
+DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
 What is positive about this abuse is that there are almost no legitimate reasons for this application, making obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
 
 IMAGE tunneling (cf /img)
@@ -455,7 +455,7 @@ Finally, we need metrics that will provide us information of the experiment. A v
 These metrics will allow us to understand what can be improved and the reason of the score obtained. From there we will adapt the features or the experiment to improve the results obtained. The goal is to reach the best results possible.
 
 \subsection{How will machine learning be implemented for this Thesis?}
-A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection are an important part. The classifiers based on the models trained. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
+A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters are an important part. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
 
 \subsection{Algorithm selection?}
 Here we will present a list of algorithms
@@ -477,30 +477,51 @@ CHECK HOW HE PRESENTS THE ALGORITHMS
 In this section, we are going to present the current state of the botnet detection taxonomy, show the weaknesses and strengths of each method and finish by showing the current state of the art of the research on passive traffic analysis for botnet detection which is the method this thesis is dedicated to.\\
 
 \subsubsection{Taxonomy of Botnets}
-\paragraph{A legacy problem} A big trend among companies for a long time has been to use a signature based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these techniques have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques but furthermore, they are ineffective against any new type of botnet emerging. IDS are great for known botnets but vulnerable to any new ones\cite{snort}. The introduction of other methods have been mostly motivated by the goal to solve this issue.
 
 \includegraphics[scale=.8]{img/Botnet-detection-taxonomy.png}
-
-HERE WE SHOULD PRESENT THE TAXONOMY
-
-\paragraph{Why DNS passive analysis ?}
-
-\includegraphics[scale=.8]{img/botnet_detection_techniques.jpg}
-
-HERE WE PRESENT THE DNS TAXONOMY
-
-\paragraph{What are the types of approaches for detection?}
-They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis, honeypots. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
-
-\paragraph{Where are botnets detected?} These 2 approaches mentioned above are the result of 3 types of behaviors observed from the bots\cite{bot-threat1}:
- 
+%%%% SYSTEMS
+\paragraph{Detection systems}In a recent survey\cite{survey1} of the state of the art regarding Botnet detection based on DNS traffic analysis\cite{survey}, they present a taxonomy of botnet detection techniques. As we can see on the figure (botnet\_detection\_taxonomy)there are 2 type of systems used for detection: Honeypots and IDS. Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information out of the behavior of the malicious actor on the host. IDS aim at analyzing the network and alert the security analysts of any malicious/suspicious traffic. IDS are divided into 2 techniques. An older one based on signatures and newer one based on abnormal behavior.\\\\
+%%%% IDS SIGNATURE-BASED
+\paragraph{A legacy problem} A big trend among companies for a long time was  a signature-based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets but remains weak to any new ones\cite{snort}. The recent introduction of other methods have been mostly motivated by the goal to solve this issue.
+\\\\
+%%%% NETWORK-BASED
+\paragraph{Where are botnets detected?} In the anomaly detection technique, we have different locations that researchers have found relevant data. Directly on the host affected and throughout the network the host belongs to.
+3 types of behaviors observed from the bots\cite{bot-threat1}:
 \begin{itemize}
 \item \textbf{network based behavior}: observable network traffic between botmaster and bots, it is used to detect individual bots and their CnC server. 
 \item \textbf{host based behavior}: observable activity on the hosts infected by the botnets. 
 \item \textbf{global correlated behavior}: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
 \end{itemize}
+%%%% PASSIVE
+\paragraph{What are the types of approaches for detection?}
+They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: deep packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
+\\\\
+This taxonomy applies to all botnets detection using different protocols and topologies. 
+Let us now analyze the particularities of the DNS protocol and more particularly the passive traffic analysis approach that we have chosen to study in this thesis.
 
+\paragraph{DNS taxonomy?}
 
+\includegraphics[scale=.8]{img/botnet_detection_techniques.jpg}
+%%%% DNS taxonomy
+In a recent survey of the state of the art regarding botnet detection based on DNS traffic analysis\cite{survey}, they present a classification of botnet detection techniques via DNS \cite{survey1}. The newer techniques emerged to detect unknown botnets and to respond to the new type of evasions that followed. Botnets have become a lot more resilient and stealthy. It has pushed the research to focus on features that would allow to distinguish between benign and malicious traffic. Techniques capable of detecting new bots are divided into 2 sections: host-based and network-based. This means anomalies focusing on a single host or the traffic of a network. The host-based research focused on detecting bots in single hosts by monitoring local processes and kernel level routines.(TODO BotSwat) The problem of these propositions were the inability to scale them, we would need large monitoring system on each host with complex capabilities to communicate with each other and do correlation(TODO EFFORT framework). This is what the second section aims to solve by monitoring networks. This activity can be done passively by simply collecting the traffic and analysing it (passive monitoring). It can also been done actively by injecting packets into the network forged to make the bots react, and then analyse the network response. \\
+TODO: The part that our study focus on because "explain a valid reason for this part having more weight then the other ones, explain that our study could be a model combining different steps of the classification."
+
+\paragraph{What are the different passive detection methods?}
+With the logs or packets captured, researchers have proposed different approaches to utilize them. Most of the techniques involve a statistical analysis or the use of machine learnings algorithms, some have opted for detection through visual representations. 
+\\\\
+The reason we have decided to focus on the machine learning approach as mentioned in the introduction is to develop our machine learning experience and methodology but also because regarding botnet detection it has shown to be the most effective achieving better scores then the other techniques in the taxonomy.
+
+MAYBE ADD MORE HERE NOT SURE, the goal is to give enough to introduce next part
+
+\subsubsection{research review}
+Now that we know the techniques used by Botmaster to set their botnets into certain topologies and evading the best they can current detection systems. We are now presenting the research papers that have tried to detect botnets using these different evasion techniques. 
+%%%%%%%% TO BE REVIEWED
+Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
+First we will present the current all-in solutions that exist, the features they extract and what model they have created. 
+Secondly, to achieve our goal towards improving these solutions, the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+IMHERE
 
 \cite{detection5} 
 "DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
@@ -513,43 +534,21 @@ After that, it removes redundant DNS queries. The next step will be to compare I
 
 
 % ========================================================================================
+CHECK PAPERS and EXTRACT VALUE
 
-\cite{bot-ml}
-Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to
-scale, limited interactions + can be reverted by hackers to learn new evasion techniques.
-IDS: monitor and look for signs 2 types: signature or anomaly based through DNS analysis(most
-promising) \cite{detection10}
-\cite{survey11}
-Anomaly detection approaches that work: 
-- DNS Blacklist (for malware, botnets and spambots) 
-\cite{dnsbl} 
-- detect botnets when they try to communicate with their CnC:
-NXDomains 
-\cite{detection11}
-- recursive DNS queries detecting botnet related services \cite{detection12}
-- DGA 
-1) Main DGA \cite{dga2}
-2) Decision tree + Bayes for DGA classification 
-\cite{detection13} 
-- Kopis = high level DNS query analysis (upper hierarchy)
-\cite{detection14}
-- Exposure 
-\cite{passive-dns}
-graph analysis 
-\cite{dns-fail}
-- reputation system 
-\cite{reputation} 
-TODO: In the beginning we explain the detection classification proposed by the large survey. Then we explain what we have researched and how we'll use it in our work. Keep in mind that it isn't a list of papers, it is a list of information that will be used or not later in the paper, that has to cover that topics current research state and that we need to argue on reasons we want to keep articles or not and what information we'll use.
-\\\\
-After this presentation on the techniques used by Botmaster to set their botnets into certain topologies and evading the best they can current detection systems. We are now presenting the research papers that have tried to detect botnets using this different evasion techniques. Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
-First we will present the current all-in solutions that exist, the features they extract and what model they have created. 
-Secondly, to achieve our goal towards improving these solutions, the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose and do a first selection if a thorough comparison has been made with the features presented. Otherwise they will saved for further analysis.
-\\\\
-In a recent survey of the state of the art regarding Botnet detection based on DNS traffic analysis\cite{survey}, they present a classification of botnet techniques (A survey of botnet detection based on DNS). They divide the classification into 2 categories, the honeynets and IDS(Snort). The later having evolved the most and where we want to focus. Most IDS were for a long time using signature-based techniques(check the IDS section for more details, p6). These are effective but only work with known botnets. Because they are signature-based there is a need to keep a blacklist updated very often, because a simple change creates a new signature and would be undetected if the database isn't updated with the latest signatures.\\
-Newer techniques, described as "anomaly based" have emerged for 2 reasons: to detect unknown botnets and to respond to the new type of evasions that followed. Botnets have become a lot more resilient and stealthy. It has pushed the research to focus on features that would allow to distinguish between benign and malicious traffic.
-These new researches capable of detecting new bots are divided into 2 sections: host-based and network-based. This means anomalies focusing on a single host or the traffic of a network. The host-based research focused on detecting bots in single hosts by monitoring local processes and kernel level routines.(BotSwat) The big problem of these propositions were the inability to scale them, we would need large monitoring system on each host with complex capabilities to communicate with each other and do correlation(EFFORT framework, the only one apparently. Do a bit more research on this framework and correct any mistakes in its previous description). This is what the second section aims to solve by monitoring networks. This activity can be done passively by simply collecting the traffic and analysing it (passive monitoring) or actively by injecting packets into the network forged to make the bots react, and then analyse the network response. 
-Active monitoring: explain in more detail the rest of the approaches.
-The part that our study focus on because "explain a valid reason for this part having more weight then the other ones, explain that our study could be a model combining different steps of the classification."
+%Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to scale, limited interactions + can be reverted by hackers to learn new evasion techniques. \cite{bot-ml}
+%IDS: monitor and look for signs 2 types\cite{survey11}: signature or anomaly based through DNS analysis(most promising) \cite{detection10}
+%Anomaly detection approaches that work:  DNS Blacklist (for malware, botnets and spambots) \cite{dnsbl} and detect botnets when they try to communicate with their CnC:
+%- NXDomains \cite{detection11}
+%- recursive DNS queries detecting botnet related services \cite{detection12}
+%- DGA 
+%	1) Main DGA \cite{dga2}
+%	2) Decision tree + Bayes for DGA classification \cite{detection13} 
+%- Kopis = high level DNS query analysis (upper hierarchy)\cite{detection14}
+%- Exposure \cite{passive-dns}
+%- graph analysis \cite{dns-fail}
+%- reputation system \cite{reputation} 
+
 Finally explain the different passive approaches: 
 \\
 Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
@@ -565,8 +564,6 @@ finally for each relevant paper either do a summary with the 4 components or sim
 
 
 After this part we are supposed to be done with the research, we have a last discussion of how the following step is planned and what information from this chapter will be translated into the rest of the thesis.
-
-
 
 \subsection{All-in solutions}
 \subsubsection{Exposure}
@@ -719,6 +716,7 @@ Average Uptime Index (average uptime for the IPs in a cluster,\\ Uptime tested t
 
 They use these features on a Decision Tree classifier (efficient, easy to interpret and auto pruning of useless features) to classify malicious and legit FF networks.\\
 
+
 In the following paper\cite{ff3}, they propose some novel features compared to the other papers. To avoid redundancy, only the features not explored in previous papers will be detailed. In the paper they present the restrictions FFSNs face compared to CDNs: FFSN cannot choose the location which makes the IP address very scattered and no Uptime garantee. Possible distinctions: the lack of control results in number of unique A records returned different and the number of NS records in a single lookup (because the NS can be hosted inside the FFSN and return many NS records whereas legitimate CDNs return a very small set of NS records). The IP diversity restriction brings another feature which is the number of unique ASNs. Legitimate CDNs tend to return a single ASN for all their A records where FFSN are dispersed.\\
 They decide not to include TTLs as a feature because both CDNs and FFSN have low TTLs. Finally,  they introduce functions of the different features above to classify FFSN and CDNs.\\
 \textbf{Fluxiness} is the total of unique A records for a domain divided by the number of A records returned for each lookup. This measures consistency in the unique A records returned. \\
@@ -795,6 +793,6 @@ In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunnel
 
 \subsubsection{Behavioral}
 
-
+w
 
 
