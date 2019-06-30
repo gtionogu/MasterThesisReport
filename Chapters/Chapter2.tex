@@ -463,13 +463,58 @@ Here we will present a list of algorithms
 CHECK HOW HE PRESENTS THE ALGORITHMS
 
 \subsubsection{K-Nearest Neighbor}
+kNN (k-Nearest Neighbor) is one of the simplest supervised machine learning algorithms.
+The idea of kNN is that it will classify the new object based on its k nearest neighbors, where k is a
+predefined positive integer [16]. kNN algorithm is comprehensively described in the following steps:
+- Step 1: Determine the parameter value k.
+- Step 2: Calculate the distance between the new object that needs to be classified with all objects
+in the training dataset.
+- Step 3: Arrange computed distances in the ascending order and identify k nearest neighbors with
+the new object.
+- Step 4: Take all the labels of the k neighbors selected above.
+- Step 5: Based on the k labels that have been taken, the label that holds the majority will be
+assigned to the new object.
+
 \subsubsection{Decision Trees}
+3.1.2.2. Decision tree
+Decision tree is a prediction model that is a mapping from observations of a thing, or a
+phenomenon to the conclusions about the objective value of things, or phenomena. Decision tree
+creates models that allow the classification of an object by creating a set of decision rules. These rules
+are extracted based on the set of characteristics of the training data. In a decision tree, leaves represent
+classes and each child node in the tree and its branches represent a combination of features that
+lead to classification. Thus, classifying an object will begin with checking the value of the root node,
+and then continuing downward under the tree branches corresponding to those values. This process is
+performed repeatedly for each node until it cannot go any further and touch the leaf node. For the best
+model, the decision to select the root node and sub-node while building the decision tree is based on
+the Information Gain (IG) and Gini Impurity measurements [16]. The decision tree algorithm used for
+experiments in this paper is C4.5.
+
 \subsubsection{Support Vector Machine}
 \subsubsection{Logistic Regression}
 \subsubsection{XGBoost}
 \subsubsection{AdaBoost}
 \subsubsection{Random forest}
+%futureinternet-10-00043.pdf
+3.1.2.3. Random forest
+Random forest (RF) is a member of the chain of decision tree algorithms. The idea of this algorithm
+is to create some decision trees. These decision trees will run and give independent results. The answer
+predicted by the largest number of decisive trees will be chosen by the random forest [16]. To ensure
+that the decision trees are not the same, random forest randomly selects a subset of the characteristics
+of each node. The remaining parameters are used in the random forest as those in the decision trees.
+Future Internet 2018, 10, 43 5 of 11
+
 \subsubsection{Gaussian Naive Bayes}
+3.1.2.4. Naïve Bayes
+Naive Bayes is a conditional probability model based on the Bayes theorem [16]. In the
+classification problem, the data includes: D is the set of training data that has been vectorized as
+x = (x1, x2, ..., xn), Ci
+is subclass i, with i = {1, 2, ..., m}. Assume that all properties are conditionally
+independent of each pair together. According to Bayes theorem, we have:
+P(Ci|X) = P(X|Ci)P(Ci)P(X)(1)
+Based on the conditionally independent characteristic, we have:
+P(X|Ci) = n k=1 P(xk|Ci) (2)
+where, P(Ci|X) is the probability of class i given sample X, P(Ci) is the probability of class i and P(xk|Ci)
+is the probability of the kth property that has the value of xk given X in class i.
 \subsubsection{Neural Networks}
 
 \section{Botnet detection related papers}
@@ -520,6 +565,7 @@ Since the end goal is to find the best features for an all-in solution, we have 
 First we will present the current all-in solutions that exist, the features they extract and what model they have created. 
 Secondly, to achieve our goal towards improving these solutions, the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 IMHERE
 
