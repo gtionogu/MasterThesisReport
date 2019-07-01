@@ -542,21 +542,23 @@ In this section, we are going to present the current state of the botnet detecti
 They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: deep packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
 \\\\
 This taxonomy applies to all botnets detection using different protocols and topologies. 
-Let us now analyze the particularities of the DNS protocol and more particularly the passive traffic analysis approach that we have chosen to study in this thesis.
+Let us now analyze the particularities of the DNS protocol and more particularly the passive traffic analysis approach that we have chosen to study in this thesis because of the progress and possibilities shown around those techniques.
 
-\paragraph{DNS taxonomy?}
+\subsubsection{Passive DNS detection Techniques}
 
-\includegraphics[scale=.8]{img/botnet_detection_techniques.jpg}
+%\includegraphics[scale=.8]{img/botnet_detection_techniques.jpg}
 %%%% DNS taxonomy
-In a recent survey of the state of the art regarding botnet detection based on DNS traffic analysis\cite{survey}, they present a classification of botnet detection techniques via DNS \cite{survey1}. The newer techniques emerged to detect unknown botnets and to respond to the new type of evasions that followed. Botnets have become a lot more resilient and stealthy. It has pushed the research to focus on features that would allow to distinguish between benign and malicious traffic. Techniques capable of detecting new bots are divided into 2 sections: host-based and network-based. This means anomalies focusing on a single host or the traffic of a network. The host-based research focused on detecting bots in single hosts by monitoring local processes and kernel level routines.(TODO BotSwat) The problem of these propositions were the inability to scale them, we would need large monitoring system on each host with complex capabilities to communicate with each other and do correlation(TODO EFFORT framework). This is what the second section aims to solve by monitoring networks. This activity can be done passively by simply collecting the traffic and analysing it (passive monitoring). It can also been done actively by injecting packets into the network forged to make the bots react, and then analyse the network response. \\
-TODO: The part that our study focus on because "explain a valid reason for this part having more weight then the other ones, explain that our study could be a model combining different steps of the classification."
+%In a recent survey of the state of the art regarding botnet detection based on DNS traffic analysis\cite{survey}, they present a classification of botnet detection techniques via DNS \cite{survey1}. The newer techniques emerged to detect unknown botnets and to respond to the new type of evasions that followed. Botnets have become a lot more resilient and stealthy. It has pushed the research to focus on features that would allow to distinguish between benign and malicious traffic. Techniques capable of detecting new bots are divided into 2 sections: host-based and network-based. This means anomalies focusing on a single host or the traffic of a network. The host-based research focused on detecting bots in single hosts by monitoring local processes and kernel level routines.(TODO BotSwat) The problem of these propositions were the inability to scale them, we would need large monitoring system on each host with complex capabilities to communicate with each other and do correlation(TODO EFFORT framework). This is what the second section aims to solve by monitoring networks. This activity can be done passively by simply collecting the traffic and analysing it (passive monitoring). It can also been done actively by injecting packets into the network forged to make the bots react, and then analyse the network response. \\
+%TODO: The part that our study focus on because "explain a valid reason for this part having more weight then the other ones, explain that our study could be a model combining different steps of the classification."
 
 \paragraph{What are the different passive detection methods?}
 With the logs or packets captured, researchers have proposed different approaches to utilize them. Most of the techniques involve a statistical analysis or the use of machine learnings algorithms, some have opted for detection through visual representations. 
 \\\\
 The reason we have decided to focus on the machine learning approach as mentioned in the introduction is to develop our machine learning experience and methodology but also because regarding botnet detection it has shown to be the most effective achieving better scores then the other techniques in the taxonomy.
 
-MAYBE ADD MORE HERE NOT SURE, the goal is to give enough to introduce next part
+%%%%%%% IMHERE
+Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
+%%%%%%
 
 \subsubsection{research review}
 Now that we know the techniques used by Botmaster to set their botnets into certain topologies and evading the best they can current detection systems. We are now presenting the research papers that have tried to detect botnets using these different evasion techniques. 
@@ -564,23 +566,8 @@ Now that we know the techniques used by Botmaster to set their botnets into cert
 Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
 First we will present the current all-in solutions that exist, the features they extract and what model they have created. 
 Secondly, to achieve our goal towards improving these solutions, the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
-%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-IMHERE
-
-\cite{detection5} 
-"DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
-(1) queries to CnC servers come only from botnet members (fixed IP address space size), 
-(2) botnet members migrate and act at the same time, which leads to temporary and synchronized DNS queries, 
-(3) botnets usually use DynamicDNS (DDNS) for CnC servers. 
-For a botmaster to keep its bots hidden and portable, he relies on DNS to rally infected hosts. In botnets, DNS queries can appear for many reasons. They appear during rallying process after infection, during malicious activities like spam or DoS attacks, during CnC server migration, during CnC server IP address change, or after CnC server or network link failure. Based on the aforementioned five situations of DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, they group DNS query data using the domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet
-DNS queries are detected using a numerically computed some similarity factor [20] This algorithm cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
-After that, it removes redundant DNS queries. The next step will be to compare IP lists of different domain name with same size of IP list, because bots use two different domain names for the CnC server during migration [20]. These algorithms are protocol and structure independent and are capable of detecting unknown and encrypted botnets. However, these are not for real-time detections and have low accuracy for small networks. Furthermore, they are very sensitive to threshold values which need to be chosen very carefully to balance false positives and false negative rates.
-
-
-% ========================================================================================
-CHECK PAPERS and EXTRACT VALUE
+========================================================================================
+%CHECK PAPERS and EXTRACT VALUE
 
 %Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to scale, limited interactions + can be reverted by hackers to learn new evasion techniques. \cite{bot-ml}
 %IDS: monitor and look for signs 2 types\cite{survey11}: signature or anomaly based through DNS analysis(most promising) \cite{detection10}
@@ -595,21 +582,9 @@ CHECK PAPERS and EXTRACT VALUE
 %- graph analysis \cite{dns-fail}
 %- reputation system \cite{reputation} 
 
-Finally explain the different passive approaches: 
-\\
-Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
-\\
-The first step in the research was to find the models that would be the current baseline for all-in solutions: Here we can start with 2 already gathered ones, and used the survey papers to find all-in solutions (if there are more than EXPOSURE), present them completely (features, dataset, model, purpose). 
-IDEA: use the survey study chart to show strengths and weaknesses of papers.
-\\
-- Step needed before presentation of these papers:
-classify them into the folders, 
-create a summary for each one with the following information:
-Model (data processing, dataset used, classification process, features)
-finally for each relevant paper either do a summary with the 4 components or simple summary if redundant information.
-
-
-After this part we are supposed to be done with the research, we have a last discussion of how the following step is planned and what information from this chapter will be translated into the rest of the thesis.
+%Finally explain the different passive approaches: 
+%Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
+The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
 \subsection{All-in solutions}
 \subsubsection{Exposure}
@@ -654,6 +629,19 @@ INCLUDE A DISCUSSION OF WHY WE PRESENT THIS PAPERS (to look for new features pro
 
 
 \subsection{related papers}
+
+%%%%% find where it belong
+
+
+\cite{detection5} 
+"DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
+(1) queries to CnC servers come only from botnet members (fixed IP address space size), 
+(2) botnet members migrate and act at the same time, which leads to temporary and synchronized DNS queries, 
+(3) botnets usually use DynamicDNS (DDNS) for CnC servers. 
+For a botmaster to keep its bots hidden and portable, he relies on DNS to rally infected hosts. In botnets, DNS queries can appear for many reasons. They appear during rallying process after infection, during malicious activities like spam or DoS attacks, during CnC server migration, during CnC server IP address change, or after CnC server or network link failure. Based on the aforementioned five situations of DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, they group DNS query data using the domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet
+DNS queries are detected using a numerically computed some similarity factor [20] This algorithm cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
+After that, it removes redundant DNS queries. The next step will be to compare IP lists of different domain name with same size of IP list, because bots use two different domain names for the CnC server during migration [20]. These algorithms are protocol and structure independent and are capable of detecting unknown and encrypted botnets. However, these are not for real-time detections and have low accuracy for small networks. Furthermore, they are very sensitive to threshold values which need to be chosen very carefully to balance false positives and false negative rates.
+
 \subsubsection{Domain-flux}
 TODO: domain-flux can is mostly about analyzing domain names, here is a list of papers that attempt to do that with different metrics and features:  
 \cite{dns-traffic}\\
@@ -839,6 +827,5 @@ In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunnel
 
 \subsubsection{Behavioral}
 
-w
 
 
