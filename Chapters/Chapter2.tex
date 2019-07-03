@@ -521,7 +521,7 @@ is the probability of the kth property that has the value of xk given X in class
 
 \section{Botnet detection related papers}
 \subsection{classification of botnet research and detection}
-In this section, we are going to present the current state of the botnet detection taxonomy, show the weaknesses and strengths of each method and finish by showing the current state of the art of the research on passive traffic analysis for botnet detection which is the method this thesis is dedicated to.\\
+In this section, we are going to present the current state of the botnet detection taxonomy, show the weaknesses and strengths of each method and end with the current state of the art of the research on passive traffic analysis for botnet detection which is the method this thesis is dedicated to.\\
 
 \subsubsection{Taxonomy of Botnets}
 
@@ -529,7 +529,7 @@ In this section, we are going to present the current state of the botnet detecti
 %%%% SYSTEMS
 \paragraph{Detection systems}In a recent survey\cite{survey1} of the state of the art regarding Botnet detection based on DNS traffic analysis\cite{survey}, they present a taxonomy of botnet detection techniques. As we can see on the figure (botnet\_detection\_taxonomy)there are 2 type of systems used for detection: Honeypots and IDS. Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information out of the behavior of the malicious actor on the host. IDS aim at analyzing the network and alert the security analysts of any malicious/suspicious traffic. IDS are divided into 2 techniques. An older one based on signatures and newer one based on abnormal behavior.\\\\
 %%%% IDS SIGNATURE-BASED
-\paragraph{A legacy problem} A big trend among companies for a long time was  a signature-based detection in their Intrusion Detection Systems(IDS)\cite{bot-ml}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets but remains weak to any new ones\cite{snort}. The recent introduction of other methods have been mostly motivated by the goal to solve this issue.
+\paragraph{A legacy problem} A big trend among companies for a long time was a signature-based detection in their Intrusion Detection Systems ( IDS )\cite{bot-ml}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets but remains weak to any new ones\cite{snort}. The recent introduction of other methods have been mostly motivated by the goal to solve this issue.
 \\\\
 %%%% NETWORK-BASED
 \paragraph{Where are botnets detected?} In the anomaly detection technique, we have different locations that researchers have found relevant data. Directly on the host affected and throughout the network the host belongs to.
@@ -543,8 +543,8 @@ In this section, we are going to present the current state of the botnet detecti
 \paragraph{What are the types of approaches for detection?}
 They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: deep packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
 \\\\
-This taxonomy applies to all botnets detection using different protocols and topologies. 
-Let us now analyze the particularities of the DNS protocol and more particularly the passive traffic analysis approach that we have chosen to study in this thesis because of the progress and possibilities shown around those techniques.
+This taxonomy applies to all botnets detection using different protocols. 
+Let us now analyze the particularities the passive traffic analysis of the DNS protocol approach. The interest to study this part of the taxonomy comes from the progress it has shown and the large amount of possibilities around those techniques.
 
 \subsubsection{Passive DNS detection Techniques}
 
@@ -562,7 +562,7 @@ In the machine learning realm, these are some of the techniques used: clustering
 \\\\
 As explained in the abuses of the DNS protocol, a new type of detection techniques have appeared that aim at finding bots evading the more usual detection techniques. 
 
-\subsubsection{research review}
+\subsection{research review}
 Now that we know the detection techniques used against botnets for different topologies and evading techniques. Here is a survey of the research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter.
 %%%%%%%% TO BE REVIEWED
 Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
@@ -591,41 +591,13 @@ Secondly, to achieve our goal towards improving these solutions, the objective i
 
 The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
-\subsection{All-in solutions}
 \subsubsection{Exposure}
 
 \cite{exposure}
 
 \quote{EXPOSURE, a system that employs large-scale, passive DNS analysis techniques to detect domains that are involved in malicious activity. They use 15 features extracted from DNS traffic.}\\
 
-\paragraph{Time-based}
-When we analyse many requests to a particular domain over
-time, patterns indicative of malicious behaviour may emerge.\\
-These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 4 features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
-\paragraph{DNS answer based}
-Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
-Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
-\begin{itemize}[noitemsep]
-\item the number of different IP addresses that are resolved for a given domain during the experiment window
-\item the number of different countries that these IP addresses are located in
-\item the reverse DNS query results of the returned IP addresses
-\item the number of distinct domains that share the IP addresses that resolve to the given domain (false positive can be reduced with google reverse DNS which will have hosting providers in top answers)
-\end{itemize}
-\paragraph{TTL value based}
-Low TTL and Round-Robin DNS: \\
-\begin{itemize}[noitemsep]
-\item high availability (Content Delivery Networks (CDNs))
-\item botnets using this, makes them resistant to DNS Blacklists(DNSBL) and take downs. Often using Fast-Flux Service Networks (FFSN).
-\end{itemize}
-Because FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain, it explains the purpose of the TTL features.
-\paragraph{Domain name based}
-Finally 2 simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).
 
-This can be noticed with 2 simple features:\\
-\begin{itemize}[noitemsep]
-\item ratio numerical chars to length of domain name
-\item length of the longest meaningful substring to length of domain name
-\end{itemize}
 \includegraphics[scale=.3]{img/exposure_features.png}
 
 
@@ -651,22 +623,7 @@ DGA specific\\
 
 Domain flux is mainly used with DGAs and so here are some papers that have proposed an approach to detect it.
 
-In \cite{dga}, they analyse the basic features that are common to most domain generated by DGA. The first is the length that can be an identifier because DGAs have long domain name. Recent DGAs have shown to have shorter lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics. They end with 2 more advanced features that cover the shortcomings of the primitive ones. They propose these features to detect DGAs:\\\\
-\begin{tabular}{|l|}
-\hline
-length of the domain name excluding TLD (top level domain)\\
-\hline
-Number of vowels in the Second Level Domain (SLD)\\
-\hline
-Number of consonants in the SLD\\
-\hline
-Number of digits in the SLD\\
-\hline
-SLD trigram entropy\\
-\hline
-SLD trigram conditional probability\\
-\hline
-\end{tabular}
+In \cite{dga}, they analyse the basic features that are common to most domain generated by DGA. The first is the length that can be an identifier because DGAs have long domain name. Recent DGAs have shown to have shorter lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics. They end with 2 more advanced features that cover the shortcomings of the primitive ones. 
 \\
 
 These 6 features are very simple but have obtained really good results. The reason for the last 2 features is to improve the quality of the classification since some of the features could belong to botnets or legit domains. The definition of the features is explained in the section where this approach is analysed.
@@ -682,116 +639,24 @@ In \cite{phoenix}, they explain the shortcomes of some of the other approaches. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 For IP flux, most papers have similar features they propose to detect fast-flux. The big challenge is to find the small differences and detect malicious fast-flux networks(FFSN) from content delivery networks(CDNs). Both use fast-flux for different reasons such as load balancing, high availability and evasion.\\
 The features most papers \cite{honeynet}\cite{ff2}\cite{ff3}bring forward are shown on the figures below\cite{ff_botconf}, and listed here:\\\\
-\begin{tabular}{|l|}
-\hline
-Numerous unique A records for a domain\\
-\hline
-Numerous unique NS records for a  domain\\
-\hline
-Different Autonomous Systems (ASN) for the IPs of linked to the same domain\\
-\hline
-Different countries for the IPs of linked to the same domain\\
-\hline
-Short Time-To-Live (TTL)\\
-\hline
-\end{tabular}
 
-also 
-
-Some features for FF detection: 
-nb of A records returned: 1-3 normal, 5 or more ff 
-nb of NS: normal -> small, ff -> several NS
-several A records for the NS AS: small nb of A from 1 AS -> normal,
-located in different AS -> ff 
-Hardware and IP: range of IP is diverged -> ff 
-No physical agent -> ff 
-no guarantee uptime -> ff
 \cite{ff1}
 \includegraphics[scale=.7]{img/ff_features.jpg}\\
 \includegraphics[scale=.6]{img/ff_features_2.png}
 \\We present now the different features and approaches proposed to distinguish the CDNs from FFSN.\\
 
 Before the approach taken by \cite{ff2}, most of the detection was based on DNS Blacklisting (DNSBL), their new approach was a passive analysis of recursive DNS traffic. Recursive DNS  when your query is send to your DNS server, it starts by checking its cache and then will recursively ask other DNS servers until finding the address. Their purpose was to allow direct analysis of DNS requests and detect malicious ones. They want to improve the HoneyNet\cite{honeynet} features(short time-to-live (TTL), set of resolved IPs returned at each query changes rapidly, usually after every TTL, the overall set of resolved IPs obtained by querying the same domain name over time is often very large, the resolved IPs are scattered across many different networks)\\
-They start by applying filters to cluster the different networks of FF using the list above. On these clusters they then applied statistical supervised algorithms to do the classification. They used a base of features provided by \cite{fluXOR} and added their own. \\It starts with the passive features: \\\\
-\begin{tabular}{|l|}
-\hline
-Number of resolved IPs\\
-\hline
-Number of domains (in a cluster = domains with similar IPs)\\
-\hline
-Avg. TTL per domain in a cluster\\
-\hline
-Network prefix diversity = ratio between the number of distinct\\ /16 network prefixes and the total \\
-\hline
-number of IPs (measures the scattering)\\
-\hline
-Number of distinct domain names that resolved to at least one of \\the IP addresses in the considered cluster\\
-\hline
-IP Growth Ratio. This represents the average number
-of new IP\\ addresses discovered per each DNS response related to any domain\\
-\hline
-\end{tabular}
+They start by applying filters to cluster the different networks of FF using the list above. On these clusters they then applied statistical supervised algorithms to do the classification. They used a base of features provided by \cite{fluXOR} and added their own. \\It starts with the passive features: 
 \\\\
-Then the active ones:\\\\
-\begin{tabular}{|l|}
-\hline
-Autonomous System (AS) diversity (ratio between the number of distinct\\ ASs where the IPs of a cluster reside and the total number of resolved IPs. \\Same for the following diversities)\\
-\hline
-BGP prefix diversity\\
-\hline
-Organization diversity\\
-\hline
-Country Code diversity\\
-\hline
-Dynamic IP ratio (ratio of dynamic vs total IPs using keywords in reverse\\ DNS lookups)\\
-\hline
-Average Uptime Index (average uptime for the IPs in a cluster,\\ Uptime tested through probing)\\
-\hline
-\end{tabular}
 
 They use these features on a Decision Tree classifier (efficient, easy to interpret and auto pruning of useless features) to classify malicious and legit FF networks.\\
-
-
+\\
 In the following paper\cite{ff3}, they propose some novel features compared to the other papers. To avoid redundancy, only the features not explored in previous papers will be detailed. In the paper they present the restrictions FFSNs face compared to CDNs: FFSN cannot choose the location which makes the IP address very scattered and no Uptime garantee. Possible distinctions: the lack of control results in number of unique A records returned different and the number of NS records in a single lookup (because the NS can be hosted inside the FFSN and return many NS records whereas legitimate CDNs return a very small set of NS records). The IP diversity restriction brings another feature which is the number of unique ASNs. Legitimate CDNs tend to return a single ASN for all their A records where FFSN are dispersed.\\
-They decide not to include TTLs as a feature because both CDNs and FFSN have low TTLs. Finally,  they introduce functions of the different features above to classify FFSN and CDNs.\\
-\textbf{Fluxiness} is the total of unique A records for a domain divided by the number of A records returned for each lookup. This measures consistency in the unique A records returned. \\
-\textbf{Flux-score} an hyperplane that separates benign from malicious fast flux where $ x = (n_A,n_{ASN},n_{NS})$ (unique A records, ASN and SN records) and the plane is defined as follows\\
-%\begin{equation}
-%F(x) = 
-%\begin{cases}
-%	w^Tx-b > 0  & \text{x is a FFSN}\\
-%	w^Tx-b \leq 0 & \text{x is CDN}\\
-%\end{cases}
-%\end{equation}
-From $F(x)$ they induce a metric $f(x) = w^Tx$ with w the weight of the vector and b a bias. $f(x) > b$ would mean x is a FFSN. By empirically testing this on a labelled dataset they determined the value of w and b. $w = (1.32,18.54,0)$ and $b =142.38$. We can notice that $n_{NS}$ does not have any impact. It could be argued that FFSN will try to mimic CDNs to have the same metrics, but as argued earlier, the metrics used take into account the restrictions FFSN have. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites.\\
+They decide not to include TTLs as a feature because both CDNs and FFSN have low TTLs. Finally,  they introduce functions of the different features above to classify FFSN and CDNs:fluxiness and flux-score\\
+It could be argued that FFSN will try to mimic CDNs to have the same metrics, but as argued earlier, the metrics used take into account the restrictions FFSN have. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites.\\
 
 %Detection of Fast-flux Networks using Various DNS Feature Sets
-This paper\cite{ff5} regroups the large majority of features encountered in the other papers accompanied with to some novel additions resulting a long list of 16 features: \\\\
-\begin{tabular}{c|l}
-Type & Features\\
-\hline
- & Number of unique A records\\
-DNS Answer-based &  Number of NS records\\
- & DNS packet size\\
- & TC (Tnmcated) Flag is set\\
-\hline
- & Edit Distance\\
-Domain name-based & KL (Kullback-Leibler) Divergence (unigrams and bigrams)\\
- & Jaccard Index (unigrams and bigrams)\\
-\hline
- & Time Zone Entropy of A records\\
-Spatial-based & Time Zone Entropy of NS records\\
- & Minimal service distances (mean and standard deviation)\\
-\hline
- & Number of distinct autonomous systems\\
-Network-based & Number of distinct networks\\
- \hline
- & Round Trip Time of DNS request\\
-Timing-based & Network delay (mean and standard deviation)\\
-& Processing delay (mean and standard deviation)\\
-& Document fetch delay (mean and standard deviation)\\
-\end{tabular}
-\\
+This paper\cite{ff5} regroups the large majority of features encountered in the other papers accompanied with to some novel additions resulting a long list of 16 features.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -801,26 +666,10 @@ Timing-based & Network delay (mean and standard deviation)\\
 In \cite{tunn1}, use of TXT RR with segmented and encrypted data.
 Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy".Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead.
 
-The complete list of features for the Rdata:
-\begin{itemize}[noitemsep]
-\item number of distinct byte values in m
-\item minimum byte value in m
-\item maximum byte value in m
-\item number of ASCII capital letters (byte values 65-90) in m
-\item number of ASCII digits (byte values 48-57) in m
-\item length of m in bytes
-\item absolute difference of the statistical byte entropy at given length of m and the entropy of m
-\item size of all Rdata messages
-\end{itemize}
+
 They expect these behavioural communication features to be effective enough in order to extend a classifier based on the rdata features.
 \\\\
-In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. The features are:
-\begin{itemize}[noitemsep]
-\item x-axis: destination IP
-\item y-axis: character count
-\item radius: hostname length
-\item colour: request type
-\end{itemize}
+In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. 
 
 \cite{dns-tun}
 
