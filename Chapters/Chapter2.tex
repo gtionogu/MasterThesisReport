@@ -339,10 +339,10 @@ There are 2 methods of searching through the different DNS server from the \text
 %TODO: Present the different abuses of the DNS protocol to evade detection
 %(use previous descriptions but revisit writing and add more visualization and explanations on how exactly it works. (it is important for future arguments regarding the evasion methods. We need to inform our reader to be able to convince him later of our arguments)
 
-\paragraph{why would botnets abuse the DNS protocol?}
+\paragraph{Why would botnets abuse the DNS protocol?}
 DNS is a very attractive protocol for its versatility. Because DNS is used by all machines to locate other machines, DNS traffic is very normal in any network. Furthermore, the DNS protocol offers a lot of flexibility regarding its uses and this is where attackers have started using DNS for other purposes.
 Looking up through DNS requests the CnC servers is an essential part in the lifecycle of a botnet. This has also made aware malicious actors that DNS traffic would be inspected to track them or detect them. To make the CnC lookup more resilient, botmasters searched multiple ways to lookup hostnames or play around them. This is where certain features of the DNS protocol became handy to fulfill that goal.
-\paragraph{what features did they exploit ?}
+\paragraph{What features did they exploit ?}
 Because of the growth of the internet, content providers have built complex infrastructures. Their goal is to sustain the load of the traffic and provide the best services. Some of the things implemented are load balancers, data fail-over, high availability through replication , security with end-to-end encryption, etc. To do so, they can use DNS features that allow to manage this type of architectures effectively. These features have inspired malicious actors with the following misuses: fast-flux, domain flux and DNS tunneling.
 
 \subsubsection{Domain flux}
@@ -400,7 +400,9 @@ IMAGE tunneling (cf /img)
 
 
 \section{Machine learning approach}
-\subsection{Machine learning} is a mathematical study of algorithms and statistics that allow to learn and improve a certain task without being directly programmed. The goal is to improve the performance of specific tasks by building models of the problems. \cite{ml-def}
+We use machine learning in our thesis to create models around certain behaviors botnets show to helps us detect them from the legitimate traffic. The next sections will detail what machine learning is, how it works and its implementation in the thesis.
+\subsection{Machine learning}
+Machine learning (ML) is a mathematical study of algorithms and statistics that allow to learn and improve a certain task without being directly programmed. The goal is to improve the performance of specific tasks by building models of the problems. \cite{ml-def}
 
 \subsection{Machine learning for botnet detection}
 The goal of botnet detection is to distinguish which traffic is normal and which is malicious. We are interested in one of the tasks that machine learning algorithms excel at which is classification. After training the models, classification algorithms are able to predict the belonging of new data.
@@ -432,17 +434,17 @@ These categories are based on the training data given to the algorithms. \textbf
 \textbf{Unsupervised algorithms} use unlabeled data as input. This type of algorithm will group data based on similar values for different features.
 Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
 \\
-ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
+TODO: ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
 \\
 Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.
 \\
 \\
-Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well to discover additional features in the \textbf{features selection} step.
+Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
 
 \subsubsection{Training and testing}
 We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation\cite{10-fold}. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10 to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
 
-ADD A CAPTION EXPLAINING 10-fold
+TODO:  A CAPTION EXPLAINING 10-fold
 
 \subsubsection{Analysis of the model's prediction abilities}
 Finally, we need metrics that will provide us information of the experiment. A very common way to do so is using the confusion matrix. This provides 4 main metrics that can then be exploited for more detailed information. There are other metrics \cite{ml-metrics} that can be introduced as well such as: 
@@ -458,9 +460,9 @@ These metrics will allow us to understand what can be improved and the reason of
 A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters are an important part. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
 
 \subsection{Algorithm selection?}
-Here we will present a list of algorithms
+Here we present the algorithms we will use.
 
-CHECK HOW HE PRESENTS THE ALGORITHMS
+TODO: CHECK HOW HE PRESENTS THE ALGORITHMS
 
 \subsubsection{K-Nearest Neighbor}
 kNN (k-Nearest Neighbor) is one of the simplest supervised machine learning algorithms.
@@ -537,7 +539,7 @@ In this section, we are going to present the current state of the botnet detecti
 \item \textbf{host based behavior}: observable activity on the hosts infected by the botnets. 
 \item \textbf{global correlated behavior}: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
 \end{itemize}
-%%%% PASSIVE
+%%%% PASSIVE APPROACH
 \paragraph{What are the types of approaches for detection?}
 They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: deep packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
 \\\\
@@ -561,11 +563,13 @@ In the machine learning realm, these are some of the techniques used: clustering
 As explained in the abuses of the DNS protocol, a new type of detection techniques have appeared that aim at finding bots evading the more usual detection techniques. 
 
 \subsubsection{research review}
-Now that we know the techniques used by Botmaster to set their botnets into certain topologies and evading the best they can current detection systems. We are now presenting the research papers that have tried to detect botnets using these different evasion techniques. 
+Now that we know the detection techniques used against botnets for different topologies and evading techniques. Here is a survey of the research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter.
 %%%%%%%% TO BE REVIEWED
 Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
 First we will present the current all-in solutions that exist, the features they extract and what model they have created. 
 Secondly, to achieve our goal towards improving these solutions, the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
+%%%%%%%%%%%%%%%%%%%%%%
+
 ========================================================================================
 %CHECK PAPERS and EXTRACT VALUE
 
@@ -584,6 +588,7 @@ Secondly, to achieve our goal towards improving these solutions, the objective i
 
 %Finally explain the different passive approaches: 
 %Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
+
 The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
 \subsection{All-in solutions}
@@ -622,10 +627,6 @@ This can be noticed with 2 simple features:\\
 \item length of the longest meaningful substring to length of domain name
 \end{itemize}
 \includegraphics[scale=.3]{img/exposure_features.png}
-
-
-INCLUDE A DISCUSSION OF WHY WE PRESENT THIS PAPERS (to look for new features proposed in other papers)
-
 
 
 \subsection{related papers}
