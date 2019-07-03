@@ -49,6 +49,38 @@ SLD trigram conditional probability\\
 \hline
 \end{tabular}
 
+\cite{localbotnet}
+\begin{tabular}{c|l}
+\hline
+ & LMS\\
+Domain-name based & numerical / character\\
+& Ngram\\
+\hline
+ & DBForwardBackwardSimilarity\\
+DNS-based & DBDialup\\
+& Nb distinct IP addresses\\
+& Nb distinct Countries\\
+& Nb distinct Domain Share IP\\
+& NXDomain\\
+& MXRecordPresent\\
+& SOA (min, exp, refresh, retry)\\
+& TXTRecordLength\\
+\hline
+ & Nb distinct AS\\
+AS-based & Reputation AS\\
+& Size of AS\\
+\hline
+ & Daily similarity\\
+Time-based & Repeating patterns\\
+& ShortLife\\
+\hline
+ & Average TTL\\
+TTL-based & Nb distinct TTL values\\
+& Nb TTL changes\\
+& \% usage of TTL ranges\\
+& Std deviation TTL\\
+\end{tabular}
+
 Fast flux
 
 \cite{honeynet}
@@ -63,7 +95,23 @@ Numerous unique NS records for a  domain\\
 \hline
 Different Autonomous Systems (ASN) for the IPs of linked to the same domain\\
 \hline
-Different countries for the IPs of linked to the same domain\\
+Different countries\cite{dga}
+They propose these features to detect DGAs:\\\\
+\begin{tabular}{|l|}
+\hline
+length of the domain name excluding TLD (top level domain)\\
+\hline
+Number of vowels in the Second Level Domain (SLD)\\
+\hline
+Number of consonants in the SLD\\
+\hline
+Number of digits in the SLD\\
+\hline
+SLD trigram entropy\\
+\hline
+SLD trigram conditional probability\\
+\hline
+\end{tabular} for the IPs of linked to the same domain\\
 \hline
 Short Time-To-Live (TTL)\\
 \hline
