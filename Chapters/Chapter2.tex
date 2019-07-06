@@ -602,6 +602,8 @@ The first step in the research was to find the models that would be the current 
 \paragraph{localbotnet}
 In This paper\cite{localbotnet}, they propose a very large set of 24 features meant to detect botnets in networks. These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
 
+\paragraph{dns-reputation}
+Antonakakis et al. propose a different system called 'Notos' for all-in solutions based on dynamic reputation. They studied the different features  
 
 \includegraphics[scale=.3]{img/exposure_features.png}
 
@@ -616,13 +618,13 @@ In This paper\cite{localbotnet}, they propose a very large set of 24 features me
 (1) queries to CnC servers come only from botnet members (fixed IP address space size), 
 (2) botnet members migrate and act at the same time, which leads to temporary and synchronized DNS queries, 
 (3) botnets usually use DynamicDNS (DDNS) for CnC servers. 
-For a botmaster to keep its bots hidden and portable, he relies on DNS to rally infected hosts. In botnets, DNS queries can appear for many reasons. They appear during rallying process after infection, during malicious activities like spam or DoS attacks, during CnC server migration, during CnC server IP address change, or after CnC server or network link failure. Based on the aforementioned five situations of DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, they group DNS query data using the domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet
-DNS queries are detected using a numerically computed some similarity factor [20] This algorithm cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
+For a botmaster to keep its bots hidden and portable, he relies on DNS to rally infected hosts. In botnets, DNS queries can appear for many reasons. They appear during rallying process after infection, during malicious activities like spam or DoS attacks, during CnC server migration, during CnC server IP address change, or after CnC server or network link failure. Based on the aforementioned five situations of DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, they group DNS query data using the domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet DNS queries are detected using a numerically computed some similarity factor [20] This algorithm cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
 After that, it removes redundant DNS queries. The next step will be to compare IP lists of different domain name with same size of IP list, because bots use two different domain names for the CnC server during migration [20]. These algorithms are protocol and structure independent and are capable of detecting unknown and encrypted botnets. However, these are not for real-time detections and have low accuracy for small networks. Furthermore, they are very sensitive to threshold values which need to be chosen very carefully to balance false positives and false negative rates.
 
 \subsubsection{Domain-flux}
-TODO: domain-flux can is mostly about analyzing domain names, here is a list of papers that attempt to do that with different metrics and features:  
-\cite{dns-traffic}\\
+Domain-fluxing detection is mostly about analyzing domain names, here are the papers that attempt to do that with different metrics and features.
+  
+Truong et al. \cite{dns-traffic}\\
 DGA specific\\
 \cite{phoenix}
 
@@ -663,7 +665,7 @@ It could be argued that FFSN will try to mimic CDNs to have the same metrics, bu
 %Detection of Fast-flux Networks using Various DNS Feature Sets
 This paper\cite{ff5} regroups the large majority of features encountered in the other papers accompanied with to some novel additions resulting a long list of 16 features.
 
-This paper \cite{dnsfailure} explores the detection possibilities in the DNS failed queries due to the fast fluxing behavior.
+Yadav et al. \cite{dnsfailure} explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
