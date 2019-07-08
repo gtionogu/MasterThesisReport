@@ -593,17 +593,28 @@ The first step in the research was to find the models that would be the current 
 
 \subsubsection{All-in}
 
-\paragraph{exposure}
-\cite{exposure}
+\paragraph{Exposure}
 
-\quote{EXPOSURE, a system that employs large-scale, passive DNS analysis techniques to detect domains that are involved in malicious activity. They use 15 features extracted from DNS traffic.}\\
-
+Bilge et al. \cite{exposure} propose Exposure, a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
 
 \paragraph{localbotnet}
 In This paper\cite{localbotnet}, they propose a very large set of 24 features meant to detect botnets in networks. These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
 
 \paragraph{dns-reputation}
 Antonakakis et al. propose a different system called 'Notos' for all-in solutions based on dynamic reputation. They studied the different features  
+- recursively collected historical dns information
+- domain name reputation (already tons of IP rep systems)
+- network and zone features capturing resource provisioning, usages, and management of domains.
+- model training through malicious and legitimate domain based on alexa, spam-trap, malware samples.
+- features: network/zone and evidence
+vocabulary: 
+d domain
+Zone(d) -> subdomains d
+D group of domains 
+A(D) -> IPs ever pointing to D
+a ip address
+BGP(a) -> all ips with bgp prefix of a
+AS(a) -> IPs in the Autonomous system of a
 
 \includegraphics[scale=.3]{img/exposure_features.png}
 
