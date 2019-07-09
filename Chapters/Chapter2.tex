@@ -649,7 +649,7 @@ It could be argued that FFSN will try to mimic CDNs to have the same metrics, bu
 %Detection of Fast-flux Networks using Various DNS Feature Sets
 This paper\cite{ff5} regroups the large majority of features encountered in the other papers accompanied with to some novel additions resulting a long list of 16 features.
 
-Yadav et al. \cite{dnsfailure} explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -676,34 +676,32 @@ The first step in the research was to find the models that would be the current 
 
 \subsubsection{Combined approaches}
 
-\paragraph{Exposure}
+\paragraph{Exposure solution}
+Bilge et al. \cite{exposure} created Exposure, a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
 
-Bilge et al. \cite{exposure} propose Exposure, a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
+\paragraph{Time-efficient local botnet infections}
+Heuer et al. did a case study on local infections related to botnets\cite{localbotnet}. They propose a very large set of 24 features meant to detect botnets in networks . These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
 
-\paragraph{localbotnet}
-In This paper\cite{localbotnet}, they propose a very large set of 24 features meant to detect botnets in networks. These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
+\paragraph{Notos}
+Antonakakis et al. \cite{dns-reputation} propose a different system called 'Notos' based on dynamic reputation od domain names. They studied the different aspects around the historical DNS data of domains that could be relevant to group domains based on their legitimacy. They use 3 categories of features: network, zone and evidence. They opted for a unsupervised approach using the clustering algorithm X-means. The purpose of this paper is to utilize some of the historical DNS features to be used in our all-in solution. Specifically, using some of the classes of domains defined by the authors as categorical features ( popular domains, common domains, Akamai domains,  CDN domains and dynamic DNS domains ).
 
-\paragraph{dns-reputation}
-Antonakakis et al. propose a different system called 'Notos' based on dynamic reputation od domain names. They studied the different aspects around the historical DNS data of domains that could be relevant to group domains based on their legitimacy. They use 3 categories of features, network, zone and evidence. %%%%% USE z-thesis
+\paragraph{DNS failures}
+Yadav et al. \cite{dnsfailure} explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
 
 
-
- based on which they used as input for a reputation function that provides a score for each domain and classifies it.
-What is interesting is that they showed that these features worked in a small environment as well which will compliment the group of features we'll use in our research.
-
-- recursively collected historical dns information
-- domain name reputation (already tons of IP rep systems)
-- network and zone features capturing resource provisioning, usages, and management of domains.
-- model training through malicious and legitimate domain based on alexa, spam-trap, malware samples.
-- features: network/zone and evidence
-vocabulary: 
-d domain
-Zone(d) -> subdomains d
-D group of domains 
-A(D) -> IPs ever pointing to D
-a ip address
-BGP(a) -> all ips with bgp prefix of a
-AS(a) -> IPs in the Autonomous system of a
+%- recursively collected historical dns information
+%- domain name reputation (already tons of IP rep systems)
+%- network and zone features capturing resource provisioning, usages, and management of domains.
+%- model training through malicious and legitimate domain based on alexa, spam-trap, malware samples.
+%- features: network/zone and evidence
+%vocabulary: 
+%d domain
+%Zone(d) -> subdomains d
+%D group of domains 
+%A(D) -> IPs ever pointing to D
+%a ip address
+%BGP(a) -> all ips with bgp prefix of a
+%AS(a) -> IPs in the Autonomous system of a
 
 \includegraphics[scale=.3]{img/exposure_features.png}
 
