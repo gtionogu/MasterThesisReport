@@ -688,6 +688,24 @@ Antonakakis et al. \cite{dns-reputation} propose a different system called 'Noto
 \paragraph{DNS failures}
 Yadav et al. \cite{dnsfailure} explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
 
+A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleiades. First, following the same machine learning idea of Notos but applied to the DGA algorithms, meaning they applied the X-means clustering algorithm to DGA algorithms. Secondly, they used a boosted decision tree classification algorithm (Alternating Decision Tree) to test associations of an NXDomain's response to  DGAs. Finally, they created Hiddem Markov models for each of the DGAs domains to be able to classify the responses to a DGA directly. 
+
+%P1 Mean, median and standard deviation of 1-gram
+%P2 Mean, median and standard deviation of 2-gram
+%P3 Mean, median and standard deviation of 3-gram
+%P4 Mean, median and standard deviation of 4-gram
+%P5 Mean and standard deviation of entropy(d)
+%P6 Mean and standard deviation of entropy(2LD)
+%P7 Mean and standard deviation of entropy(3LD)
+%P8 Mean, median, standard deviation and variance of domain name length
+%P9 Mean, median, standard deviation and variance of # of domain levels
+%P10 Number of distinct characters
+%P11 Number of distinct TLD
+%P12 Ratio of .com TLD
+%P13 Ratio of other TLD
+%P14 Mean, median and standard deviation of the occurrence frequency distribution for the different TLDs
+%Table 8: Pleiades features
+
 
 %- recursively collected historical dns information
 %- domain name reputation (already tons of IP rep systems)
