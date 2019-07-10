@@ -635,27 +635,23 @@ Nazario et al. \cite{ff1} showed visually how the FF traffic features present th
 \\
 Perdisci et al. \cite{ff2} aimed at improving the Honeynet's features \cite{honeynet}. Their method consisted in collecting recursive DNS logs for a period of time, filter most of the non-fast-fluxing traffic. Secondly, they grouped the domains names using different features such as similar ISPs, same CDN. And finally, they classify, using a Decision Tree algorithm, the clusters of domain names as malicious or legitimate. They used a base of features provided by \cite{fluXOR} and added their own. We used some of the features they presented for our classifiers as well as the traffic volume reduction filters to improve some of the features already on-boarded. \\
 \\
-In the following paper\cite{ff3}, they propose some novel features compared to the other papers. To avoid redundancy, only the features not explored in previous papers will be detailed. In the paper they present the restrictions FFSNs face compared to CDNs: FFSN cannot choose the location which makes the IP address very scattered and no Uptime garantee. Possible distinctions: the lack of control results in number of unique A records returned different and the number of NS records in a single lookup (because the NS can be hosted inside the FFSN and return many NS records whereas legitimate CDNs return a very small set of NS records). The IP diversity restriction brings another feature which is the number of unique ASNs. Legitimate CDNs tend to return a single ASN for all their A records where FFSN are dispersed.\\
-They decide not to include TTLs as a feature because both CDNs and FFSN have low TTLs. Finally,  they introduce functions of the different features above to classify FFSN and CDNs:fluxiness and flux-score\\
-It could be argued that FFSN will try to mimic CDNs to have the same metrics, but as argued earlier, the metrics used take into account the restrictions FFSN have. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites.\\
+In the following paper, Holz et al. cite{ff3} propose some novel features compared to the other papers. They presented the restrictions FFSNs face compared to CDNs: problems such as location and uptime that FFSN can't garantee. From all the features they captured they introduced functions to classify FFSN and CDNs:fluxiness and flux-score. They even considered the possibility of botnets mimicking CDNs but the metrics used already take into account the restrictions FFSN have that can't be avoided. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites. We focused our interest in the 2 functions presented in the paper as new features for our classifiers.
 
 %Detection of Fast-flux Networks using Various DNS Feature Sets
-This paper\cite{ff5} regroups the large majority of features encountered in the other papers accompanied with to some novel additions resulting a long list of 16 features.
-
-
+Celik et al. \cite{ff4} have regrouped the large majority of features encountered in the other papers accompanied with some novel additions. They have 5 categories of features: answer-based, domain name-based, spatial-based, network-based and timing-based. We added to our list of features the ones we hadn't seen yet such as the spatial approach looking at the entropy of time zones related to A or NS records. The second interesting set of features we attempted to use in our thesis were the timing-based featured analyzing delays related to different actions (network, processing and document fetching) but we realized that we didn't have the capacity of building the infrastructure necessary to analyze them.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{DNS tunneling}
 %memoire
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-In \cite{tunn1}, use of TXT RR with segmented and encrypted data.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Another evasion technique of botnets that exploits the DNS protocol is the concealing of data exchanges through DNS tunneling. We explore below some of the studies that have proposed features and methods to detect such behavior.
+
+In \cite{tunn1}, Dietrichyz et al. analyze the use of TXT RR with segmented and encrypted data. Their study resulted in a set of features mostly analyzing the strings characteristics.
 Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy".Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead.
+They expect these behavioural communication features to be effective enough in order to extend a classifier based on the rdata features.\\
 
-
-They expect these behavioural communication features to be effective enough in order to extend a classifier based on the rdata features.
-\\\\
-In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. 
+In this article written by G. Farnham \cite{tunn}, he proposes a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. 
 
 \cite{dns-tun}
 
@@ -663,14 +659,20 @@ In this paper\cite{tunn}, they propose a visual approach to detecting DNS tunnel
 
 \subsubsection{Behavioral}
 
+
+
 \subsubsection{shadowing}
 
-The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
+
 
 \subsubsection{Combined approaches}
+The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
 \paragraph{Exposure solution}
 Bilge et al. \cite{exposure} created Exposure, a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
+
+TODO: decide if keep them here or just present them in the feature extraction step\includegraphics[scale=.3]{img/exposure_features.png}
+
 
 \paragraph{Time-efficient local botnet infections}
 Heuer et al. did a case study on local infections related to botnets\cite{localbotnet}. They propose a very large set of 24 features meant to detect botnets in networks . These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
@@ -713,6 +715,3 @@ A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleia
 %a ip address
 %BGP(a) -> all ips with bgp prefix of a
 %AS(a) -> IPs in the Autonomous system of a
-
-\includegraphics[scale=.3]{img/exposure_features.png}
-
