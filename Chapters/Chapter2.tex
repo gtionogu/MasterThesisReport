@@ -658,11 +658,11 @@ In this article written by G. Farnham \cite{tunn}, he proposes a visual approach
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Behavioral}
-
+TODO: decide if we use the behavioral papers and if they can be of any use.
 
 
 \subsubsection{shadowing}
-
+TODO: add the summaries for 
 
 
 \subsubsection{Combined approaches}
@@ -671,7 +671,9 @@ The first step in the research was to find the models that would be the current 
 \paragraph{Exposure solution}
 Bilge et al. \cite{exposure} created Exposure, a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
 
-TODO: decide if keep them here or just present them in the feature extraction step\includegraphics[scale=.3]{img/exposure_features.png}
+TODO: decide if keep them here or just present them in the feature extraction step.
+\includegraphics[scale=.3]{img/exposure_features.png}
+\includegraphics[scale=.3]{img/exposure_architecture.png}
 
 
 \paragraph{Time-efficient local botnet infections}
@@ -715,3 +717,6 @@ A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleia
 %a ip address
 %BGP(a) -> all ips with bgp prefix of a
 %AS(a) -> IPs in the Autonomous system of a
+
+\section{Discussion}
+The detection rates obtained by Exposure are really good but they are hard to implement in a smaller environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. Furthermore, there are some features presented in the studies above that we think could improve the detection accuracy rate.
