@@ -626,13 +626,13 @@ Thomas et al. \cite{dga4} realized that during the domain generation process, mo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The behavior of IP fluxing has been well analyzed by the community and most papers propose similar features to detect fast-flux. They often differ with different settings for their experiments. On the other hand, the big challenge for our thesis was to find the features that allowed us to find differences betweent malicious fast-flux networks(FFSN) and content delivery networks(CDNs). Both use fast-flux for different reasons making it hard to differentiate.\\
 \\
-The common features presented by  \cite{honeynet}\cite{ff2}\cite{ff3}\cite{ff_botconf} bring forward the main features to detect fast-fluxing, the next papers had additional features to improve detection specifically of malicious fast-fluxing. 
-
-\cite{ff1}
+The common features presented by  Salusky et al.\cite{honeynet}, Nazario et al.\cite{ff1}, Perdisci et al.\cite{ff2}, Holz et al.\cite{ff3} and Stalmans et al.\cite{ff_botconf} bring forward the features to detect fast-fluxing in general such as a large amount of unique A RRs for a domains, numerous unique NS for a domain and different Autonomous System (ASN) for the IPs linked to the same domain. \\
+The next papers present additional features to distinguish detection specifically of the FFSN from the CDNs. \\
+\\
+Nazario et al. \cite{ff1} showed visually how the FF traffic features present themselves.
 \includegraphics[scale=.7]{img/ff_features.jpg}\\
 \includegraphics[scale=.6]{img/ff_features_2.png}
-\\We present now the different features and approaches proposed to distinguish the CDNs from FFSN.\\
-
+\\
 Before the approach taken by \cite{ff2}, most of the detection was based on DNS Blacklisting (DNSBL), their new approach was a passive analysis of recursive DNS traffic. Recursive DNS  when your query is send to your DNS server, it starts by checking its cache and then will recursively ask other DNS servers until finding the address. Their purpose was to allow direct analysis of DNS requests and detect malicious ones. They want to improve the HoneyNet\cite{honeynet} features(short time-to-live (TTL), set of resolved IPs returned at each query changes rapidly, usually after every TTL, the overall set of resolved IPs obtained by querying the same domain name over time is often very large, the resolved IPs are scattered across many different networks)\\
 They start by applying filters to cluster the different networks of FF using the list above. On these clusters they then applied statistical supervised algorithms to do the classification. They used a base of features provided by \cite{fluXOR} and added their own. \\It starts with the passive features: 
 \\\\

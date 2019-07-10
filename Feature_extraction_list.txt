@@ -95,27 +95,8 @@ Numerous unique NS records for a  domain\\
 \hline
 Different Autonomous Systems (ASN) for the IPs of linked to the same domain\\
 \hline
-Different countries\cite{dga}
-They propose these features to detect DGAs:\\\\
-\begin{tabular}{|l|}
-\hline
-length of the domain name excluding TLD (top level domain)\\
-\hline
-Number of vowels in the Second Level Domain (SLD)\\
-\hline
-Number of consonants in the SLD\\
-\hline
-Number of digits in the SLD\\
-\hline
-SLD trigram entropy\\
-\hline
-SLD trigram conditional probability\\
-\hline
-\end{tabular} for the IPs of linked to the same domain\\
-\hline
-Short Time-To-Live (TTL)\\
-\hline
-\end{tabular}
+
+
 
 \cite{ff1}
 Some features for FF detection: 
