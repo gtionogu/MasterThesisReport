@@ -407,7 +407,7 @@ Machine learning (ML) is a mathematical study of algorithms and statistics that 
 \subsection{Machine learning for botnet detection}
 The goal of botnet detection is to distinguish which traffic is normal and which is malicious. We are interested in one of the tasks that machine learning algorithms excel at which is classification. After training the models, classification algorithms are able to predict the belonging of new data.
 
-TODO: ADD DIAGRAM OF THE WORKFLOW
+IMAGE: DIAGRAM OF THE WORKFLOW (DONE)
 
 \subsection{Machine Learning workflow}
 %https://cdn-images-1.medium.com/max/2000/1*KzmIUYPmxgEHhXX7SlbP4w.jpeg
@@ -434,7 +434,10 @@ These categories are based on the training data given to the algorithms. \textbf
 \textbf{Unsupervised algorithms} use unlabeled data as input. This type of algorithm will group data based on similar values for different features.
 Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
 \\
-TODO: ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
+IMAGE: ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
+\cite{supvsunsup}
+\includegraphics[scale=.3]{img/supVsUnsup.png}
+
 \\
 Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.
 \\
