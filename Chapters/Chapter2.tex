@@ -185,7 +185,7 @@ Hierarchical topology is a tree based structure where any part of the tree can b
 \paragraph{Random - P2P}
 This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
 
-TODO
+TODO: topologies
 \paragraph{Hybrid}
 \paragraph{P2P}
 
@@ -380,7 +380,7 @@ The power of FFSN is allowing one domain name to have an unlimited number of IP 
 
 IMAGE replace these below by own pictures
 
-Normal FF\cite{review1}\\
+Normal FF\cite{survey6}\\
 \includegraphics[scale=.7]{img/normal_FF.jpg}
 single flux\\
 \includegraphics[scale=.7]{img/single_FF.jpg}
@@ -437,10 +437,7 @@ Semi-supervised algorithms is the combination of both, where the training data i
 IMAGE: ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
 \cite{supvsunsup}
 \includegraphics[scale=.3]{img/supVsUnsup.png}
-
-\\
-Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.
-\\
+Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.\\
 \\
 Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
 
@@ -532,7 +529,7 @@ In this section, we are going to present the current state of the botnet detecti
 %%%% SYSTEMS
 \paragraph{Detection systems}In a recent survey\cite{survey1} of the state of the art regarding Botnet detection based on DNS traffic analysis\cite{survey}, they present a taxonomy of botnet detection techniques. As we can see on the figure (botnet\_detection\_taxonomy)there are 2 type of systems used for detection: Honeypots and IDS. Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information out of the behavior of the malicious actor on the host. IDS aim at analyzing the network and alert the security analysts of any malicious/suspicious traffic. IDS are divided into 2 techniques. An older one based on signatures and newer one based on abnormal behavior.\\\\
 %%%% IDS SIGNATURE-BASED
-\paragraph{A legacy problem} A big trend among companies for a long time was a signature-based detection in their Intrusion Detection Systems ( IDS )\cite{bot-ml}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets but remains weak to any new ones\cite{snort}. The recent introduction of other methods have been mostly motivated by the goal to solve this issue.
+\paragraph{A legacy problem} A big trend among companies for a long time was a signature-based detection in their Intrusion Detection Systems ( IDS )\cite{detection8}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets but remains weak to any new ones\cite{snort}. The recent introduction of other methods have been mostly motivated by the goal to solve this issue.
 \\\\
 %%%% NETWORK-BASED
 \paragraph{Where are botnets detected?} In the anomaly detection technique, we have different locations that researchers have found relevant data. Directly on the host affected and throughout the network the host belongs to.
@@ -576,16 +573,16 @@ Secondly, to achieve our goal towards improving these solutions, the objective i
 %========================================================================================
 %CHECK PAPERS and EXTRACT VALUE
 
-%Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to scale, limited interactions + can be reverted by hackers to learn new evasion techniques. \cite{bot-ml}
-%IDS: monitor and look for signs 2 types\cite{survey11}: signature or anomaly based through DNS analysis(most promising) \cite{detection10}
+%Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to scale, limited interactions + can be reverted by hackers to learn new evasion techniques. \cite{detection8}
+%IDS: monitor and look for signs 2 types\cite{survey1}: signature or anomaly based through DNS analysis(most promising) \cite{detection10}
 %Anomaly detection approaches that work:  DNS Blacklist (for malware, botnets and spambots) \cite{dnsbl} and detect botnets when they try to communicate with their CnC:
 %- NXDomains \cite{detection11}
-%- recursive DNS queries detecting botnet related services \cite{detection12}
+%- recursive DNS queries detecting botnet related services \cite{ff2}
 %- DGA 
 %	1) Main DGA \cite{dga2}
 %	2) Decision tree + Bayes for DGA classification \cite{detection13} 
 %- Kopis = high level DNS query analysis (upper hierarchy)\cite{detection14}
-%- Exposure \cite{passive-dns}
+%- Exposure \cite{exposure}
 %- graph analysis \cite{dns-fail}
 %- reputation system \cite{reputation} 
 
@@ -613,7 +610,7 @@ Domain-fluxing detection is mostly about analyzing domain names, here are the pa
 \\
 Truong et al. \cite{dns-traffic} came up with an experiment allowing them to detect domains generated by humans or algorithms. This is the base-ground study of DGA detection. We use the features they propose to easily detect DGA domain names with the addition of later papers to distinguish between legitimate and malicious DGAs.\\
 \\
-Yadav et al. \cite{dga3} propose an unsupervised approach based on anomaly detection with a set of metrics analysing ngrams of the SLD. They use the Kullback-Liebler divergence measure with unigrams and bigrams, the Jaccard index between bigrams and the last feature and the Edit distance. These 3 features are used widely in the DGA detection research because of their efficiency, that is why we added them to our list of DGA features. \\
+Yadav et al. \cite{dga2} propose an unsupervised approach based on anomaly detection with a set of metrics analysing ngrams of the SLD. They use the Kullback-Liebler divergence measure with unigrams and bigrams, the Jaccard index between bigrams and the last feature and the Edit distance. These 3 features are used widely in the DGA detection research because of their efficiency, that is why we added them to our list of DGA features. \\
 \\
 Schiavoni et al. \cite{phoenix} go a step further then Truong et al. with their Pheonix project by improving the initial experiment with additional features to cluster groups of DGAs under the botnet families. Pheonix allows to associate new DGAs to certain botnets and follow the evolution of the different botnet families. We used the new features brought by Schiavoni et al. to improve our models for classification.\\
 \\
