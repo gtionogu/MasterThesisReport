@@ -387,10 +387,13 @@ double flux\\
 
 
 \subsubsection{DNS tunneling}
+
+
+
 DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
 What is positive about this abuse is that there are almost no legitimate reasons for this application, making obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
 
-TODO: improve section with this study: \cite{tunneling2}
+Paloalto's research unit provided a nice medium level overview of DNS tunneling\cite{tunneling2}. They explain how the protocol can be used either to exfiltrate or infiltrate data with infected machines. They show how different parts of the protocol can be exploited. Using the request queries names to embed information directly in the domain name queried with encoded data, using the type of RR to indicate the CnC the status or type of response expected, and finally, using the type of the response codes (NXDOMAINS or NOERROR) to define the malicious response.
 
 IMAGE tunneling (cf /img)
 
