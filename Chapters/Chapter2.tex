@@ -365,11 +365,9 @@ IMAGE: IP flux
 
 \paragraph{How do botnets exploit this feature ?}
 Fast-Flux is mostly used by botmasters to hide a malicious network behind a large amount of dynamic proxies(flux-agents).\cite{ff1} When a bot tries to connect with the CnC his request to the FQDN goes through a DNS server that returns one of these proxies which is picked from an immense list of rotating addresses. After that, the flux-agent relays the client's request to the mothership.\cite{wiki_ff} Behind the curtain of redirections created by the network of proxies, botmasters use it to distribute updates or host malicious content. They key elements for FFSN strength are very short TTLs and the round-robin answer from a large list of agents\cite{hybrid}\cite{tracking2}.
-The Fast-flux Service Network (FFSN) motherships are the controlling parts of the networks. They are very similar to the command and a control (CnC) system found in conventional botnets but provide more features. It is observed that these nodes are managed as CDN servers with the same traits (high availability, load-balancing,...). To manage this complex network they collect all the information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) change over time.\cite{bot-com}\cite{detection3}
+The Fast-flux Service Network (FFSN) motherships are the controlling parts of the networks. They are very similar to the command and a control (CnC) system found in conventional botnets but provide more features. It is observed that these nodes are managed as CDN servers with the same traits (high availability, load-balancing,...). To manage this complex network they collect all the information on the IP addresses assigned to the domain name and how those IP addresses (A and NS records) change over time.\cite{bot-com}
 
-SOLVE biblio Issue
-
-\paragraph{why is IP flux so effective?} Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate, a very challenging problem [16]. Moreover, they use techniques to hide their communication with the bots to evade any deployed botnet detection processes [17]. The  botmasters use the DNS services to hide their command and control (CnC) IP address to make the botnet reliable and easy to migrate from server to another without being noticed.
+\paragraph{why is IP flux so effective?} Unfortunately, botnets use the DNS traffic as any other legitimate host, which makes differentiating the legitimate DNS traffic from the illegitimate, a very challenging problem. Moreover, they use techniques to hide their communication with the bots to evade any deployed botnet detection processes. The  botmasters use the DNS services to hide their command and control (CnC) IP address to make the botnet reliable and easy to migrate from server to another without being noticed.\cite{detection3}
 \\
 The power of FFSN is allowing one domain name to have an unlimited number of IP addresses. The IP addresses belonging to such a domain act as a proxy for any device attempting a connection with their respective CnC server. This process helps botnet controllers avoid detection and blacklisting. Attackers have developed better techniques utilizing IP-flux over time, here are the different categories:
 \begin{itemize}[noitemsep]
@@ -392,12 +390,14 @@ double flux\\
 DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
 What is positive about this abuse is that there are almost no legitimate reasons for this application, making obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
 
+TODO: improve section with this study: \cite{tunneling2}
+
 IMAGE tunneling (cf /img)
 
 
-\subsubsection{Maybe Domain shadowing (need more research)}
+\subsubsection{Domain shadowing}
 \cite{review2}\cite{detection8}
-
+TODO: explain domain shadowing
 
 \section{Machine learning approach}
 We use machine learning in our thesis to create models around certain behaviors botnets show to helps us detect them from the legitimate traffic. The next sections will detail what machine learning is, how it works and its implementation in the thesis.
@@ -654,12 +654,6 @@ They expect these behavioural communication features to be effective enough in o
 In this article written by G. Farnham \cite{tunn}, he proposes a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. 
 
 \cite{dns-tun}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsubsection{Behavioral}
-TODO: decide if we use the behavioral papers and if they can be of any use.
-
 
 \subsubsection{shadowing}
 TODO: add the summaries for 
