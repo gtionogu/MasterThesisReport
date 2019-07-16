@@ -386,6 +386,12 @@ double flux\\
 \includegraphics[scale=.7]{img/double_FF.jpg}
 
 
+ADD IMAGE HERE:
+\cite{ff_visual}
+\cite{ff2_visual}
+
+
+
 \subsubsection{DNS tunneling}
 
 
@@ -467,6 +473,12 @@ Here we present the algorithms we will use.
 
 TODO: CHECK HOW HE PRESENTS THE ALGORITHMS
 
+\subsubsection{Naive Bayes}
+The Gaussian Naive Bayes name comes from the Bayes’ theorem.
+This theorem "describes the probability of an event, based on prior knowledge of conditions be related of conditions to the event" [51].
+So basically this machine learning algorithm bases its prediction on
+previous experience. It is a probability algorithm, which means that it tells us not only the target but also the degree of certainty, which is
+one of its advantages.
 \subsubsection{K-Nearest Neighbor}
 kNN (k-Nearest Neighbor) is one of the simplest supervised machine learning algorithms.
 The idea of kNN is that it will classify the new object based on its k nearest neighbors, where k is a
@@ -479,6 +491,15 @@ the new object.
 - Step 4: Take all the labels of the k neighbors selected above.
 - Step 5: Based on the k labels that have been taken, the label that holds the majority will be
 assigned to the new object.
+%====================
+The model created by the k-Nearest Neighbors (k-NN) algorithm
+is, in fact, the entire training dataset. To make the predictions, the
+algorithm looks for the k nearest neighbors that are similar to the
+new instance we want to predict and summarizes instances found in
+the model [13].
+The k-NN algorithm works well for small datasets but tends to
+struggle with high dimensional data and reach the “Curse of Dimensionality“
+that we talked about in chapter 5.
 
 \subsubsection{Decision Trees}
 3.1.2.2. Decision tree
@@ -493,11 +514,54 @@ performed repeatedly for each node until it cannot go any further and touch the 
 model, the decision to select the root node and sub-node while building the decision tree is based on
 the Information Gain (IG) and Gini Impurity measurements [16]. The decision tree algorithm used for
 experiments in this paper is C4.5.
-
+\subsubsection{Decision tree}
+The decision tree algorithm takes its name from the way it creates
+a tree-like model of decisions. Each internal node corresponds to a
+condition while each leaf is the decision (e.g. "Botnet" or "Normal"
+traffic).
+The main advantages of decision trees are that they are easy to
+understand as we can visualize trees. The usage of the model for
+predictions is logarithmic, thus cheap in term of performance. One
+of the drawbacks is that the algorithm could create models that do
+not generalize the dataset well, resulting in overfitting. It is recommended
+to balance the dataset before the training as not doing so
+could result in trees being biased in the case of a class dominating
+another [18].
 \subsubsection{Support Vector Machine}
 \subsubsection{Logistic Regression}
+Logistic regression is a very basic algorithm that can be used when
+the target is categorical (e.g. "botnet" or "normal" traffic). The model
+created bases itself on a threshold to predict unknown data.
+The main advantage of Logistic Regression is the informative output
+it gives us as it explicitly expresses the relationship between the
+feature and the target or, in other words, which direction it takes ( e.g.
+"botnet" or "normal" traffic). The drawback resides in the quantity of
+data needed to obtain stable and meaningful results [22].
 \subsubsection{XGBoost}
+XGBoost stands for eXtreme Gradient Boosting. It is an open-source
+implementation of gradient boosted decision trees which have been
+created for performance reasons. The boosting technique is based on
+ensemble where we use new models to correct previously trained
+ones. The models are added until no further improvements are
+possible [11]. Gradient boosting comes from the gradient descent
+algorithm it uses to obtain minimal losses when adding new models.
+XGBoost is considered to be the fastest implementation of gradient
+boosting [11] and is very popular on the Kaggle competition platform.
+Despite it being an algorithm that gives good results, we have
+to take care of overfitting when using it, which is its main drawback.
+However, the algorithm provides multiple parameters that allow to
+tune it correctly.
 \subsubsection{AdaBoost}
+AdaBoost, which is a short name for "Adaptive Boosting", is another
+ensemble learning algorithm that combines multiple weak classifiers
+in order to conceive a stronger one. It was the first algorithm
+created for binary classification. We could use any machine learning
+algorithm to boost it with AdaBoost but most frequently it is a
+Decision tree classifier with one level that is used [12].
+The main drawback of AdaBoost is that it is sensitive to noise and
+outliers but it can be less susceptible to overfitting than other algorithms.
+Finally, it is still an algorithm that performs well on diverse
+machine learning tasks
 \subsubsection{Random forest}
 %futureinternet-10-00043.pdf
 3.1.2.3. Random forest
@@ -521,6 +585,18 @@ P(X|Ci) = n k=1 P(xk|Ci) (2)
 where, P(Ci|X) is the probability of class i given sample X, P(Ci) is the probability of class i and P(xk|Ci)
 is the probability of the kth property that has the value of xk given X in class i.
 \subsubsection{Neural Networks}
+In theory, neural networks are inspired by the brain and try to
+reproduce the way humans learn. In practice, they work very
+differently: there is an input and an output layer with some hidden
+layers in between. The hidden layers transform the input and gives
+it to the output layer. To train the model, neural networks use a
+technique called "back-propagation" to adjust the hidden layers
+when the output is not the one desired.
+The main drawback of neural networks is the black box model
+generated by this algorithm. In fact, it is very difficult to interpret
+the result and to identify the relationship between an input and its
+target.
+
 
 \section{Botnet detection related work}
 \subsection{classification of botnet research and detection}
@@ -595,7 +671,7 @@ Secondly, to achieve our goal towards improving these solutions, the objective i
 
 
 
-\subsection{related work}
+\subsection{Related work}
 
 %%%%% find where it belong
 
@@ -611,22 +687,17 @@ Secondly, to achieve our goal towards improving these solutions, the objective i
 \subsubsection{Domain-flux}
 Domain-fluxing detection is mostly about analyzing domain names, here are the papers that attempt to do that with different metrics and features.\\
 \\
-Truong et al. \cite{dns-traffic} came up with an experiment allowing them to detect domains generated by humans or algorithms. This is the base-ground study of DGA detection. We use the features they propose to easily detect DGA domain names with the addition of later papers to distinguish between legitimate and malicious DGAs.\\
+Truong et al. \cite{dns-traffic} came up with an experiment allowing them to detect domains generated by humans or algorithms. This is the base-ground study of DGA detection.\\
 \\
-Yadav et al. \cite{dga2} propose an unsupervised approach based on anomaly detection with a set of metrics analysing ngrams of the SLD. They use the Kullback-Liebler divergence measure with unigrams and bigrams, the Jaccard index between bigrams and the last feature and the Edit distance. These 3 features are used widely in the DGA detection research because of their efficiency, that is why we added them to our list of DGA features. \\
+Yadav et al. \cite{dga2} propose an unsupervised approach based on anomaly detection with a set of metrics analysing ngrams of the SLD. They use the Kullback-Liebler divergence measure with uni-grams and bi-grams, the Jaccard index between bi-grams and the last feature and the Edit distance. These 3 features are used widely in the DGA detection research because of their efficiency.\\
 \\
-Schiavoni et al. \cite{phoenix} go a step further then Truong et al. with their Pheonix project by improving the initial experiment with additional features to cluster groups of DGAs under the botnet families. Pheonix allows to associate new DGAs to certain botnets and follow the evolution of the different botnet families. We used the new features brought by Schiavoni et al. to improve our models for classification.\\
+Schiavoni et al. \cite{phoenix} go a step further then Truong et al. with their Phoenix project by improving the initial experiment with additional features to cluster groups of DGAs under botnet families. The project works in 2 phases: DGA discovery and DGA detection. In the discovery phase, they apply the following filters that focus on linguistics: percentage of meaningful words in the domain name and the popularity of the n-grams of the domain. They construct a base generated with the top 100.000 domains from \textit{alexa.com}. Then define the Mahalanobis distance and the thresholds, using known malicious domains,  to determine when domains can be considered DGAs. Their approach is able to associate new DGAs to botnet families and follow their evolution.\\
 \\
-Ahluwalia et al. \cite{dga} analyse the basic features that are common to most domain generated by DGA and provide advanced linguistic features to improve the results. The motivation for their work was due to recent botnets using shorter DGA lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics and 2 more advanced features that cover the shortcomings of the primitive ones. These features are simple but obtain really good results. They are an addition to our features for malicious DGA detection.\\
+Ahluwalia et al. \cite{dga} analyse the basic features that are common to most domain generated by DGA and provide advanced linguistic features to improve the results. The motivation for their work was due to recent botnets using shorter DGA lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics and 2 more advanced features that cover the shortcomings of the primitive ones. These features are simple but obtain really good results.\\
 \\
-%TODO: check if that paper is the same as used at the end?
-Thomas et al. \cite{dga4} realized that during the domain generation process, most of the domains will not be up. This should result in a lot of NXDomain responses. Furthermore, the caching of NXDomains is limited which means that they cannot hide this traffic. Their contribution consists of a clustering technique based on domain names and request patterns; and similarity metrics for malicious domains detection. What can be retrieved from this study is the feature related to NXDomains and the clustering process for big datasets.
+Thomas et al. \cite{dga4} realized that during the domain generation process, most of the domains will not be up. This should result in a lot of NXDomain responses. Furthermore, the caching of NXDomains is limited which means that they cannot hide this traffic. Their contribution consists of a clustering technique based on domain names and request patterns; and similarity metrics for malicious domains detection.
 
-%In \cite{phoenix}, they explain the shortcomes of some of the other approaches. The study works in 2 phases: DGA discovery and DGA detection. In the discovery phase they apply the following filters that focus on linguistics: percentage of meaningful word in the domain name; popularity of the ngrams of the domain. They construct a base generated with the top 100.000 domains from Alexa. Then they define a distance (Mahalanobis distance) and thresholds(loose and stric ones) to determine when domains can be considered DGAs. They use known malicious domains to determine their thresholds. Afterwards they propose a sytem to cluster DGAs. They create a graph where each node is a domain and edges are created if both nodes resolve to similar IPs, the weight is proportional to the number of common resolved IPs. From all the "communities" discovered, they extract different common features to be reintroduced in the detection phase for each family of DGAs.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Fast-flux}
-%memoire
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The behavior of IP fluxing has been well analyzed by the community and most papers propose similar features to detect fast-flux. They often differ with different settings for their experiments. On the other hand, the big challenge for our thesis was to find the features that allowed us to find differences betweent malicious fast-flux networks(FFSN) and content delivery networks(CDNs). Both use fast-flux for different reasons making it hard to differentiate.\\
 \\
 The common features presented by  Salusky et al.\cite{honeynet}, Nazario et al.\cite{ff1}, Perdisci et al.\cite{ff2}, Holz et al.\cite{ff3} and Stalmans et al.\cite{ff_botconf} bring forward the features to detect fast-fluxing in general such as a large amount of unique A RRs for a domains, numerous unique NS for a domain and different Autonomous System (ASN) for the IPs linked to the same domain. \\
@@ -659,11 +730,10 @@ In this article written by G. Farnham \cite{tunn}, he proposes a visual approach
 \cite{dns-tun}
 
 \subsubsection{shadowing}
-TODO: add the summaries for 
 Liu et al. \cite{shadowing} are the first to propose an approach against this new trend. TODO: summarize paper 
 IMHERE
 
-\subsubsection{Combined approaches}
+\subsubsection{multi-method approach}
 The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
 \paragraph{Exposure solution}
