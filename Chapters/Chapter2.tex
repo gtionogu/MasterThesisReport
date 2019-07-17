@@ -642,11 +642,12 @@ In the machine learning realm, these are some of the techniques used: clustering
 As explained in the abuses of the DNS protocol, a new type of detection techniques have appeared that aim at finding bots evading the more usual detection techniques. 
 
 \subsection{research review}
-Now that we know the detection techniques used against botnets for different topologies and evading techniques. Here is a survey of the research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter.
-%%%%%%%% TO BE REVIEWED
-Since the end goal is to find the best features for an all-in solution, we have structured the current state of research as follows: 
-First we will present the current all-in solutions that exist, the features they extract and what model they have created. 
-Secondly, to achieve our goal towards improving these solutions, the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
+Now that we know the detection techniques used against botnets for different topologies and evading techniques. Here is a survey of the research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter.\\\\
+%%%%%%%%%%%%%%%%%%%%%%
+Since the end goal is to find the best features for an combined solution, we have structured the current state of research as follows: 
+First, we will present the Exposure experiment, the features they extract and what model they have created. \\
+Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.
+%the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
 %%%%%%%%%%%%%%%%%%%%%%
 
 %========================================================================================
@@ -673,16 +674,51 @@ Secondly, to achieve our goal towards improving these solutions, the objective i
 
 \subsection{Related work}
 
-%%%%% find where it belong
+\subsubsection{Exposure experiment}
+The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
 
-%TODO: check that paper again\cite{detection5} 
-%"DNS Traffic Botmaster use DNS rallying to make their botnets invisible and portable. Choi et al. [20] proposed a botnet detection mechanism by monitoring their DNS traffic. Bots use DNS queries either to connect or to migrate to another CnC server. The DNS traffic has a unique feature that they define as group activity. Bots can be detected by using the group activity property of botnet DNS traffic while bots are connecting to their server or migrating to another server. There are three factors that help in distinguishing botnet DNS queries from legitimate DNS queries [20]; 
-%(1) queries to CnC servers come only from botnet members (fixed IP address space size), 
-%(2) botnet members migrate and act at the same time, which leads to temporary and synchronized DNS queries, 
-%(3) botnets usually use DynamicDNS (DDNS) for CnC servers. 
-%For a botmaster to keep its bots hidden and portable, he relies on DNS to rally infected hosts. In botnets, DNS queries can appear for many reasons. They appear during rallying process after infection, during malicious activities like spam or DoS attacks, during CnC server migration, during CnC server IP address change, or after CnC server or network link failure. Based on the aforementioned five situations of DNS query used in botnets, the authors have developed a Botnet DNS Q Detection algorithms, which distinguishes the botnet. This algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, they group DNS query data using the domain name and timestamp field. After that, they remove redundant DNS queries. Finally, botnet DNS queries are detected using a numerically computed some similarity factor [20] This algorithm cannot detect botnets migrating to another CnC server. Therefore, they developed a Migrating Botnet Detection algorithm by modifying the botnet DNS query detection algorithm. Similarly, this algorithm starts by building a database for DNS queries comprised of the source IP address, domain name and timestamp. Then, it groups DNS query data using the domain name and timestamp field.
-%After that, it removes redundant DNS queries. The next step will be to compare IP lists of different domain name with same size of IP list, because bots use two different domain names for the CnC server during migration [20]. These algorithms are protocol and structure independent and are capable of detecting unknown and encrypted botnets. However, these are not for real-time detections and have low accuracy for small networks. Furthermore, they are very sensitive to threshold values which need to be chosen very carefully to balance false positives and false negative rates.
+\includegraphics[scale=.3]{img/exposure_features.png}
+\includegraphics[scale=.3]{img/exposure_architecture.png}
+
+\paragraph{Time-based}
+When we analyse many requests to a particular domain over
+time, patterns indicative of malicious behaviour may emerge.\\
+These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 4 features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
+\paragraph{DNS answer based}
+Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
+Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
+\begin{itemize}[noitemsep]
+\item the number of different IP addresses that are resolved for a given domain during the experiment window
+\item the number of different countries that these IP addresses are located in
+\item the reverse DNS query results of the returned IP addresses
+\item the number of distinct domains that share the IP addresses that resolve to the given domain (false positive can be reduced with google reverse DNS which will have hosting providers in top answers)
+\end{itemize}
+\paragraph{TTL value based}
+Low TTL and Round-Robin DNS: \\
+\begin{itemize}[noitemsep]
+\item high availability (Content Delivery Networks (CDNs))
+\item botnets using this, makes them resistant to DNS Blacklists(DNSBL) and take downs. Often using Fast-Flux Service Networks (FFSN).
+\end{itemize}
+Because FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain, it explains the purpose of the TTL features.
+\paragraph{Domain name based}
+Finally 2 simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).\\
+This can be noticed with 2 simple features:\\
+\begin{itemize}[noitemsep]
+\item ratio numerical chars to length of domain name
+\item length of the longest meaningful substring to length of domain name
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Time-efficient local botnet infections}
+Heuer et al.\cite{localbotnet} did a case study on local infections related to botnets. They propose a very large set of 24 features meant to detect botnets in networks . These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
+TODO get access to the paper!!! (visuals aren't enough)
+\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Focused experiments}
 
 \subsubsection{Domain-flux}
 Domain-fluxing detection is mostly about analyzing domain names, here are the papers that attempt to do that with different metrics and features.\\
@@ -695,65 +731,13 @@ Schiavoni et al. \cite{phoenix} go a step further then Truong et al. with their 
 \\
 Ahluwalia et al. \cite{dga} analyse the basic features that are common to most domain generated by DGA and provide advanced linguistic features to improve the results. The motivation for their work was due to recent botnets using shorter DGA lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics and 2 more advanced features that cover the shortcomings of the primitive ones. These features are simple but obtain really good results.\\
 \\
+Antonakakis et al. \cite{dns-reputation}, in this paper they propose a different system called 'Notos' based on dynamic reputation odd domain names. They studied the different aspects around the historical DNS data of domains that could be relevant to group domains based on their legitimacy. They use 3 categories of features: network, zone and evidence. They opted for a unsupervised approach using the clustering algorithm X-means. The purpose of this paper is to utilize some of the historical DNS features to be used in our all-in solution. Specifically, using some of the classes of domains defined by the authors as categorical features ( popular domains, common domains, Akamai domains,  CDN domains and dynamic DNS domains ).
+\\
 Thomas et al. \cite{dga4} realized that during the domain generation process, most of the domains will not be up. This should result in a lot of NXDomain responses. Furthermore, the caching of NXDomains is limited which means that they cannot hide this traffic. Their contribution consists of a clustering technique based on domain names and request patterns; and similarity metrics for malicious domains detection.
 
-\subsubsection{Fast-flux}
-The behavior of IP fluxing has been well analyzed by the community and most papers propose similar features to detect fast-flux. They often differ with different settings for their experiments. On the other hand, the big challenge for our thesis was to find the features that allowed us to find differences betweent malicious fast-flux networks(FFSN) and content delivery networks(CDNs). Both use fast-flux for different reasons making it hard to differentiate.\\
-\\
-The common features presented by  Salusky et al.\cite{honeynet}, Nazario et al.\cite{ff1}, Perdisci et al.\cite{ff2}, Holz et al.\cite{ff3} and Stalmans et al.\cite{ff_botconf} bring forward the features to detect fast-fluxing in general such as a large amount of unique A RRs for a domains, numerous unique NS for a domain and different Autonomous System (ASN) for the IPs linked to the same domain. \\
-The next papers present additional features to distinguish detection specifically of the FFSN from the CDNs. \\
-\\
-Nazario et al. \cite{ff1} showed visually how the FF traffic features present themselves.
-\includegraphics[scale=.7]{img/ff_features.jpg}\\
-\includegraphics[scale=.6]{img/ff_features_2.png}
-\\
-Perdisci et al. \cite{ff2} aimed at improving the Honeynet's features \cite{honeynet}. Their method consisted in collecting recursive DNS logs for a period of time, filter most of the non-fast-fluxing traffic. Secondly, they grouped the domains names using different features such as similar ISPs, same CDN. And finally, they classify, using a Decision Tree algorithm, the clusters of domain names as malicious or legitimate. They used a base of features provided by \cite{fluXOR} and added their own. We used some of the features they presented for our classifiers as well as the traffic volume reduction filters to improve some of the features already on-boarded. \\
-\\
-In the following paper, Holz et al. cite{ff3} propose some novel features compared to the other papers. They presented the restrictions FFSNs face compared to CDNs: problems such as location and uptime that FFSN can't garantee. From all the features they captured they introduced functions to classify FFSN and CDNs:fluxiness and flux-score. They even considered the possibility of botnets mimicking CDNs but the metrics used already take into account the restrictions FFSN have that can't be avoided. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites. We focused our interest in the 2 functions presented in the paper as new features for our classifiers.
+In another paper from Yadav et al. \cite{dnsfailure}, they explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
 
-%Detection of Fast-flux Networks using Various DNS Feature Sets
-Celik et al. \cite{ff4} have regrouped the large majority of features encountered in the other papers accompanied with some novel additions. They have 5 categories of features: answer-based, domain name-based, spatial-based, network-based and timing-based. We added to our list of features the ones we hadn't seen yet such as the spatial approach looking at the entropy of time zones related to A or NS records. The second interesting set of features we attempted to use in our thesis were the timing-based featured analyzing delays related to different actions (network, processing and document fetching) but we realized that we didn't have the capacity of building the infrastructure necessary to analyze them.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsubsection{DNS tunneling}
-%memoire
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Another evasion technique of botnets that exploits the DNS protocol is the concealing of data exchanges through DNS tunneling. We explore below some of the studies that have proposed features and methods to detect such behavior.
-
-In \cite{tunn1}, Dietrichyz et al. analyze the use of TXT RR with segmented and encrypted data. Their study resulted in a set of features mostly analyzing the strings characteristics.
-Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy".Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead.
-They expect these behavioural communication features to be effective enough in order to extend a classifier based on the rdata features.\\
-
-In this article written by G. Farnham \cite{tunn}, he proposes a visual approach to detecting DNS tunneling, by plotting the following features, you can detect by "visual anomaly detection" the presence of DNS tunneling. 
-
-\cite{dns-tun}
-
-\subsubsection{shadowing}
-Liu et al. \cite{shadowing} are the first to propose an approach against this new trend. TODO: summarize paper 
-IMHERE
-
-\subsubsection{multi-method approach}
-The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
-
-\paragraph{Exposure solution}
-Bilge et al. \cite{exposure} created Exposure, a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
-
-TODO: decide if keep them here or just present them in the feature extraction step.
-\includegraphics[scale=.3]{img/exposure_features.png}
-\includegraphics[scale=.3]{img/exposure_architecture.png}
-
-
-\paragraph{Time-efficient local botnet infections}
-Heuer et al. did a case study on local infections related to botnets\cite{localbotnet}. They propose a very large set of 24 features meant to detect botnets in networks . These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
-
-\paragraph{Notos}
-Antonakakis et al. \cite{dns-reputation} propose a different system called 'Notos' based on dynamic reputation od domain names. They studied the different aspects around the historical DNS data of domains that could be relevant to group domains based on their legitimacy. They use 3 categories of features: network, zone and evidence. They opted for a unsupervised approach using the clustering algorithm X-means. The purpose of this paper is to utilize some of the historical DNS features to be used in our all-in solution. Specifically, using some of the classes of domains defined by the authors as categorical features ( popular domains, common domains, Akamai domains,  CDN domains and dynamic DNS domains ).
-
-\paragraph{DNS failures}
-Yadav et al. \cite{dnsfailure} explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
-
-A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleiades. First, following the same machine learning idea of Notos but applied to the DGA algorithms, meaning they applied the X-means clustering algorithm to DGA algorithms. Secondly, they used a boosted decision tree classification algorithm (Alternating Decision Tree) to test associations of an NXDomain's response to  DGAs. Finally, they created Hiddem Markov models for each of the DGAs domains to be able to classify the responses to a DGA directly. We'll use their work to improve the DGA features already gathered with the other papers.
+A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleiades, their second big botnet project after the Notos experiment. First, following the same machine learning idea of Notos but applied to the DGA algorithms, meaning they applied the X-means clustering algorithm to DGA algorithms. Secondly, they used a boosted decision tree classification algorithm (Alternating Decision Tree) to test associations of an NXDomain's response to  DGAs. Finally, they created Hiddem Markov models for each of the DGAs domains to be able to classify the responses to a DGA directly. We'll use their work to improve the DGA features already gathered with the other papers.
 
 %P1 Mean, median and standard deviation of 1-gram
 %P2 Mean, median and standard deviation of 2-gram
@@ -772,19 +756,110 @@ A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleia
 %Table 8: Pleiades features
 
 
-%- recursively collected historical dns information
-%- domain name reputation (already tons of IP rep systems)
-%- network and zone features capturing resource provisioning, usages, and management of domains.
-%- model training through malicious and legitimate domain based on alexa, spam-trap, malware samples.
-%- features: network/zone and evidence
-%vocabulary: 
-%d domain
-%Zone(d) -> subdomains d
-%D group of domains 
-%A(D) -> IPs ever pointing to D
-%a ip address
-%BGP(a) -> all ips with bgp prefix of a
-%AS(a) -> IPs in the Autonomous system of a
+
+\subsubsection{Fast-flux}
+The behavior of IP fluxing has been well analyzed by the community and most papers propose similar features to detect fast-flux. They often differ with different settings for their experiments. On the other hand, the big challenge for our thesis was to find the features that allowed us to find differences betweent malicious fast-flux networks(FFSN) and content delivery networks(CDNs). Both use fast-flux for different reasons making it hard to differentiate.\\
+\\
+The common features presented by  Salusky et al.\cite{honeynet}, Nazario et al.\cite{ff1}, Perdisci et al.\cite{ff2}, Holz et al.\cite{ff3} and Stalmans et al.\cite{ff_botconf} bring forward the features to detect fast-fluxing in general such as a large amount of unique A RRs for a domains, numerous unique NS for a domain and different Autonomous System (ASN) for the IPs linked to the same domain. \\
+The next papers present additional features to distinguish detection specifically of the FFSN from the CDNs. \\
+\\
+Nazario et al. \cite{ff1} showed visually how the FF traffic features present themselves.
+\includegraphics[scale=.7]{img/ff_features.jpg}\\
+\includegraphics[scale=.6]{img/ff_features_2.png}
+\\
+Perdisci et al. \cite{ff2} aimed at improving the Honeynet's features \cite{honeynet}. Their method consisted in collecting recursive DNS logs for a period of time, filter most of the non-fast-fluxing traffic. Secondly, they grouped the domains names using different features such as similar ISPs, same CDN. And finally, they classify, using a Decision Tree algorithm, the clusters of domain names as malicious or legitimate. They used a base of features provided by \cite{fluXOR} and added their own. We used some of the features they presented for our classifiers as well as the traffic volume reduction filters to improve some of the features already on-boarded. \\
+\\
+In the following paper, Holz et al. \cite{ff3} propose some novel features compared to the other papers. They presented the restrictions FFSNs face compared to CDNs: problems such as location and uptime that FFSN can't garantee. From all the features they captured they introduced functions to classify FFSN and CDNs:fluxiness and flux-score. They even considered the possibility of botnets mimicking CDNs but the metrics used already take into account the restrictions FFSN have that can't be avoided. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites. We focused our interest in the 2 functions presented in the paper as new features for our classifiers.\\
+\\
+Celik et al. \cite{ff4} have regrouped the large majority of features encountered in the other papers accompanied with some novel additions. They have 5 categories of features: answer-based, domain name-based, spatial-based, network-based and timing-based. We added to our list of features the ones we hadn't seen yet such as the spatial approach looking at the entropy of time zones related to A or NS records. The second interesting set of features we attempted to use in our thesis were the timing-based featured analyzing delays related to different actions (network, processing and document fetching) but we realized that we didn't have the capacity of building the infrastructure necessary to analyze them.\\
+\\
+TODO: Perdisci et al. \cite{ff} 
+
+
+\subsubsection{DNS tunneling}
+Another evasion technique of botnets that exploits the DNS protocol is the concealing of data exchanges through DNS tunneling. We explore below some of the studies that have proposed features and methods to detect such behavior.
+
+In \cite{tunn1}, Dietrichyz et al. analyze the use of TXT RR with segmented and encrypted data. Their study resulted in a set of features mostly analyzing the strings characteristics. Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy". Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead. They expect these behavioral communication features to be effective enough in order to extend a classifier based on the rdata features.\\
+\\
+In this article written by G. Farnham \cite{tunn}, he proposed a visual approach to detecting DNS tunneling, by plotting the set of features proposed, you can detect by "visual anomaly detection" the presence of DNS tunneling in your network.. 
+
+TODO: This last paper \cite{dns-tun}
+
+\subsubsection{shadowing}
+TODO: Liu et al. \cite{shadowing} are the first to propose an approach against this new trend.
+IMHERE
+
+
 
 \section{Discussion}
-The detection rates obtained by Exposure are really good but they are hard to implement in a smaller environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. Furthermore, there are some features presented in the studies above that we think could improve the detection accuracy rate.
+In the first part of the related works, we presented Bilge et al. \cite{exposure} where they propose a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.
+
+
+The secomd part presented very interesting studies and projects that allowed the detection of the different evasion mechanisms using the DNS protocol. They allowed us to extract valuable features and techniques for each mechanism. 
+
+DGA
+Truong et al. \cite{dns-traffic}
+	the length of domain names
+	the expected values of domain names (cf paper for the probability table)
+Yadav et al. \cite{dga2}
+	K-L(Kullback-Leibler) divergence of uni-grams
+	K-L divergence with bigrams
+	Jaccard Index between bigrams
+	Edit distance
+	with different types of groupings.
+Schiavoni et al. \cite{phoenix} (unsupervised)Our system, instead, requires registered domains to function. Therefore, it is fed with data that takes slightly longer collection periods. This results in a less-responsive detection of previously unseen DGAs
+	Meaningful Characters Ratio
+	n-gram Normality Score
+	- Uses the  Mahalanobis distance from the mean and covariance computed from the features and decides if it is malicious based on threshold
+	=> cluster models:
+		CnC addresses
+		length range
+		character set
+		numerical character ratio range
+		Public suffix set
+Ahluwalia et al. \cite{dga} 
+	length of the domain name excluding TLD (top level domain)\\
+	Number of vowels in the Second Level Domain (SLD)\\
+	Number of consonants in the SLD\\
+	Number of digits in the SLD\\
+	SLD trigram entropy\\
+	SLD trigram conditional probability\\
+Thomas et al. \cite{dga4} As the nature of the DGA is to create a large number of domains, yet the botmaster will only register a small subset of these domains, a large portion
+of the DNS traffic will fall into the NXDomain (Non-Existent Domain) [14]. We observe that NXDomains have a limited caching characteristic, which make most of the queries concerning NXDomains propagate to the registry DNS servers. We hope to identify these domains and use that as a base of tracking the actively registered command and control domain in the YXDomain (Existent Domain), non-NXDomain typically resulting in NOERROR DNS
+responses.
+
+Antonakakis et al. \cite{pleiades}
+	
+	
+FF
+Perdisci et al. \cite{ff}
+	Number of resolved IPs
+	Number of domains
+	Avg TTL per domain
+	Number of domains per networks
+	IP diversity
+	IP growth ratio
+	IP prefixes last growth ratio
+	Novelty
+	- interesting way of looking at results (p9)
+for each type of mechanism:
+
+{
+    For the X mechanisms, we learned X and have obtained X features, that will be part of our experiment:
+    #list + explanation of features for each evasion mechanism.
+}
+
+SIMILAR IDEA \cite{phoenix}"These approaches are very interesting to detect infected clients over a large network over which the analyst has full control. However, they impose undesirable requirements in terms of input data and deployment to create a large-scale observatory and intelligence service.
+
+BUT First, relying on the IP addresses of querying hosts is error prone, because of IP-(re)assignment and masquerading policies
+employed by ASs. + BONUS: More importantly, access to this information is limited in scope, because it is available only from DNS servers placed below the recursive
+DNS level (e.g., host DNSs). This can be problematic for researchers, but also for practitioners who want to operate these systems beyond the scope of a single network. Finally, of particular interest for researchers, IP information raises privacy concerns, leading to non-repeatable experiments [16], as datasets that include these details cannot be made publicly available."
+ 
+These features are very specific to each mechanism and only work on the botnets that use them. That is why in the second part, we presented solutions with combined approaches. We want to experiment if a combined solution could provide better results and have other advantages such being more effective against new families of botnets. 
+This type of project already exist such as the project Exposure detailed above. The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set. This means that without the access to these features their experiment doesn't show the same level of success. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. 
+
+TODO: weaknesses and improvements found in the other combined approaches.
+ 
+The objective is going to test out the features presented by all the papers mentioned and select the best combination for smaller environments. We want to avoid having too many features due to the "curse of dimensionality" \cite{curse}, which is caused by the amount of features for a model that increases its run-time exponentially. We also want to compare how a combined approach would do against a separate approach where we pipe 4-5  classifiers focused on a single evasion mechanism. 
+
+Our suppositions are that the combined approach will probably do really good against new approaches and botnets using multiple techniques. But the pipeline of focused classifiers should perform better against botnets using only one type of evasion.
