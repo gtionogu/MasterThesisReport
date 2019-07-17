@@ -639,10 +639,10 @@ In the machine learning realm, these are some of the techniques used: clustering
 As explained in the abuses of the DNS protocol, a new type of detection techniques have appeared that aim at finding bots evading the more usual detection techniques. 
 
 \section{Related work}
-Now that we know the detection techniques used against botnets for different topologies and evading techniques. Here is a survey of the research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter.\\\\
+Now that we know the detection techniques used against botnets for different topologies and evading techniques. \\\\
 %%%%%%%%%%%%%%%%%%%%%%
 Since the end goal is to find the best features for an combined solution, we have structured the current state of research as follows: 
-First, we will present the Exposure experiment, the features they extract and what model they have created. \\
+First, we will present the combined experiments. These experiments don't focus on a single type of detection mechanism but aggregate the different detection techniques used for botnets. We will discuss the features they have extracted, what models they have created and how they have implemented their approach.\\
 Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.
 %the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
 %%%%%%%%%%%%%%%%%%%%%%
@@ -670,6 +670,7 @@ Secondly, to achieve our goal towards improving these solutions, we will discuss
 \subsection{Presentation of the Exposure and the Local botnet experiments}
 The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
+Our first objective during our research was to 
 
 \includegraphics[scale=.3]{img/exposure_features.png}
 \includegraphics[scale=.3]{img/exposure_architecture.png}
@@ -746,7 +747,7 @@ This type of project already exist such as the project Exposure detailed above. 
 
 TODO: weaknesses and improvements found in the other combined approaches.
 \subsection{Focused experiments}
-These are the papers where we found features and ideas to improve the above experiments. For clarity, we have divided them by evasion mechanisms.
+Here are research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter. These are the papers where we found features and ideas to improve the above experiments. For clarity, we have divided them by evasion mechanisms.
 \subsubsection{Domain-flux}
 Domain-fluxing detection is mostly about analyzing domain names, here are the papers that attempt to do that with different metrics and features.\\
 \\
