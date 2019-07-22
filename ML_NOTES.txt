@@ -1,0 +1,343 @@
+Web Notes on different project topics:
+--------------------------------------
+
++ Honeynet: FF
+	. Because fast-flux techniques utilize blind TCP and UDP redirects, any directional service protocol with a single target port would likely encounter few problems being served via a fast-flux service network
+	. Please note that in the figure below that request caching is not taken into account and that the outbound request would usually emanate from the client's preferred nameserver instead of the client itself
+	. it’s all about ROI for the criminals, and fast-flux service networks provide a reliable way to maximize the returns on their criminal activities for relatively low effort. Fast-flux service networks offer three major advantages to operators of Internet based criminal activity.
+		1. simplicity: Only one suitably powerful backend server (or mothership) host is needed to serve the master content and DNS information. Very simple infra to manage
+		2. legal protection: layer of protection from ongoing investigative response or legal action
+		3. fast-flux service networks extend the operational lifespan of the critical backend core servers
+
+	SINGLE VS DOUBLE example https://www.honeynet.org/node/138
+
+    1. Establish policies to enable blocking of TCP 80 and UDP 53 into user-land networks if possible (ISP)
+    2. Block access to controller infrastructure (motherships, registration, and availability checkers) as they are discovered. (ISP)
+    3. Improving domain registrar response procedures, and auditing new registrations for likely fraudulent purpose. (Registrar)
+    4. Increase service provider awareness, foster understanding of the threat, shared processes and knowledge. (ISP)
+    5. Blackhole DNS and BGP route injection to kill related motherships and management infrastructure. (ISP)
+    6. Passive DNS harvesting/monitoring to identify A or NS records advertised into publicly routable user IP space. (ISPs, Registrars, Security professionals, ...)
+
++ ML 
+	. Fine-tuning models
+		- only when everything has already been tried
+            - EDA https://towardsdatascience.com/a-gentle-introduction-to-exploratory-data-analysis-f11d843b8184
+		- improve data https://medium.com/fintechexplained/processing-data-to-improve-machine-learning-models-accuracy-de17c655dc8e
+			. How we fill missing or erroneous values?
+
+                FIND DATA: missingno.matrix(train, figsize = (30,10))
+
+                OUTLINERS? Feature engineering can be broken down into three categories: adding, removing and changing.
+
+
+				data_frame = pd.read_csv(my_data)
+				
+				1. REMOVING DATA
+					
+					#remove all missing data
+					data_frame.dropna()
+					#remove missing data from specific columns
+					data_frame.dropna(subset=['TOtal Wealth'])
+
+				2. REPLACE DATA
+					
+					#set default value
+					data_frame = pd.read_csv(my_data)
+					#back fill
+					data_frame.replacena(method='bfill')
+					#front fill
+					data_frame.replacena(method='bfill')
+					#interpolate by placing mean values using sci-kit learn
+					from sklearn.preprocessing import Imputer
+					imr = Imputer(missing_values='NaN', strategy='mean', axis=0)
+					imr = imr.fit(df)
+					imputed_data = imr.transform(data_frame.values)
+
+			. How we need to handle categorical or textual values?
+
+				1. CREATE CATEGORY DICT (good for low number of )
+
+					map = {'Fashion': 1, 'Economical':2}
+					#this will map categorical to numerical values
+					target_feature = 'Most Active Current News Type'
+					data_frame[target_feature] = data_frame[target_feature].map(map)
+
+				2. If large number of categories (>30) -> ENCODERS
+
+					from sklearn.preprocessing import LabelEncoder
+					target_feature = 'Most Active Current News Type'
+					#use encoder and transform
+					encoder = LabelEncoder()
+					encoded_values = encoder.fit_transform(data_frame[target_feature].values)
+					data_frame[target_feature] = pd.Series(encoded_values, index=data_frame.index)
+					#to inverse, use inverse method
+					decoded = encoder.inverse_transform(data_frame[target_feature].values)
+					data_frame[target_feature] = pd.Series(decoded, index=data_frame.index)
+
+				3. Higher values in categories -> HOT ENCODING
+
+					basically creates a feature for each value of the category
+
+					data_frame = pd.get_dummies(data_frame) # OR data_frame = pd.get_dummies(data_frame)
+
+			. How we need to scale the values? https://www.renom.jp/notebooks/tutorial/preprocessing/normalization/notebook.html
+
+				1. Normalisation
+
+					Normalised Value = (Value - Feature Min)/(Feature Max - Feature Min)
+					sklearn.preprocessing.MinMaxScaler can be used to perform normalisation
+
+
+					from sklearn import preprocessing
+					import numpy as np
+					# Get dataset
+					df = pd.read_csv("https://storage.googleapis.com/mledudatasets/california_housing_train.csv", sep=",")
+					# Normalize total_bedrooms column
+					x_array = np.array(df['total_bedrooms'])
+					normalized_X = preprocessing.normalize([x_array])
+
+					Why would we normalize in the first place?
+						1. Normalization makes training less sensitive to the scale of features, so we can better solve for coefficients.
+						2. The use of a normalization method will improve analysis from multiple models.
+						3. Normalizing will ensure that a convergence problem does not have a massive variance, making optimization feasible
+				2. Standardisation
+
+					Standarderised Value = (Value - Feature Mean)/Feature Standard Deviation
+					sklearn.preprocessing.StandardScaler can be used to perform standarisation.
+
+					from sklearn import preprocessing
+					# Get column names first
+					names = df.columns
+					# Create the Scaler object
+					scaler = preprocessing.StandardScaler()
+					# Fit your data on the scaler object
+					scaled_df = scaler.fit_transform(df)
+					scaled_df = pd.DataFrame(scaled_df, columns=names)
+
+					Why standardize?
+						1. Compare features that have different units or scales.
+						2. Standardizing tends to make the training process well behaved because the numerical condition of the optimization problems is improved
+							/!\ 
+
+			. How we need to select features?
+
+            /!\ When we are training our models even when we are training imputers or scalars, always use training set to the train models. Leave test or validation set for testing only.
+
+
+                1. Solve overfitting:
+                    A. We can remove features that have strong correlation with each other. You can use correlation matrix to determine correlation between all independent variables.
+                    B. We could also use scatter mix plot to determine how all variables are linked to each other.
+                    C. Importance 
+
+                        my_importance_model = RandomForestClassifier(n_estimators=10000, random_state=0, n_jobs=-1)
+                        my_importance_model.fit(independent_variables, dependent_variables)
+                        print(my_importance_model.feature_importances_)
+
+                        least important can be excluded (can also use data summary)
+
+			. How we need to reduce dimensions? https://medium.com/fintechexplained/what-is-dimension-reduction-in-data-science-2aa5547f4d29
+                1. Principal component analysis (PCA), https://stackabuse.com/implementing-pca-in-python-with-scikit-learn/
+                2. Linear Discriminant Analysis (LDA) or 
+                3. Kernel principal component analysis to reduce the dimensions.
+
+		- choose the right algorithm 
+            1. Bruteforce 
+            2. Understanding algorithms and applying most sense for the data
+
+    . Find Score metric 
+
+        Understand metrics: https://medium.com/thalus-ai/performance-metrics-for-classification-problems-in-machine-learning-part-i-b085d432082b
+
+    QUALITY of predictions https://scikit-learn.org/stable/modules/model_evaluation.html
+        - Mean
+        - Mode
+        - Median
+        - Variance
+        - Std Deviation
+        - Covariance
+        - Correlation
+            Correlation is always between -1 and 1. -1 indicates that the variables are negatively correlated and +1 shows that the variables are positively correlated. 0 indicates that there is no correlation amongst the target variables.
+        - Explained Sum Of Squares
+        - Sum Of Squared Residuals
+        - Total Sum of Squares
+        - R-Squared
+        - Adjusted R-Squared
+        - Standard Error Of Regression
+        - Mean Absolute Error
+        - Root Mean Squared Error
+        - F1
+        - Confusion matrix
+            + summary of classification
+        - Euclidean Distance
+            Finds similarity between two variables
+        - Manhattan Distance
+            Finds similarity between two variables
+        - Minkowski Distance
+            Metric form of Euclidean and Manhattan distances
+        - Cosine Similarity
+            Finds how similar two variables X and Y are
+
+
+        METRICS: https://turi.com/learn/userguide/evaluation/classification.html REALLY GOOD METRICS PAPER
+
+
+
+    . Accurate prediction score
+        - Cross Validation
+            There are two common cross validation methodologies
+            1. Holdout Cross Validation
+
+                A. Train your model on the training set (60% of the data), 
+                B. Model selection (tuning parameters) on validation set (20% of the data) and 
+                C. test your model on the test set (20% of the data).
+
+            2. K fold cross validation
+            
+                from sklearn.cross_validation import cross_val_score 
+                scores = cross_val_score(estimator=pipe_lr, X=X_train, y=Y_train, cv=12, n_jobs=)
+                mean_scores = scores.mean()
+
+        . Best parameters with validation curves
+            Before we tune the parameters, we need to diagnose and find if the model is suffering from under or overfitting.
+                - Large number of parameters tends to overfit
+            OPTIMIZE HYPER PARAMETERS: https://www.datacamp.com/community/tutorials/parameter-optimization-machine-learning-models…
+
+            1. Grid search
+                from sklearn.grid_search import GridSearchCV
+
+            2. Random search
+
+
+MACHINE LEARNING INTERPRETABILITY https://towardsdatascience.com/interpretability-in-machine-learning-70c30694a05f
+---------------------------------
+
+Feature importance:
+- Generalised Linear Models
+- Random Forest and SVM
+- Lime https://github.com/marcotcr/lime
+
+Interpretation: https://towardsdatascience.com/explainable-artificial-intelligence-part-2-model-interpretation-strategies-75d4afa6b739
+- Exploratory analysis and visualization techniques like clustering and dimensionality reduction.
+    + Dimensionality reduction: Principal Component Analysis (PCA), Self-organizing maps (SOM), Latent Semantic Indexing
+    + Manifold Learning: t-Distributed Stochastic Neighbor Embedding (t-SNE)
+    + Variational autoencoders: An automated generative approach using variational autoencoders (VAE)
+    + Clustering: Hierarchical Clustering
+- Model performance evaluation metrics
+    + Supervised Learning — Classification: For classification problems, our main objective is to predict a discrete categorical response variable. The confusion matrix is extremely useful here from which we can derive a whole bunch of useful metrics including accuracy, precision, recall, F1-Score as depicted in the following example.
+    + ROC curve and the AUC score are really recommended
+
+- Feature Importance
+    + Partial Dependence Plots
+        * Shap
+        * Skater
+    
+- Global Surrogate Models
+    + TreeSurrogates
+- Local Interpretable Model-agnostic Explanations (LIME)
+- Shapley Values and SHapley Additive exPlanations (SHAP)
+    + The ‘game’ is the prediction task for a single instance of the dataset.
+    + The ‘gain’ is the actual prediction for this instance minus the average prediction of all instances.
+    + The ‘players’ are the feature values of the instance, which collaborate to receive the gain (= predict a certain value).
+
+
+
+
+
+DNS tunneling
+-------------
+
+https://unit42.paloaltonetworks.com/dns-tunneling-how-dns-can-be-abused-by-malicious-actors/
+
+Basic traffic with CnC:
+1. HEARTBEAT: 
+    request, type A with embedded data(encoded or plaintext) in the query encoded.bad.com
+    response, type A with code NXDOMAIN since domain not registered or pretending
+
+2. Exfiltration (ONLY USE OF REQUESTS)
+
+Anything could be sent only limitation: UDP size + UDP best effort
+- size can be bypassed with truncation 
+- very complicated to deal with dropped datagrams
+
+3. Infiltration (RESPONSES)
+- almost no limitations, especially using the TXT DNS record.
+- perfect for base64
+- we are still unsure if things arrive
+
+When does the bot actually asks for TXT records?
+When requesting for the A records most of the time the answer will be NXDOMAINS
+with the answer NOERROR, the CnC can use the IPv4 response to embed commands.
+
+Imagine the values returned as commands that can indicate to request TXT RR or to wipe the traces, or any possible malicious command possible.
+
+A lot of instructions can also be hidden in the parameters of the queries, such as the flags. Since the DNS server is under malicious control all the exchanges could be configured and have conditional responses.
+
+https://www.giac.org/paper/gcia/1116/detecting-dns-tunneling/108367
+
+A better way to qualify tunneling is VPN over DNS as a service. Malware installs client and the server decodes the DNS requests and does the proxying of the real traffic. example of tools: Iodine.
+
+The core techniques
+used by all DNS tunneling utilities include a controlled domain or subdomain, a server side component, a client side component and data encoded in DNS payloads. Server and client each hosting one side of the tunnel.
+
+- Encoding techniques, this is where tools vary:
+    + Data encoded in the dns request.
+    + CNAME response by the server possible 
+    + Server initiation of communication can be only achieved by regular poll of the server by the client so if the server wants to send data he can respond to the requests.
+
+Type of encoding and type of RR queried are variant. Some tools even detect the best option @iodine. EDNS allows to have larger payloads
+
+Detection techniques:
+    + payload analysis
+        * size of request and response (Bianco, 2006)
+            - ratio of source and destination bytes compared against a threshold.
+            - length of dns query and response (Pietraszek, 2004), (Skoudis, 2012)
+            - hostname request longer then 52 char (Guy,2009)
+        * Entropy of hostname
+        * statistical analysis (Bilge, 2011) with LMS and (Guy, 2009) with an alert with anything with above 27 unique characters.
+        * Uncommon record types (Pietraszek, 2004)
+        * policy violation  (Fry, 2009)
+        * specific signatures (Van Horenbeeck, 2006)
+    + traffic analysis
+        * volume of DNS traffic per IP (Pietraszek, 2004), (Van Horenbeeck, 2006)
+        * volume of DNS traffic per domain  (Butler, 2011)
+        * number of hostnames per domain (Guy, 2009)
+        * geographic location of DNS server (Skoudis, 2012)
+        * Domain history (Zrdnja, 2007)
+            - when was the record added?
+        * volume of NXDomain responses  (Antonakakis, 2012)
+        * Visualization  (Guy, 2009).
+        * Orphan DNS requests
+
+DNS shadowing
+-------------
+https://blog.malwarebytes.com/threat-analysis/2015/04/domain-shadowing-with-a-twist/
+.Definition: Domain shadowing is a technique where attackers steal domain account credentials from their owners for the purpose of creating sub domains directed at malicious servers (reverse proxy).
+
+This gives criminals a huge amount of URLs they can cycle through and discard after use. This architecture is efficient because it connects victims with malicious URLs that are served to them ‘on-demand’ in a completely automated fashion.
+
+---
+For cyber criminals, domain shadowing is creating  thousands of subdomains by generally capturing user information with phishing. it’s shown as a way to prevent classical detection methods like IP or websites blocking because it utilizes legit sites as fronts for malicious delivery.
+
+1. domain owners’ identity information is captured by phishing or keylogging methods.
+2. creation of subdomains using the compromised owner's credentials.
+3. Angler Exploit Kit begins here. The work is designed to redirect victims to an attacker-controlled webpage hosted on the first tier of subdomains.
+4. Users are redirected to the exploit kit landing pages hosted on the second tier of subdomains
+
+Anlger EK: The Angler exploit kit is now one of the best exploit kits on the market. With Zero Day, it offers the ability to quickly and effectively integrate many emerging abuses such as Adobe Flash Player zero-days and Internet Explorer exploits.
+++++++
+Angler Exploit Kit has begun utilizing these hijacked domain registrant accounts to serve malicious content. This is an increasingly effective attack vector since most individuals don’t monitor their domain registrant accounts regularly
+
+Since this campaign has done an exceptional job of rotation not only the subdomains, but also the IP addresses associated with the campaign.  Additionally, these subdomains are being rotated quickly minimizing the time the exploits are active, further hindering both block list effectiveness and analysis
+
+Domain shadowing is the process of using users domain registration logins to create subdomains
+
+FEATURES: 
+
+There are some other differentiators between the redirecting domains and the exploit domains. The redirecting domains only made use of third level domains that were english word based (i.e. says.imperialsocks.com). The landing page / exploit kit subdomains are random string based and recently have branched into using both third level and fourth level domains (i.e. brandmuellergekwantifiseer.astarentals.co.uk &  3e3qcq.plante.bplawfirm.net)
+
+Detection:
+
+Don’t Let One Rotten Apple Spoil the Whole Barrel:
+Towards Automated Detection of Shadowed Domains \cite{shadowing}
+
+

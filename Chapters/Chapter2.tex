@@ -394,7 +394,8 @@ ADD IMAGE HERE:
 
 \subsubsection{DNS tunneling}
 
-
+With DNS tunneling, another protocol can be tunneled through DNS. A DNS tunnel can be used for CnC data exfiltration or tunneling of
+any internet protocol (IP) traffic.
 
 DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
 What is positive about this abuse is that there are almost no legitimate reasons for this application, making obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
@@ -407,6 +408,11 @@ IMAGE tunneling (cf /img)
 \subsubsection{Domain shadowing}
 \cite{review2}\cite{detection8}
 TODO: explain domain shadowing
+
+\cite{shadowing2}
+\cite{shadowing3}
+\cite{shadowing4}
+\cite{shadowing5}
 
 \section{Machine learning approach}
 We use machine learning in our thesis to create models around certain behaviors botnets show to helps us detect them from the legitimate traffic. The next sections will detail what machine learning is, how it works and its implementation in the thesis.
@@ -429,10 +435,12 @@ Data pre-processing involves 2 processes: feature selection and feature extracti
 
 \paragraph{Feature selection} is an important step of the workflow. The choice of the data that will be ingested is crucial and directly connected to the results we will obtain. We chose to select features based on patterns or features based on data type. Pattern based means through statistical analysis of the data and using unsupervised learning algorithms to extract new tendencies from their results. The goal is to find patterns for each label, understand the underlying reason. Data type based means that we focus on the  specific features related to the traffic from the labeled data. Most of these features have been analysed by other researchers and will be based on the nature of the traffic coming from malicious and normal labels.\label{featureselectionlabel}
 
-\paragraph{feature extraction} It is important to realize that algorithms are programs that only understand numerical data. The raw traffic captures can't directly be ingested by the algorithms, these can only digest 3 types of formats: numerical (300 seconds for the TTL of a record), categorical(DNS record types such as A, AAAA, TXT, CNAME, ...) and ordinal (short, medium, long). These formats can always be converted into numerical values which is the only thing algorithms can use. It is important to realize that only features from the data convertible into one of these formats will be able to be used. Format isn' the only thing that is important, with large datasets, we need to get rid of all the noise that they might contain as well as find missing data or inconsistency in parts of the traffic.
+\paragraph{Feature extraction} It is important to realize that algorithms are programs that only understand numerical data. The raw traffic captures can't directly be ingested by the algorithms, these can only digest 3 types of formats: numerical (300 seconds for the TTL of a record), categorical(DNS record types such as A, AAAA, TXT, CNAME, ...) and ordinal (short, medium, long). These formats can always be converted into numerical values which is the only thing algorithms can use. It is important to realize that only features from the data convertible into one of these formats will be able to be used. Format isn' the only thing that is important, with large datasets, we need to get rid of all the noise that they might contain as well as find missing data or inconsistency in parts of the traffic.
 This section will be detailed in \label{featureextractionlabel}
 
-\subparagraph{feature extraction techniques} To clean and extract the features from the raw data, there are common techniques used. The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). The second consists in dealing with missing data by either removing it or using an average for that feature not to have it influence the other data for that feature. Thirdly, anomalies due to human errors for example need to be discovered and corrected. Finally, we normalize the features\cite{ml-norm} by dividing them by the maximum for that feature. The goal of the normalization is to avoid features unbalanced analysis by the algorithms(i.e. TTL is around $$[300-86400]$$ and number of resolved IPs $$[0-15]$$, TTL could have more weight in the algorithm due to the scale difference of the features). 
+\subparagraph{Feature extraction techniques} To clean and extract the features from the raw data, there are common techniques used. The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). The second consists in dealing with missing data by either removing it or using an average for that feature not to have it influence the other data for that feature. Thirdly, anomalies due to human errors for example need to be discovered and corrected. Finally, we normalize the features\cite{ml-norm} by dividing them by the maximum for that feature. The goal of the normalization is to avoid features unbalanced analysis by the algorithms(i.e. TTL is around $$[300-86400]$$ and number of resolved IPs $$[0-15]$$, TTL could have more weight in the algorithm due to the scale difference of the features).
+
+\subparagraph{Feature selection} After you have extracted the features from the raw data there is a very important step to go through. The number of features used can be a major impact of your research in regards to redundancy, complexity. Therefore, the next step is to decide which features we want to use for our experiment.
 
 \subsubsection{How to chose the right algorithms?}
 To answer this question we first need to learn which are the differences between the available algorithms and what they look to achieve: 
@@ -806,11 +814,31 @@ Another evasion technique of botnets that exploits the DNS protocol is the conce
 In \cite{tunn1}, Dietrichyz et al. analyze the use of TXT RR with segmented and encrypted data. Their study resulted in a set of features mostly analyzing the strings characteristics. Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy". Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead. They expect these behavioral communication features to be effective enough in order to extend a classifier based on the rdata features.\\
 \\
 In this article written by G. Farnham \cite{tunn}, he proposed a visual approach to detecting DNS tunneling, by plotting the set of features proposed, you can detect by "visual anomaly detection" the presence of DNS tunneling in your network.. 
+x-axis: destination IP
+y-axis: character count
+radius: hostname length
+colour: request type
+
+\url{https://vimeo.com/38727629}
+
+IDEA: use the DGA tricks to plot some of the tunneling done
+but more specific to NXDOMaINS / NO ERRORS and TXT / base64
 
 TODO: This last paper \cite{dns-tun}
 
+\cite{tunn2}
+
+TODO: check if this is the same paper used to detect DGA, the study looks very similar. % https://pdfs.semanticscholar.org/c7cc/7c16e8952facae1e4dfb0dd768a4504cd5cb.pdf
+
+\cite{tunn3} 
+
+\cite{tunn4}
+
+TODO: follows the same idea but visually.
+
 \subsubsection{Domain shadowing}
-TODO: Liu et al. \cite{shadowing} are the first to propose an approach against this new trend.
+TODO: Liu et al. \cite{shadowing} are the first to propose an approach against this new trend. 
+
 
 \subsection{Value summary}
 
