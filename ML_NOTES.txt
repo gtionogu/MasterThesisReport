@@ -341,3 +341,139 @@ Don’t Let One Rotten Apple Spoil the Whole Barrel:
 Towards Automated Detection of Shadowed Domains \cite{shadowing}
 
 
+EXPLANATION OF ALGORITHMS:
+--------------------------
+
+
+\subsubsection{Naive Bayes}
+The Gaussian Naive Bayes name comes from the Bayes’ theorem.
+This theorem "describes the probability of an event, based on prior knowledge of conditions be related of conditions to the event" [51].
+So basically this machine learning algorithm bases its prediction on
+previous experience. It is a probability algorithm, which means that it tells us not only the target but also the degree of certainty, which is
+one of its advantages.
+
+\subsubsection{Gaussian Naive Bayes}
+3.1.2.4. Naïve Bayes
+Naive Bayes is a conditional probability model based on the Bayes theorem [16]. In the
+classification problem, the data includes: D is the set of training data that has been vectorized as
+x = (x1, x2, ..., xn), Ci
+is subclass i, with i = {1, 2, ..., m}. Assume that all properties are conditionally
+independent of each pair together. According to Bayes theorem, we have:
+P(Ci|X) = P(X|Ci)P(Ci)P(X)(1)
+Based on the conditionally independent characteristic, we have:
+P(X|Ci) = n k=1 P(xk|Ci) (2)
+where, P(Ci|X) is the probability of class i given sample X, P(Ci) is the probability of class i and P(xk|Ci)
+is the probability of the kth property that has the value of xk given X in class i.
+
+\subsubsection{K-Nearest Neighbor}
+kNN (k-Nearest Neighbor) is one of the simplest supervised machine learning algorithms.
+The idea of kNN is that it will classify the new object based on its k nearest neighbors, where k is a
+predefined positive integer [16]. kNN algorithm is comprehensively described in the following steps:
+- Step 1: Determine the parameter value k.
+- Step 2: Calculate the distance between the new object that needs to be classified with all objects
+in the training dataset.
+- Step 3: Arrange computed distances in the ascending order and identify k nearest neighbors with
+the new object.
+- Step 4: Take all the labels of the k neighbors selected above.
+- Step 5: Based on the k labels that have been taken, the label that holds the majority will be
+assigned to the new object.
+%====================
+The model created by the k-Nearest Neighbors (k-NN) algorithm
+is, in fact, the entire training dataset. To make the predictions, the
+algorithm looks for the k nearest neighbors that are similar to the
+new instance we want to predict and summarizes instances found in
+the model [13].
+The k-NN algorithm works well for small datasets but tends to
+struggle with high dimensional data and reach the “Curse of Dimensionality“
+that we talked about in chapter 5.
+
+\subsubsection{Decision Trees}
+3.1.2.2. Decision tree
+Decision tree is a prediction model that is a mapping from observations of a thing, or a phenomenon to the conclusions about the objective value of things, or phenomena. Decision tree creates models that allow the classification of an object by creating a set of decision rules. These rules are extracted based on the set of characteristics of the training data. In a decision tree, leaves represent classes and each child node in the tree and its branches represent a combination of features that lead to classification. Thus, classifying an object will begin with checking the value of the root node, and then ontinuing downward under the tree branches corresponding to those values. This process is performed repeatedly for each node until it cannot go any further and touch the leaf node. For the best model, the decision to select the root node and sub-node while building the decision tree is based on the Information Gain (IG) and Gini Impurity measurements [16]. The decision tree algorithm used for experiments in this paper is C4.5.
+
+\subsubsection{Decision tree}
+The decision tree algorithm takes its name from the way it creates
+a tree-like model of decisions. Each internal node corresponds to a
+condition while each leaf is the decision (e.g. "Botnet" or "Normal"
+traffic).
+The main advantages of decision trees are that they are easy to
+understand as we can visualize trees. The usage of the model for
+predictions is logarithmic, thus cheap in term of performance. One
+of the drawbacks is that the algorithm could create models that do
+not generalize the dataset well, resulting in overfitting. It is recommended
+to balance the dataset before the training as not doing so
+could result in trees being biased in the case of a class dominating
+another [18].
+
+\subsubsection{Support Vector Machine}
+Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
+Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data. The different parameters it proposes are Kernel, Regularization, Gamma and Margin.
+
+
+\subsubsection{Logistic Regression}
+Logistic regression is a very basic algorithm that can be used when
+the target is categorical (e.g. "botnet" or "normal" traffic). The model
+created bases itself on a threshold to predict unknown data.
+The main advantage of Logistic Regression is the informative output
+it gives us as it explicitly expresses the relationship between the
+feature and the target or, in other words, which direction it takes ( e.g.
+"botnet" or "normal" traffic). The drawback resides in the quantity of
+data needed to obtain stable and meaningful results [22].
+
+\subsubsection{XGBoost}
+XGBoost stands for eXtreme Gradient Boosting. It is an open-source
+implementation of gradient boosted decision trees which have been
+created for performance reasons. The boosting technique is based on
+ensemble where we use new models to correct previously trained
+ones. The models are added until no further improvements are
+possible [11]. Gradient boosting comes from the gradient descent
+algorithm it uses to obtain minimal losses when adding new models.
+XGBoost is considered to be the fastest implementation of gradient
+boosting [11] and is very popular on the Kaggle competition platform.
+Despite it being an algorithm that gives good results, we have
+to take care of overfitting when using it, which is its main drawback.
+However, the algorithm provides multiple parameters that allow to
+tune it correctly.
+
+\subsubsection{AdaBoost}
+AdaBoost, which is a short name for "Adaptive Boosting", is another
+ensemble learning algorithm that combines multiple weak classifiers
+in order to conceive a stronger one. It was the first algorithm
+created for binary classification. We could use any machine learning
+algorithm to boost it with AdaBoost but most frequently it is a
+Decision tree classifier with one level that is used [12].
+The main drawback of AdaBoost is that it is sensitive to noise and
+outliers but it can be less susceptible to overfitting than other algorithms.
+Finally, it is still an algorithm that performs well on diverse
+machine learning tasks
+
+\subsubsection{Random forest}
+%futureinternet-10-00043.pdf
+3.1.2.3. Random forest
+Random forest (RF) is a member of the chain of decision tree algorithms. The idea of this algorithm
+is to create some decision trees. These decision trees will run and give independent results. The answer
+predicted by the largest number of decisive trees will be chosen by the random forest [16]. To ensure
+that the decision trees are not the same, random forest randomly selects a subset of the characteristics
+of each node. The remaining parameters are used in the random forest as those in the decision trees.
+Future Internet 2018, 10, 43 5 of 11
+
+\subsubsection{Neural Networks}
+In theory, neural networks are inspired by the brain and try to
+reproduce the way humans learn. In practice, they work very
+differently: there is an input and an output layer with some hidden
+layers in between. The hidden layers transform the input and gives
+it to the output layer. To train the model, neural networks use a
+technique called "back-propagation" to adjust the hidden layers
+when the output is not the one desired.
+The main drawback of neural networks is the black box model
+generated by this algorithm. In fact, it is very difficult to interpret the result and to identify the relationship between an input and its
+target.
+
+
+FEATURE SELECTION JUSTIFICATION:
+In the following paragraphs, the most important features are presented.
+It is essential to take the most valuable features in machine
+learning because, the more features we have, the more it is likely that
+the model will overfit the dataset [19]. Therefore, dropping some
+features that do not significantly improve the predictions could help
+generalizing the model and produce better results on unknown data.
