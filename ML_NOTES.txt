@@ -340,6 +340,104 @@ Detection:
 Don’t Let One Rotten Apple Spoil the Whole Barrel:
 Towards Automated Detection of Shadowed Domains \cite{shadowing}
 
+3 RR associated with subdomain creation:
+    - A
+    - CNAME (alias)
+    - AAAA
+In particular, the bad actors harvested a large amount of credentials
+of domain owners (e.g., through phishing emails or brute-force
+guessing) and logged into their accounts to create subdomains.
+This technique is called domain shadowing, and such subdomains
+are called shadowed domains
+The malicious subdomains inherit the reputation of legitimate apex domain
+Goal: detection of bulk creation of shadowed domains
+
+1. Deviation from legitimate domains under the same apex
+2. Ccorrelation amongst shadowed domains under different apex
+- subdomain usage 
+    + analysis of date between apex creation and subdomdomain non-www creation. 
+    + ratio of popular domain (under upper apex and IP???)
+    + web connectivity, subdomains are deteched from their apex, there aren't any links + shadow domains cloaked (connectivity checked through web archive)
+- subdomain hosting
+    + deviation of hosting, distant IPs from apex and good subdomains + different AS
+    + correlation ratio, ratio of cohosted subdomains and dc(apex with subdomains hosted together)
+- subdomain activity
+    + distribution of first seen date
+    + resolution count
+    + active days
+- subdomain name
+    + diversity of name levels
+    + subdomain name length
+    
+Detection system: Woodpecker
+    a. creates profile of S (subdomains observed)
+    b. aggregation of profiles and extracts 17 features.
+    c. classifier training
+
+
+Rank Feature Score rank Feature Score
+1 F10 0.26188
+2 F2* 0.13213 
+3 F7* 0.11509 
+4 F17 0.06493 
+5 F5* 0.0623 
+6 F9 0.05221 
+7 F1* 0.04496 
+8 F14 0.04424 
+9 F11* 0.03451
+10 F8* 0.03374
+11 F12* 0.03183
+12 F16* 0.03128
+13 F3* 0.02852
+14 F15 0.02395
+15 F13* 0.02309
+16 F6* 0.01491
+17 F4* 0.00036
+
+USE THIS TO DECIDE WHICH FEATURES TO TAKE
+
+Table 5: Importance of features. Features marked with an
+asterisk (*) are novel.
+
+Feature analysis
+    We assess the importance of our features through a standard metric
+in the RandomForest model, namely mean decrease impurity (MDI).
+
+Datasets:
+
+Most manual through google research. Use of PDNS farsight and 360(security companies)
+as well as a live feed for VirusTotal totest the model with new data.
+## From 360
+{"rrname": "eu.account.amazon.com", "rrtype": "A",
+"rdata": "52.94.216.25;", "count": 31188,
+"time_first": 1477960509, "time_last": 1494290720}
+## From Farsight
+{"rrname":"aws.amazon.com.","rrtype":"A",
+"rdata":["54.240.255.207"], "count":63,
+"time_first":1302981660,"time_last":1318508315}
+
+Conclusions:
+
+Shadowed domains. Finally, we analyze the characteristics of
+shadowed domains and their apex. Basically, the number of shadowed domains under an apex is quite random, from one up to 2,989
+with the average number at six. Most shadowed domains have a
+short lifetime and are mostly (85%) resolved for less than five times
+per IP. Figure 12 shows the CDF of the active days of shadowed
+domains. Among them, 85% are observed for only one day. This
+indicates that miscreants rotate shadowed domains quickly, in a
+similar fashion as fast-flux networks [39].
+Previous work [14] uses the TTL value to identify malicious
+domains. We do not use it for our problem, since it is usually not
+distinctive on the ground-truth set. We verify this design choice
+on the entire set by sending DNS queries for 10,000 randomly
+sampled resolvable shadowed domains. The result confirms our
+prior observation that the value is either the same as their apex or
+within the normal range of other legitimate domains.
+By cross-checking with VT, we find that 126,384 shadowed domains were submitted to VirusTotal but only 14,134 subdomains
+were alarmed. In other words, security companies have not yet
+devised and deployed an effective solution, and we believe that
+Woodpecker can provide great value in tackling domain shadowing
+
 
 EXPLANATION OF ALGORITHMS:
 --------------------------
@@ -408,6 +506,7 @@ another [18].
 \subsubsection{Support Vector Machine}
 Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
 Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data. The different parameters it proposes are Kernel, Regularization, Gamma and Margin.
+https://medium.com/machine-learning-101/chapter-2-svm-support-vector-machine-coding-edd8f1cf8f2d
 
 
 \subsubsection{Logistic Regression}
@@ -469,6 +568,8 @@ The main drawback of neural networks is the black box model
 generated by this algorithm. In fact, it is very difficult to interpret the result and to identify the relationship between an input and its
 target.
 
+Neural networks are a algorithms which are designed after our brain cells. They excel at pattern-recognition. They are mostly used for clustering for unlabeled data and classification otherwise.
+
 
 FEATURE SELECTION JUSTIFICATION:
 In the following paragraphs, the most important features are presented.
@@ -477,3 +578,29 @@ learning because, the more features we have, the more it is likely that
 the model will overfit the dataset [19]. Therefore, dropping some
 features that do not significantly improve the predictions could help
 generalizing the model and produce better results on unknown data.
+
+
+PAPERS:
+-------
+Malicious Domain Names Detection Algorithm Based on N-Gram
+
+2 sections: domain name whitelist substring construction and 
+            malicious domain names detection
+
+1. Domain Name Whitelist Substring Set Construction
+    - substring stats:
+        + substrings for each N-gram for each domain
+        + n-gam done without Top Level DomainD
+        + substring length average
+            *   Length         3     4      5     6     7
+                Proportion (%) 5.39 20.09 29.13 29.21 13.81
+        + duplicate substrings are removed ??
+    - substring weight values calculation
+        The whitelist is created through statistical analysis of N-grams in legit domains (Alexa). Adding the weight calculation as well using 3-7 N-grams sizes.
+        - malicious domain detection
+            + Reputation values calculation
+                * sum of weights for each gram
+            + threshold setting D=0.65 for the study (optimal values)
+                * this is the reputation value under which we consider it to be a malicious domain
+
+

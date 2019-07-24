@@ -393,16 +393,13 @@ ADD IMAGE HERE:
 
 
 \subsubsection{DNS tunneling}
+DNS tunneling is a technique used to bypass restriction on a protocol or hide certain activity by embedding it in the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected \cite{Botnet1} while exfiltrating data. The only positive aspect about this abuse is that there are almost no legitimate reasons for this application as we saw with fast-flux, this makes obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
+\\
+Paloalto's research unit provided a nice overview of the DNS tunneling practices\cite{tunneling2}. They explain how the protocol can be used either to exfiltrate or infiltrate data with infected machines. They show how different parts of the protocol can be exploited. They divided the botnet traffic using dns tunneling into 3 types: heartbeat, exfiltration and infiltration. A heartbeat will be a simple query for an A record met with a NXDOMAIN response. An exfiltration can only use the query to send data therefore, it is usually fragmented through multiple A queries with the data embedded in the query as mentioned above. A big problem remains that because DNS uses UDP it can't rely on the same assurances provided by TCP. And finally infiltration, this usecase has a lot limitations then the exfiltration because it can hide the encoded data in the values of the records such as the TXT record. It has the same problem as the exfiltration which it can't rely on the protocol to ensure the data is correctly arrived.
+An interesting question they ask is how does the bot know when to ask for a TXT record instead of a A record. An they use a lot of different options but the most common one is the following: the malicious DNS server will respond with a NOERROR response when it is ready to provide the next payload and that is how the bot will change its next query for a TXT record.
 
-With DNS tunneling, another protocol can be tunneled through DNS. A DNS tunnel can be used for CnC data exfiltration or tunneling of
-any internet protocol (IP) traffic.
 
-DNS tunneling implies the act of embedding other protocols or data through the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected while exfiltrating data. \cite{Botnet1}
-What is positive about this abuse is that there are almost no legitimate reasons for this application, making obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
-
-Paloalto's research unit provided a nice medium level overview of DNS tunneling\cite{tunneling2}. They explain how the protocol can be used either to exfiltrate or infiltrate data with infected machines. They show how different parts of the protocol can be exploited. Using the request queries names to embed information directly in the domain name queried with encoded data, using the type of RR to indicate the CnC the status or type of response expected, and finally, using the type of the response codes (NXDOMAINS or NOERROR) to define the malicious response.
-
-IMAGE tunneling (cf /img)
+\includegraphics[scale=.8]{img/pers_tunn.png}
 
 
 \subsubsection{Domain shadowing}
