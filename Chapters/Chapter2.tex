@@ -403,8 +403,12 @@ An interesting question they ask is how does the bot know when to ask for a TXT 
 
 
 \subsubsection{Domain shadowing}
+The last abuse of DNS which has been recently detected, used by botnets as a communication channel is DNS shadowing. DNS shadowing is an abuse obtain by stealing account credentials from legitimate domains for the purpose of creating subdomains aimed at malicious servers. This provides criminals with a great amount of subdomains that inherit their parent's domain reputation. This allows to bypass a lot of features based on reputation and 2LD.
+Malicious actors cycle through the creation of subdomains which they delete shortly after, similar to the fast-flux rotation behavior.
+\\
+The reason this type of activity spawned is due to IDS using detection based on reputation scores for the domain names flagging domain fluxing and fast-fluxing making it complicated for botmasters to use those evasion systems as much. Malicious actors realized they could bypassed most detection systems by using the reputation of legitimate domains and that is when they started campaigns to harvest this specific type of credentials.
+
 \cite{review2}\cite{detection8}
-TODO: explain domain shadowing
 
 \cite{shadowing2}
 \cite{shadowing3}
@@ -419,7 +423,7 @@ Machine learning (ML) is a mathematical study of algorithms and statistics that 
 \subsection{Machine learning for botnet detection}
 The goal of botnet detection is to distinguish which traffic is normal and which is malicious. We are interested in one of the tasks that machine learning algorithms excel at which is classification. After training the models, classification algorithms are able to predict the belonging of new data.
 
-IMAGE: DIAGRAM OF THE WORKFLOW (DONE)
+\includegraphics[scale=.2]{img/pers_ml_workflow.png}
 
 \subsection{Machine Learning workflow}
 %https://cdn-images-1.medium.com/max/2000/1*KzmIUYPmxgEHhXX7SlbP4w.jpeg
