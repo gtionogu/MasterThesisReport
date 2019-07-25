@@ -97,12 +97,12 @@ Web Notes on different project topics:
 					normalized_X = preprocessing.normalize([x_array])
 
 					Why would we normalize in the first place?
+                        USE THIS IN THE EXPERIMENT
 						1. Normalization makes training less sensitive to the scale of features, so we can better solve for coefficients.
 						2. The use of a normalization method will improve analysis from multiple models.
 						3. Normalizing will ensure that a convergence problem does not have a massive variance, making optimization feasible
 				2. Standardisation
-
-					Standarderised Value = (Value - Feature Mean)/Feature Standard Deviation
+                    Standarderised Value = (Value - Feature Mean)/Feature Standard Deviation
 					sklearn.preprocessing.StandardScaler can be used to perform standarisation.
 
 					from sklearn import preprocessing
