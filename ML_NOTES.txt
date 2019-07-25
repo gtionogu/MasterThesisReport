@@ -135,11 +135,15 @@ Web Notes on different project topics:
 
                         least important can be excluded (can also use data summary)
 
-			. How we need to reduce dimensions? https://medium.com/fintechexplained/what-is-dimension-reduction-in-data-science-2aa5547f4d29
-                1. Principal component analysis (PCA), https://stackabuse.com/implementing-pca-in-python-with-scikit-learn/
-                2. Linear Discriminant Analysis (LDA) or 
-                3. Kernel principal component analysis to reduce the dimensions.
+    . How we need to reduce dimensions? https://medium.com/fintechexplained/what-is-dimension-reduction-in-data-science-2aa5547f4d29
+    1. Principal component analysis (PCA), https://stackabuse.com/implementing-pca-in-python-with-scikit-learn/
+    2. Linear Discriminant Analysis (LDA) or 
+    3. Kernel principal component analysis to reduce the dimensions.
 
+    Principal component analysis (PCA) is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables (entities each of which takes on various numerical values) into a set of values of linearly uncorrelated variables called principal components. This transformation is defined in such a way that the first principal component has the largest possible variance (that is, accounts for as much of the variability in the data as possible), and each succeeding component in turn has the highest variance possible under the constraint that it is orthogonal to the preceding components. The resulting vectors (each being a linear combination of the variables and containing n observations) are an uncorrelated orthogonal basis set. PCA is sensitive to the relative scaling of the original variables
+
+    Linear discriminant analysis (LDA), normal discriminant analysis (NDA), or discriminant function analysis is a generalization of Fisher's linear discriminant, a method used in statistics, pattern recognition and machine learning to find a linear combination of features that characterizes or separates two or more classes of objects or events. The resulting combination may be used as a linear classifier, or, more commonly, for dimensionality reduction before later classification.
+    
 		- choose the right algorithm 
             1. Bruteforce 
             2. Understanding algorithms and applying most sense for the data
