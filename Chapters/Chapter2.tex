@@ -463,7 +463,6 @@ These categories are based on the training data given to the algorithms. \textbf
 \textbf{Unsupervised algorithms} use unlabeled data as input. This type of algorithm will group data based on similar values for different features.
 Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
 \\
-IMAGE: ADD HERE CAPTION OF DIFFERENT CATEGORIES OF ALGORITHMS (supervised -> labeled(colors) then line between, unsupervised -> clusters, semi-super -> dunno yet)
 \cite{supvsunsup}
 \includegraphics[scale=.3]{img/supVsUnsup.png}
 Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This falls into the typical classification problem as mentioned above where supervised algorithms prevail. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.\\
@@ -592,19 +591,6 @@ predicted by the largest number of decisive trees will be chosen by the random f
 that the decision trees are not the same, random forest randomly selects a subset of the characteristics
 of each node. The remaining parameters are used in the random forest as those in the decision trees.
 Future Internet 2018, 10, 43 5 of 11
-
-\subsubsection{Gaussian Naive Bayes}
-3.1.2.4. Naïve Bayes
-Naive Bayes is a conditional probability model based on the Bayes theorem [16]. In the
-classification problem, the data includes: D is the set of training data that has been vectorized as
-x = (x1, x2, ..., xn), Ci
-is subclass i, with i = {1, 2, ..., m}. Assume that all properties are conditionally
-independent of each pair together. According to Bayes theorem, we have:
-P(Ci|X) = P(X|Ci)P(Ci)P(X)(1)
-Based on the conditionally independent characteristic, we have:
-P(X|Ci) = n k=1 P(xk|Ci) (2)
-where, P(Ci|X) is the probability of class i given sample X, P(Ci) is the probability of class i and P(xk|Ci)
-is the probability of the kth property that has the value of xk given X in class i.
 \subsubsection{Neural Networks}
 In theory, neural networks are inspired by the brain and try to
 reproduce the way humans learn. In practice, they work very
