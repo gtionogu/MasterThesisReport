@@ -493,17 +493,15 @@ These metrics will allow us to understand what can be improved and the reason of
 \subsection{How will machine learning be implemented for this Thesis?}
 A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters are an important part. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
 
-\subsection{Algorithm selection?}
-Here we present the algorithms we will use.
-
-TODO: CHECK HOW HE PRESENTS THE ALGORITHMS
+\subsection{Algorithm selection}
+Based on the explanations above on how to chose the right algorithms, here we present the algorithms we will use. The reason for picking them is their mainstream use for this type of problem.
 
 \subsubsection{Gaussian Naive Bayes}
-This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event". In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
-\subsubsection{K-Nearest Neighbor}
-kNN (k-Nearest Neighbor) is one of the simplest supervised machine learning algorithms.
+This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event"\cite{bayes}. In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
+\subsubsection{K-Nearest Neighbors}
+k-Nearest Neighbors (kNN) is one of the simplest supervised machine learning algorithms.
 The idea of kNN is that it will classify the new object based on its k nearest neighbors, where k is a
-predefined positive integer [16]. kNN algorithm is comprehensively described in the following steps:
+predefined positive integer. kNN algorithm is comprehensively described in the following steps:
 - Step 1: Determine the parameter value k.
 - Step 2: Calculate the distance between the new object that needs to be classified with all objects
 in the training dataset.
