@@ -498,27 +498,7 @@ Based on the explanations above on how to chose the right algorithms, here we pr
 \subsubsection{Gaussian Naive Bayes}
 This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event"\cite{bayes}. In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
 \subsubsection{K-Nearest Neighbors}
-k-Nearest Neighbors (kNN) is one of the simplest supervised machine learning algorithms.
-The idea of kNN is that it will classify the new object based on its k nearest neighbors, where k is a
-predefined positive integer. kNN algorithm is comprehensively described in the following steps:
-- Step 1: Determine the parameter value k.
-- Step 2: Calculate the distance between the new object that needs to be classified with all objects
-in the training dataset.
-- Step 3: Arrange computed distances in the ascending order and identify k nearest neighbors with
-the new object.
-- Step 4: Take all the labels of the k neighbors selected above.
-- Step 5: Based on the k labels that have been taken, the label that holds the majority will be
-assigned to the new object.
-%====================
-The model created by the k-Nearest Neighbors (k-NN) algorithm
-is, in fact, the entire training dataset. To make the predictions, the
-algorithm looks for the k nearest neighbors that are similar to the
-new instance we want to predict and summarizes instances found in
-the model [13].
-The k-NN algorithm works well for small datasets but tends to
-struggle with high dimensional data and reach the “Curse of Dimensionality“
-that we talked about in chapter 5.
-
+k-Nearest Neighbors (kNN) is a very simple supervised ML algorithm. kNN classifies new objects based on their nearest neighbors. The parameter k represents the amount of nearest neighbors it looks for before it assigns the majority. The model created by kNN is actually the entire training dataset since it will use all the neighbors to determine the classification. kNN algorithm works well with a low amount of features, with datasets with large dimensions computing the distances for the k-nearest neighbors becomes computationally expensive.
 \subsubsection{Decision Trees}
 3.1.2.2. Decision tree
 Decision tree is a prediction model that is a mapping from observations of a thing, or a
@@ -532,7 +512,7 @@ performed repeatedly for each node until it cannot go any further and touch the 
 model, the decision to select the root node and sub-node while building the decision tree is based on
 the Information Gain (IG) and Gini Impurity measurements [16]. The decision tree algorithm used for
 experiments in this paper is C4.5.
-\subsubsection{Decision tree}
+%===================================================================
 The decision tree algorithm takes its name from the way it creates
 a tree-like model of decisions. Each internal node corresponds to a
 condition while each leaf is the decision (e.g. "Botnet" or "Normal"
