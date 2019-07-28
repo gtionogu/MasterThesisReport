@@ -473,15 +473,20 @@ Supervised algorithms have been chosen for the modeling part of the problem but 
 \subsubsection{Training and testing}
 We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation\cite{10-fold}. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10 to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
 
-TODO:  A CAPTION EXPLAINING 10-fold
+\begin{figure}[h]
+\centering
+\includegraphics[scale=.3]{img/K-fold-cross-validation.png}
+\caption{An example graph}
+\label{fig:x cubed graph}
+\end{figure}
 
 \subsubsection{Analysis of the model's prediction abilities}
 Finally, we need metrics that will provide us information of the experiment. A very common way to do so is using the confusion matrix. This provides 4 main metrics that can then be exploited for more detailed information. There are other metrics \cite{ml-metrics} that can be introduced as well such as: 
 \begin{enumerate}
-\item Classification Accuracy.
-\item Logarithmic Loss.
-\item Area Under ROC Curve.
-\item Classification Report.
+\item Classification Accuracy, 
+\item Logarithmic Loss, 
+\item Area Under ROC Curve, 
+\item Classification Report, 
 \end{enumerate}
 These metrics will allow us to understand what can be improved and the reason of the score obtained. From there we will adapt the features or the experiment to improve the results obtained. The goal is to reach the best results possible.
 
@@ -493,12 +498,8 @@ Here we present the algorithms we will use.
 
 TODO: CHECK HOW HE PRESENTS THE ALGORITHMS
 
-\subsubsection{Naive Bayes}
-The Gaussian Naive Bayes name comes from the Bayes’ theorem.
-This theorem "describes the probability of an event, based on prior knowledge of conditions be related of conditions to the event" [51].
-So basically this machine learning algorithm bases its prediction on
-previous experience. It is a probability algorithm, which means that it tells us not only the target but also the degree of certainty, which is
-one of its advantages.
+\subsubsection{Gaussian Naive Bayes}
+This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event". In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
 \subsubsection{K-Nearest Neighbor}
 kNN (k-Nearest Neighbor) is one of the simplest supervised machine learning algorithms.
 The idea of kNN is that it will classify the new object based on its k nearest neighbors, where k is a
