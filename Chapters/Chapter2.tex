@@ -548,6 +548,8 @@ to balance the dataset before the training as not doing so
 could result in trees being biased in the case of a class dominating
 another [18].
 \subsubsection{Support Vector Machine}
+Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
+Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data. It proposes 4 main hyper parameters 
 \subsubsection{Logistic Regression}
 Logistic regression is a very basic algorithm that can be used when
 the target is categorical (e.g. "botnet" or "normal" traffic). The model
@@ -646,7 +648,8 @@ Let us now analyze the particularities the passive traffic analysis of the DNS p
 
 %\includegraphics[scale=.8]{img/botnet_detection_techniques.jpg}
 %%%% DNS taxonomy
-%In a recent survey of the state of the art regarding botnet detection based on DNS traffic analysis\cite{survey}, they present a classification of botnet detection techniques via DNS \cite{survey1}. The newer techniques emerged to detect unknown botnets and to respond to the new type of evasions that followed. Botnets have become a lot more resilient and stealthy. It has pushed the research to focus on features that would allow to distinguish between benign and malicious traffic. Techniques capable of detecting new bots are divided into 2 sections: host-based and network-based. This means anomalies focusing on a single host or the traffic of a network. The host-based research focused on detecting bots in single hosts by monitoring local processes and kernel level routines.(TODO BotSwat) The problem of these propositions were the inability to scale them, we would need large monitoring system on each host with complex capabilities to communicate with each other and do correlation(TODO EFFORT framework). This is what the second section aims to solve by monitoring networks. This activity can be done passively by simply collecting the traffic and analysing it (passive monitoring). It can also been done actively by injecting packets into the network forged to make the bots react, and then analyse the network response. \\
+TODO: check for this section if needed or not
+In a recent survey of the state of the art regarding botnet detection based on DNS traffic analysis\cite{survey}, they present a classification of botnet detection techniques via DNS \cite{survey1}. The newer techniques emerged to detect unknown botnets and to respond to the new type of evasions that followed. Botnets have become a lot more resilient and stealthy. It has pushed the research to focus on features that would allow to distinguish between benign and malicious traffic. Techniques capable of detecting new bots are divided into 2 sections: host-based and network-based. This means anomalies focusing on a single host or the traffic of a network. The host-based research focused on detecting bots in single hosts by monitoring local processes and kernel level routines.(TODO BotSwat) The problem of these propositions were the inability to scale them, we would need large monitoring system on each host with complex capabilities to communicate with each other and do correlation(TODO EFFORT framework). This is what the second section aims to solve by monitoring networks. This activity can be done passively by simply collecting the traffic and analysing it (passive monitoring). It can also been done actively by injecting packets into the network forged to make the bots react, and then analyse the network response. \\
 %TODO: The part that our study focus on because "explain a valid reason for this part having more weight then the other ones, explain that our study could be a model combining different steps of the classification."
 
 \paragraph{What are the different passive detection methods?}
@@ -665,27 +668,6 @@ Since the end goal is to find the best features for an combined solution, we hav
 First, we will present the combined experiments. These experiments don't focus on a single type of detection mechanism but aggregate the different detection techniques used for botnets. We will discuss the features they have extracted, what models they have created and how they have implemented their approach.\\
 Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.
 %the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
-%%%%%%%%%%%%%%%%%%%%%%
-
-%========================================================================================
-%CHECK PAPERS and EXTRACT VALUE
-
-%Honeynet: capture and analyze Pros: Easy to build, low ressources requirements Cons: Hard to scale, limited interactions + can be reverted by hackers to learn new evasion techniques. \cite{detection8}
-%IDS: monitor and look for signs 2 types\cite{survey1}: signature or anomaly based through DNS analysis(most promising) \cite{detection10}
-%Anomaly detection approaches that work:  DNS Blacklist (for malware, botnets and spambots) \cite{dnsbl} and detect botnets when they try to communicate with their CnC:
-%- NXDomains \cite{detection11}
-%- recursive DNS queries detecting botnet related services \cite{ff2}
-%- DGA 
-%	1) Main DGA \cite{dga2}
-%	2) Decision tree + Bayes for DGA classification \cite{detection13} 
-%- Kopis = high level DNS query analysis (upper hierarchy)\cite{detection14}
-%- Exposure \cite{exposure}
-%- graph analysis \cite{dns-fail}
-%- reputation system \cite{reputation} 
-
-%Finally explain the different passive approaches: 
-%Explain that these passive detection can also be divided into specific counters for certain evasion systems such as DF, FF, tunneling. Or be put together in an all-in solution to detect botnets independently of the evasion technique used.
-
 
 \subsection{Presentation of the Exposure and the Local botnet experiments}
 The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
@@ -694,8 +676,7 @@ The first step in the research was to find the models that would be the current 
 \includegraphics[scale=.5]{img/exposure_architecture.png}
 
 \paragraph{Time-based}
-When we analyse many requests to a particular domain over
-time, patterns indicative of malicious behaviour may emerge.\\
+When we analyse many requests to a particular domain over time, patterns indicative of malicious behaviour may emerge.\\
 These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 4 features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
 \paragraph{DNS answer based}
 Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
@@ -721,10 +702,9 @@ This can be noticed with 2 simple features:\\
 \item length of the longest meaningful substring to length of domain name
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 Heuer et al.\cite{localbotnet} did a case study on local infections related to botnets. They propose a very large set of 24 features meant to detect botnets in networks . These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
-TODO get access to the paper!!! (visuals aren't enough)
-\\
 features:
 \begin{tabular}{c|l}
 \hline
@@ -756,7 +736,7 @@ TTL-based & Nb distinct TTL values\\
 & \% usage of TTL ranges\\
 & Std deviation TTL\\
 \end{tabular}
-TODO: add missing ones
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Weaknesses and possible improvements}
 TODO: rework this section.
