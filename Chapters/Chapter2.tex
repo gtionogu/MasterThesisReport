@@ -508,53 +508,21 @@ Its hyper parameters are very interesting too, they allows to adapt to the dimen
 \subsubsection{Logistic Regression}
 Logistic regression is a very basic algorithm that can be used when the target is categorical (e.g. "botnet" or "normal" traffic). The model created bases itself on a threshold to predict unknown data. The main advantage of Logistic Regression is the informative output it gives us as it explicitly expresses the relationship between the feature and the target or, in other words, which direction it takes ( e.g. "botnet" or "normal" traffic). The drawback resides in the quantity of
 data needed to obtain stable and meaningful results [22].
-\subsubsection{XGBoost}
-The main idea between eXtreme Gradient Boosting (XGBoost) is to take an improved decision tree algorithm, Random Forest, and improve it with an additional technique: improved gradiant boosting.
-Gradient boosting is a technique SEARCH ML BOOSTING AND GRADIENT BOOSTING
-XGBoost was created for fast and high performance. It is one of the most popular algorithms because it provides the best performance on a range of difficult machine learning tasks. Its only drawback is its overfitting but that can be solved fine-tuning its hyper-parameters.
-Furthermore, there are other considerations to take into account such as explainability which can be a bit complicated, that is why it isn't always the best algorithm even if it performs better.
+\subsubsection{XGBoost and Adaboost}
+Both algorithms, eXtreme Gradient Boosting (XGBoost) and Adaptive Boosting (AdaBoost), are based on a similar concept which is boosting. Boosting is a technique that modifies weak learners into strong learners. It is done by training multiple of these weak learners sequentially and each improving based on the previous one.\cite{boosting} Both use this technique with different approaches to it.
 
-===========================
-XGBoost stands for eXtreme Gradient Boosting. It is an open-source
-implementation of gradient boosted decision trees which have been
-created for performance reasons. The boosting technique is based on
-ensemble where we use new models to correct previously trained
-ones. The models are added until no further improvements are
-possible [11]. Gradient boosting comes from the gradient descent
-algorithm it uses to obtain minimal losses when adding new models.
-XGBoost is considered to be the fastest implementation of gradient
-boosting [11] and is very popular on the Kaggle competition platform.
-Despite it being an algorithm that gives good results, we have
-to take care of overfitting when using it, which is its main drawback.
-However, the algorithm provides multiple parameters that allow to
-tune it correctly.
-\subsubsection{AdaBoost}
-AdaBoost, which is a short name for "Adaptive Boosting", is another
-ensemble learning algorithm that combines multiple weak classifiers
-in order to conceive a stronger one. It was the first algorithm
-created for binary classification. We could use any machine learning
-algorithm to boost it with AdaBoost but most frequently it is a
-Decision tree classifier with one level that is used [12].
-The main drawback of AdaBoost is that it is sensitive to noise and
-outliers but it can be less susceptible to overfitting than other algorithms.
-Finally, it is still an algorithm that performs well on diverse
-machine learning tasks
+\paragraph{AdaBoost}
+The boosting used with Adaptive Boosting(AdaBoost) is simpler than XGBoost, it uses decision trees with a single decision node, they are called decision stumps. Each mistake made by stumps during classification are forwarded to the next stump by carrying more weight. This will allow the errors to be corrected of the numbers of stumps and obtain a cleaned up result in the end. This concept is mostly applied with DTs but it could be applied to any supervised algorithms. As are trees, AdaBoost are victims of outliers but they do a good job not to overfit the models as its peer. 
+
+\paragraph{XGBoost}
+The type of boosting used with XGBoost is Gradient Boosting on steroids. The algorithm improved is the RFs which is already a really strong supervised classifier. Like the AdaBoost, it sequentially improves the current tree using its predecessor but instead of adding more weight to the misclassified observations, it tries to train the next predictor to those observations. But this isn't all, XGBoost was created for fast and high performance to solve the slow characteristic of gradient boosting. That is where the eXtreme part comes in and where they introduced solutions to its shortcomings: parallelization of the tree construction,  distributed computing, out-of-core computing and cache optimization.\cite{xgboost} Due to this, it is one of the most popular algorithms because it provides the best performance on a range of difficult machine learning tasks. Its only drawback is its overfitting but that can be solved fine-tuning its hyper-parameters and it's explainability which can be complicated.
+
 \subsubsection{Random forest}
 The Random Forest (RF) algorithm is an improvement of the DTs. The concept is to randomly create low correlated models (forest) and give them the same input. It then picks the majority result as the prediction for the input. This technique provides a good way to protect from the overfitting that DTs are known for and to protect against individual errors of the trees. RF takes advantage of Bagging (Bootstrap aggregation) and Feature randomness to achieve this uncorrelated forest.
 Bagging consists in giving all the trees the same amount of data but with replaced data (duplicates). Secondly feature randomness as its name implies, at each node the trees only take decision based on a subset of features.\cite{rf}
+
 \subsubsection{Artificial Neural Networks}
 Artificial Neural Networks (ANN) is an algorithm created similar to how the brain works and its learning capabilities by modeling neurons and their synapses. It works as a black box system with inputs on one side and and outputs on the other which are dependent on the inputs. The black box is a network of neurons grouped in layers, neurons of each layer connect with the ones of the next layer with weighted connections that will determine when the neurons fire. The modeling is around finding the values of the neurons and the connections inside the blackbox (hidden layers). The way ANNs hidden layers are computed are through gradient descent, a way of automatically updating the weights step by step into a direction that will make them less wrong, based on the output desired.\cite{ann}
-===================================
-In theory, neural networks are inspired by the brain and try to
-reproduce the way humans learn. In practice, they work very
-differently: there is an input and an output layer with some hidden
-layers in between. The hidden layers transform the input and gives
-it to the output layer. To train the model, neural networks use a
-technique called "back-propagation" to adjust the hidden layers
-when the output is not the one desired.
-The main drawback of neural networks is the black box model
-generated by this algorithm. In fact, it is very difficult to interpret the result and to identify the relationship between an input and its
-target.
 
 \section{Classification of botnet research and detection}
 In this section, we are going to present the current state of the botnet detection taxonomy, show the weaknesses and strengths of each method and end with the current state of the art of the research on passive traffic analysis for botnet detection which is the method this thesis is dedicated to.\\
