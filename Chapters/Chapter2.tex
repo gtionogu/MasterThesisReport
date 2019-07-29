@@ -506,13 +506,7 @@ DTs are very simple to visualize and perform really well even in higher dimensio
 Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
 Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data.
 \subsubsection{Logistic Regression}
-Logistic regression is a very basic algorithm that can be used when
-the target is categorical (e.g. "botnet" or "normal" traffic). The model
-created bases itself on a threshold to predict unknown data.
-The main advantage of Logistic Regression is the informative output
-it gives us as it explicitly expresses the relationship between the
-feature and the target or, in other words, which direction it takes ( e.g.
-"botnet" or "normal" traffic). The drawback resides in the quantity of
+Logistic regression is a very basic algorithm that can be used when the target is categorical (e.g. "botnet" or "normal" traffic). The model created bases itself on a threshold to predict unknown data. The main advantage of Logistic Regression is the informative output it gives us as it explicitly expresses the relationship between the feature and the target or, in other words, which direction it takes ( e.g. "botnet" or "normal" traffic). The drawback resides in the quantity of
 data needed to obtain stable and meaningful results [22].
 \subsubsection{XGBoost}
 XGBoost stands for eXtreme Gradient Boosting. It is an open-source
@@ -540,14 +534,8 @@ outliers but it can be less susceptible to overfitting than other algorithms.
 Finally, it is still an algorithm that performs well on diverse
 machine learning tasks
 \subsubsection{Random forest}
-%futureinternet-10-00043.pdf
-3.1.2.3. Random forest
-Random forest (RF) is a member of the chain of decision tree algorithms. The idea of this algorithm
-is to create some decision trees. These decision trees will run and give independent results. The answer
-predicted by the largest number of decisive trees will be chosen by the random forest [16]. To ensure
-that the decision trees are not the same, random forest randomly selects a subset of the characteristics
-of each node. The remaining parameters are used in the random forest as those in the decision trees.
-Future Internet 2018, 10, 43 5 of 11
+The Random Forest (RF) algorithm is an improvement of the DTs. The concept is to randomly create low correlated models (forest) and give them the same input. It then picks the majority result as the prediction for the input. This technique provides a good way to protect from the overfitting that DTs are known for and to protect against individual errors of the trees. RF takes advantage of Bagging (Bootstrap aggregation) and Feature randomness to achieve this uncorrelated forest.
+Bagging consists in giving all the trees the same amount of data but with replaced data (duplicates). Secondly feature randomness as its name implies, at each node the trees only take decision based on a subset of features.\cite{rf}
 \subsubsection{Neural Networks}
 In theory, neural networks are inspired by the brain and try to
 reproduce the way humans learn. In practice, they work very
