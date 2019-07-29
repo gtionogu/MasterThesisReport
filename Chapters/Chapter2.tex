@@ -498,33 +498,10 @@ Based on the explanations above on how to chose the right algorithms, here we pr
 \subsubsection{Gaussian Naive Bayes}
 This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event"\cite{bayes}. In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
 \subsubsection{K-Nearest Neighbors}
-k-Nearest Neighbors (kNN) is a very simple supervised ML algorithm. kNN classifies new objects based on their nearest neighbors. The parameter k represents the amount of nearest neighbors it looks for before it assigns the majority. The model created by kNN is actually the entire training dataset since it will use all the neighbors to determine the classification. kNN algorithm works well with a low amount of features, with datasets with large dimensions computing the distances for the k-nearest neighbors becomes computationally expensive.
+k-Nearest Neighbors (kNN) is a very simple supervised ML algorithm. kNN classifies new objects based on their nearest neighbors. The parameter k represents the amount of nearest neighbors it looks for before it assigns the majority. The model created by kNN is actually the entire training dataset since it will use all the neighbors to determine the classification of a new item. kNN algorithm works well with a low amount of features, with datasets with large dimensions computing the distances for the k-nearest neighbors becomes computationally expensive.
 \subsubsection{Decision Trees}
-3.1.2.2. Decision tree
-Decision tree is a prediction model that is a mapping from observations of a thing, or a
-phenomenon to the conclusions about the objective value of things, or phenomena. Decision tree
-creates models that allow the classification of an object by creating a set of decision rules. These rules
-are extracted based on the set of characteristics of the training data. In a decision tree, leaves represent
-classes and each child node in the tree and its branches represent a combination of features that
-lead to classification. Thus, classifying an object will begin with checking the value of the root node,
-and then continuing downward under the tree branches corresponding to those values. This process is
-performed repeatedly for each node until it cannot go any further and touch the leaf node. For the best
-model, the decision to select the root node and sub-node while building the decision tree is based on
-the Information Gain (IG) and Gini Impurity measurements [16]. The decision tree algorithm used for
-experiments in this paper is C4.5.
-%===================================================================
-The decision tree algorithm takes its name from the way it creates
-a tree-like model of decisions. Each internal node corresponds to a
-condition while each leaf is the decision (e.g. "Botnet" or "Normal"
-traffic).
-The main advantages of decision trees are that they are easy to
-understand as we can visualize trees. The usage of the model for
-predictions is logarithmic, thus cheap in term of performance. One
-of the drawbacks is that the algorithm could create models that do
-not generalize the dataset well, resulting in overfitting. It is recommended
-to balance the dataset before the training as not doing so
-could result in trees being biased in the case of a class dominating
-another [18].
+Decision Trees(DTs) are supervised algorithms that based on observations of labeled data creates a model of decision that is represented by a tree where all the nodes of the tree are a condition for the features and where all the leaves are the label they are classified as. The classification process starts at the root and ends in one of the leaves.\\
+DTs are very simple to visualize and perform really well even in higher dimensions. The most common problem of DTs is the overfitting of the data. Because outliers and unbalanced datasets will create branches that don't generalize the data correctly.
 \subsubsection{Support Vector Machine}
 Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
 Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data. It proposes 4 main hyper parameters 
