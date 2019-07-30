@@ -254,10 +254,6 @@ Interpretation: https://towardsdatascience.com/explainable-artificial-intelligen
     + The ‘gain’ is the actual prediction for this instance minus the average prediction of all instances.
     + The ‘players’ are the feature values of the instance, which collaborate to receive the gain (= predict a certain value).
 
-
-
-
-
 DNS tunneling
 -------------
 
@@ -490,13 +486,5 @@ Malicious Domain Names Detection Algorithm Based on N-Gram
 
 MAKING SURE THE ORDER MAKES SENSE
 
-ML 
-ML for detection (classification)
-ML workflow
-    data gathering (dataset, balancing, labeling)
-    data pre-processing
-        feature selection(pattern/type/independence of features/large set of features)
-        feature extraction
-
-
-
+feature extracts
+    typr of ingested data

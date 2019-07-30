@@ -486,8 +486,6 @@ TODO: decide if we do this?
 \subsubsection{Training and testing}
 We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation\cite{10-fold}. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10\% to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
 
-ADD HYPERPARAMETERS IMHERE
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=.3]{img/K-fold-cross-validation.png}
@@ -495,15 +493,40 @@ ADD HYPERPARAMETERS IMHERE
 \label{fig:x cubed graph}
 \end{figure}
 
+
+A summary of our optimization for the machine learning part of the project would be to find the best combination of classifier, scaling function, feature selection and hyper-parameter tuning.
+
 \subsubsection{Analysis of the model's prediction abilities}
-Finally, we need metrics that will provide us information of the experiment. A very common way to do so is using the confusion matrix. This provides 4 main metrics that can then be exploited for more detailed information. There are other metrics \cite{ml-metrics} that can be introduced as well such as: 
-\begin{enumerate}
+Finally, we need metrics that will provide us information on the experiment to enable the feedback loop. A very common way to do so is using the confusion matrix which we can derive a large number of useful metrics including accuracy, precision, recall, F1-Score. There are also other advanced metrics \cite{ml-metrics} that can be introduced as well such as: Logarithmic Loss, Area Under ROC Curve and Classification Report. All will be described in this section but will be detailed in the experiment section.
+\paragraph{Logarithmic Loss}
+\paragraph{Area Under ROC Curve}
+\paragraph{•}
 \item Classification Accuracy, 
 \item Logarithmic Loss, 
 \item Area Under ROC Curve, 
 \item Classification Report, 
 \end{enumerate}
 These metrics will allow us to understand what can be improved and the reason of the score obtained. From there we will adapt the features or the experiment to improve the results obtained. The goal is to reach the best results possible.
+
+\subsubsection{Result interpretation}
+\cite{ml-inter}
+Feature Importance
+    Partial Dependence Plots
+        Shap
+        Skater
+	Generalised Linear Models
+	Random Forest and SVM
+	Lime https://github.com/marcotcr/lime        
+        
+    
+Global Surrogate Models
+    TreeSurrogates
+Local Interpretable Model-agnostic Explanations (LIME)
+Shapley Values and SHapley Additive exPlanations (SHAP)
+    The game is the prediction task for a single instance of the dataset.
+    The gain is the actual prediction for this instance minus the average prediction of all instances.
+    The players are the feature values of the instance, which collaborate to receive the gain (= predict a certain value).
+
 
 \subsection{How will machine learning be implemented for this Thesis?}
 A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters are an important part. Furthermore, the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
