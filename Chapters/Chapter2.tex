@@ -459,10 +459,8 @@ Here are some questions to help us in that selection.
 \subparagraph{Are the features independent enough from each other to have a balanced weight between general features?} The problem that often arises in ML is that different features are providing the same type of information and not adding value. This can push the balance of the models in their direction and result in a biased model. There are multiple solutions used in ML for this issue:  analyzing feature correlation and removing strong ones, scatter mix plots to understand links between features and finally importance analysis through the use of the Random forests algorithm.
 \\
 \subparagraph{Are there issues with large sets of features?}
-ADD citation
-
 This is where we can see the curse of the dimensionality manifest itself. Where problems such as exponential computing and overfitting come in to play. Some machine learning algorithms handle large sets of features very well but others have an exponential complexity when it comes to the number of features and it can end up slowing your research process. The problem of overfitting is important to take into account when doing ML and keep in mind that our dataset might not represent the global view of the problem we are solving. This means that if we create a model that doesn't generalize enough it won't work on other data as well even if you obtain really good results.\\
-To solve dimensionality there are a couple of solutions, some are part of reducing the amount of features by removing the less independent ones or important ones. There are other solutions such as Principal Component Analysis (PCA) and Linear Disciminant Analysis(LDA). \\
+To solve dimensionality there are a couple of solutions, some are part of reducing the amount of features by removing the less independent ones or important ones. There are other solutions such as Principal Component Analysis (PCA) and Linear Disciminant Analysis(LDA)\cite{ml-reduction}. \\
 PCA is a procedure that transforms a group of features that could be correlated into linearly uncorrelated features. The features provided are named principal components and provide valuable features for model creation but they are also hard to interpret. Its use introduces a part of shadow in the results which is a trade-off to take into account when using it. \\
 LDA models distributions of the features given into classes then uses Bayes to estimate their probability, it is mostly used in ML for dimensionality reduction.\\
 Both are similar in the way that they look for the best way to explain the data they are given.
@@ -493,6 +491,7 @@ We now have a balanced and clean dataset with the chosen features. The way model
 \label{fig:x cubed graph}
 \end{figure}
 
+\paragraph{hyper-parameters}
 
 A summary of our optimization for the machine learning part of the project would be to find the best combination of classifier, scaling function, feature selection and hyper-parameter tuning.
 
@@ -500,12 +499,7 @@ A summary of our optimization for the machine learning part of the project would
 Finally, we need metrics that will provide us information on the experiment to enable the feedback loop. A very common way to do so is using the confusion matrix which we can derive a large number of useful metrics including accuracy, precision, recall, F1-Score. There are also other advanced metrics \cite{ml-metrics} that can be introduced as well such as: Logarithmic Loss, Area Under ROC Curve and Classification Report. All will be described in this section but will be detailed in the experiment section.
 \paragraph{Logarithmic Loss}
 \paragraph{Area Under ROC Curve}
-\paragraph{•}
-\item Classification Accuracy, 
-\item Logarithmic Loss, 
-\item Area Under ROC Curve, 
-\item Classification Report, 
-\end{enumerate}
+\paragraph{Classification Report}
 These metrics will allow us to understand what can be improved and the reason of the score obtained. From there we will adapt the features or the experiment to improve the results obtained. The goal is to reach the best results possible.
 
 \subsubsection{Result interpretation}
