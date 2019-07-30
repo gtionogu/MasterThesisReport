@@ -434,12 +434,29 @@ Machine learning has a specific pipeline that needs to be followed to obtain the
 \subsubsection{Data pre-processing} 
 Data pre-processing involves a number of processes, it aims at improving the quality of the data and depends on the type of data in the dataset. Its 2 main processes are feature selection and feature extraction. The feature selection consists on deciding what elements of the data are relevant to create the model and feature extraction consists in cleaning the data and formatting it correctly to be ingested by the machine learning algorithms optimally.\\\\
 
-\paragraph{Feature selection} \label{featureselectionlabel}is an important step of the workflow. The choice of the data that will be ingested is crucial and directly connected to the results we will obtain. We chose to select features based on patterns or features based on data type. Pattern based means through statistical analysis of the data and using unsupervised learning algorithms to extract new tendencies from their results. The goal is to find patterns for each label, understand the underlying reason. Data type based means that we focus on the  specific features related to the traffic from the labeled data. Most of these features have already been analysed by other researchers and will be based on the nature of the DNS traffic coming from malicious or normal labels.
+\paragraph{Feature extraction} It is important to realize that algorithms are programs that only understand numerical data. The raw traffic captures can't directly be ingested by the algorithms, these can only digest 3 types of formats: numerical (TTL value for a RR), categorical(DNS record types such as A, AAAA, TXT, CNAME, ...) and ordinal (short, medium, long). These formats can always be converted into numerical values which is the only thing algorithms can use. It is important to realize that only features from the data convertible into one of these formats will be able to be used. Format isn't the only thing that is important, with large datasets, we need to get rid of all the noise that they might contain as well as find missing data or inconsistency in parts of the traffic.
+This section will be detailed in \label{featureextractionlabel}
+
+\subparagraph{Feature extraction techniques} To clean and extract the features from the raw data, there are common techniques used. \\
+The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). This can even be improved by using hot encoding which creates a feature for each value of the category. Hot encoding is nevertheless mostly used for large categorical features.
 \\
-After you have extracted the features from the raw data there is a very important step to go through. The number of features used can be a major impact of your research in regards to redundancy, complexity, overfitting the model. Therefore, the next step is to decide which features we want to use for our experiment.
+The second consists in dealing with \textbf{missing data} by either removing it or using an average for that feature not to have it influence the other data for that feature.\\
+Thirdly, \textbf{anomalies} due to human errors for example need to be discovered and corrected manually.\\
+Another aspect to consider are the scales of the features. Certain algorithms will give more weight to features that have a higher scale which would create a bias in the data. To deal with scale issues between the features there are two used techniques: \textbf{Normalization} and \textbf{Standardization}. \\
+We normalize the features\cite{ml-norm} by dividing them by the maximum for that feature. The goal of the normalization is to avoid features unbalanced analysis by the algorithms(i.e. TTL is around [300-86400] and number of resolved IPs [0-15], TTL could have more weight in the algorithm due to the scale difference of the features). The normalization will project the features into ranges between 0 and 1. The reason we need to normalize in our project is because some of the algorithms chosen are sensitive to outliers and to different scales.\\
+The standardization process re-scales the data so it has a mean of 0 and a standard deviation of 1.
+It aims similarly at the same as the normalization but through another method. The other reason standardization is applied to features is because some of the models improve their learning when re-scaling is applied.
 \\
-After a first selection of the features we think could be interesting for our problem we need to ask ourselves some questions.
-\subparagraph{Are the features independent enough from each other to have a balanced weight between general features?} The problem that often arises in ML is that different features are providing the same type of information and not adding value. This can push the balance of the models in their direction and result in a biased model. There are multiple solutions used in ML for this issue, analysing feature correlation and removing strong ones, scatter mix plots to understand links between features and finally importance analysis through the use of the Random forests algorithm.
+As explained in this article\cite{normstd} normalization and standardization seem to always improve quality of the results but the choice of scaling function can have important different results. Therefore, this is why will will test our results using the different scalers available for each classifier.
+
+\paragraph{Feature selection} \label{featureselectionlabel}is an important step of the workflow. The choice of the data that will be ingested is crucial and directly connected to the results we will obtain. We can select features based on pattern or data type.\\
+Pattern based selection means through the statistical analysis of the data and using unsupervised learning algorithms to extract tendencies from the results. This aims at finding patterns for each label and understand the underlying reason. \\
+Data type based means that we focus on the specific features related to the traffic from the labeled data. Most of these features have already been analyzed by other researchers and will be based on the nature of the DNS traffic coming from malicious or normal labels.\\
+\\
+After you have chosen the features from your dataset, there are a couple of things to look for: The number of features used can be a major impact of your research in regards to redundancy of the features, complexity related to number of dimensions, overfitting the model. Our next step is to decide which features we want to keep for our experiment. \\
+Here are some questions to help us in that selection.
+
+\subparagraph{Are the features independent enough from each other to have a balanced weight between general features?} The problem that often arises in ML is that different features are providing the same type of information and not adding value. This can push the balance of the models in their direction and result in a biased model. There are multiple solutions used in ML for this issue:  analyzing feature correlation and removing strong ones, scatter mix plots to understand links between features and finally importance analysis through the use of the Random forests algorithm.
 \\
 \subparagraph{Are there issues with large sets of features?}
 ADD citation
@@ -450,21 +467,6 @@ PCA is a procedure that transforms a group of features that could be correlated 
 LDA models distributions of the features given into classes then uses Bayes to estimate their probability, it is mostly used in ML for dimensionality reduction.\\
 Both are similar in the way that they look for the best way to explain the data they are given.
 \\
-\\
-After we have chosen which features there is still a step that needs to applied on the raw data.
-
-\paragraph{Feature extraction} It is important to realize that algorithms are programs that only understand numerical data. The raw traffic captures can't directly be ingested by the algorithms, these can only digest 3 types of formats: numerical (300 seconds for the TTL of a record), categorical(DNS record types such as A, AAAA, TXT, CNAME, ...) and ordinal (short, medium, long). These formats can always be converted into numerical values which is the only thing algorithms can use. It is important to realize that only features from the data convertible into one of these formats will be able to be used. Format isn' the only thing that is important, with large datasets, we need to get rid of all the noise that they might contain as well as find missing data or inconsistency in parts of the traffic.
-This section will be detailed in \label{featureextractionlabel}
-
-\subparagraph{Feature extraction techniques} To clean and extract the features from the raw data, there are common techniques used. The first is \textbf{conversion of data}, this consists in transforming the categorical and ordinal features into numerical ones (i.e [high, medium,low] would become [2,1,0]). This can even be improved by using hot encoding which creates a feature for each value of the category. Hot encoding is nevertheless mostly used for large categorical features.
-\\
-The second consists in dealing with missing data by either removing it or using an average for that feature not to have it influence the other data for that feature.\\
-Thirdly, anomalies due to human errors for example need to be discovered and corrected manually.\\
-Another aspect to consider are the scales of the features. Certain algorithms will give more weight to features that have a higher scale which would creat a bias in the data. To deal with scale issues between the features there are two used techniques: normalization and standardization. \\
-We normalize the features\cite{ml-norm} by dividing them by the maximum for that feature. The goal of the normalization is to avoid features unbalanced analysis by the algorithms(i.e. TTL is around [300-86400] and number of resolved IPs [0-15], TTL could have more weight in the algorithm due to the scale difference of the features). The normalization will project the features into ranges between 0 and 1. The reason we need to normalize in our project is because some of the algorithms chosen are sensitive to outliers and to different scales.\\
-The standardization process re-scales the data so it has a mean of 0 and a standard deviation of 1. 
-As explained in this article\cite{normstd} Normalisation and standardisation seem to always improve quality of the results but the choice of scaling function can have important different results. Therefore, this is why will will test our results using the different scalers available.
-
 \subsubsection{How to chose the right algorithms?}
 To answer this question we first need to learn which are the differences between the available algorithms and what they look to achieve: 
 
@@ -476,14 +478,15 @@ Semi-supervised algorithms is the combination of both, where the training data i
 \\
 \includegraphics[scale=.3]{img/supVsUnsup.png}
 \cite{supvsunsup}
-Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This  falls into a classification problem as mentioned above where supervised algorithms prevail\cite{supvsunsup2}. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.\\
+Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This  falls into a classification problem where supervised algorithms prevail\cite{supvsunsup2}. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.\\
 \\
-Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
+TODO: decide if we do this?
+%Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
 
 \subsubsection{Training and testing}
 We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation\cite{10-fold}. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10\% to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
 
-ADD HYPERPARAMETERS
+ADD HYPERPARAMETERS IMHERE
 
 \begin{figure}[h]
 \centering

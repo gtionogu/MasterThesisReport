@@ -495,7 +495,7 @@ ML for detection (classification)
 ML workflow
     data gathering (dataset, balancing, labeling)
     data pre-processing
-        feature selection
+        feature selection(pattern/type/independence of features/large set of features)
         feature extraction
 
 
