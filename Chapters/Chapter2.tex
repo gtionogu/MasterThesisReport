@@ -480,8 +480,7 @@ Now we need to decide what algorithm makes more sense to model the data in accor
 TODO: decide if we do this?
 %Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
 
-\subsubsection{Training and testing}
-\paragraph{Training the models}\\
+\subsubsection{Training the models}
 After the steps above, we have a balanced and clean dataset, we have the features that will be used to model the classes and we have a list of algorithms.
 \begin{enumerate}
 \item Now comes the part were we are going to feed this data into our algorithms and start creating a model. The way models are verified is by dividing the dataset into 2 sets, one for training and one for testing. The way datasets are divided into the 2 sets are up to us, the standard is 80\% for the training set and 20\% for the testing set. The choice is ours, as long as the testing set is large enough to provide accurate statistical results and is diverse enough to be a good representation of the rest of the dataset.\\
@@ -497,7 +496,7 @@ The random search works similarly but instead of trying all the value in the ran
 \label{fig:x cubed graph}
 \end{figure}
 
-\paragraph{Testing the model}
+\subsubsection{Testing the model}
 We now have obtained a classifier, we need to see how to performs with our testing set. The process is pretty simple, we take the classifier and give it our testing set as input, it is important to know that the set provided to the classifier are the features only, the testing set given to the classifier isn't labeled. The result is the labeling of the testing set. From this point, we enter the analysis of the results where we compare the resulting labels from the real class they belong to.
 
 \subsubsection{Analysis of the model's results}
@@ -546,26 +545,29 @@ Bagging consists in giving all the trees the same amount of data but with replac
 Artificial Neural Networks (ANN) is an algorithm created similar to how the brain works and its learning capabilities by modeling neurons and their synapses. It works as a black box system with inputs on one side and and outputs on the other which are dependent on the inputs. The black box is a network of neurons grouped in layers, neurons of each layer connect with the ones of the next layer with weighted connections that will determine when the neurons fire. The modeling is around finding the values of the neurons and the connections inside the blackbox (hidden layers). The way ANNs hidden layers are computed are through gradient descent, a way of automatically updating the weights step by step into a direction that will make them less wrong, based on the output desired.\cite{ann}
 
 \section{Classification of botnet research and detection}
-In this section, we are going to present the current state of the botnet detection taxonomy, show the weaknesses and strengths of each method and end with the current state of the art of the research on passive traffic analysis for botnet detection which is the method this thesis is dedicated to.\\
+In this section, we are going to present the current state of the botnet detection taxonomy and show the weaknesses and strengths of each method. This will be followed by a discussion in the next chapter of the current state of the art when it comes to passive traffic analysis for botnet detection and what we are going to bring to it. 
 
 \subsection{Taxonomy of Botnets}
+\includegraphics[scale=.6]{img/Botnet-detection-taxonomy.png}
+\label(taxonomy)
 
-\includegraphics[scale=.8]{img/Botnet-detection-taxonomy.png}
 %%%% SYSTEMS
-\paragraph{Detection systems}In a recent survey\cite{survey1} of the state of the art regarding Botnet detection based on DNS traffic analysis\cite{survey}, they present a taxonomy of botnet detection techniques. As we can see on the figure (botnet\_detection\_taxonomy)there are 2 type of systems used for detection: Honeypots and IDS. Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information out of the behavior of the malicious actor on the host. IDS aim at analyzing the network and alert the security analysts of any malicious/suspicious traffic. IDS are divided into 2 techniques. An older one based on signatures and newer one based on abnormal behavior.\\\\
-%%%% IDS SIGNATURE-BASED
-\paragraph{A legacy problem} A big trend among companies for a long time was a signature-based detection in their Intrusion Detection Systems ( IDS )\cite{detection8}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets but remains weak to any new ones\cite{snort}. The recent introduction of other methods have been mostly motivated by the goal to solve this issue.
-\\\\
-%%%% NETWORK-BASED
-\paragraph{Where are botnets detected?} In the anomaly detection technique, we have different locations that researchers have found relevant data. Directly on the host affected and throughout the network the host belongs to.
-3 types of behaviors observed from the bots\cite{bot-threat1}:
+\subsubsection{Detection systems} In a recent survey, Alieyan et al. \cite{survey1} presented the taxonomy of botnet detection techniques. We will follow down the path of the detection taxonomy until reaching our center of interest. As we can see on the figure \ref{taxonomy}, there are 2 type of systems used for detection: \textbf{Honeypots} and \textbf{Intrusion Detection System} (IDS). Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information from the behavior of the malicious actor on the host. IDS aim at analyzing the network and security logs, and alert the security analysts of any malicious or suspicious traffic. The IDS is divided into 2 techniques. An older one \textbf{based on signatures} and newer one \textbf{based on abnormal behavior}.
+
+%%%% IDS
+\subsubsection{A legacy problem} A big trend among companies for a long time and even today was solely use of a signature-based detection in their IDS \cite{detection8}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and new evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets\cite{snort} and should always be implemented in IDS solutions but is insufficient and should always be coupled with other techniques. The recent introduction of other techniques such as abnormal behavior has been mostly motivated by the goal to solve this issue.
+
+%%%% ABNORMAL BEHAVIOR-BASED
+\subsubsection{Where are botnets detected?} In the anomaly detection technique, researchers have found relevant data in different locations: directly on the host affected and throughout the network the host belongs to. Location wise, here are 3 types of behaviors observed from bots\cite{bot-threat1} :
 \begin{itemize}
-\item \textbf{network based behavior}: observable network traffic between botmaster and bots, it is used to detect individual bots and their CnC server. 
-\item \textbf{host based behavior}: observable activity on the hosts infected by the botnets. 
-\item \textbf{global correlated behavior}: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
+\item \textbf{Network based behavior}: this is the observable network traffic between botmaster and bots. The goal is to uncover the communication channels and any traffic related to attacks. 
+\item \textbf{Host based behavior}: observable activity on the host infected by the botnet. This activity is mostly what Antivirus (AV) software cover.
+\item \textbf{Global correlated behavior}: global behavior characteristics, structure will be similar to current structures; same for all mechanisms
 \end{itemize}
+
+
 %%%% PASSIVE APPROACH
-\paragraph{What are the types of approaches for detection?}
+\subsubsection{What are the types of approaches for detection?}
 They are classified into 2 categories, passive and active detection\cite{detection9}. \textbf{Passive detection} consists gathering data through monitoring logs. Activity on the network is tracked without interfering with it, also making it harder for botmasters to notice it. This method is limited in the amount of data it can gather. Some examples of this approach: deep packet inspection through IDS, flow records analysis for traffic flow pattern identification, DNS monitoring, spam records analysis for botnet correlation, application log files analysis. \textbf{Active detection} differs from the passive approach by interacting directly with the information it observes. Because of the changes it may introduce, this approaches can be detected by the botmaster that might change the behavior of the botnet or add elements of evasion. There are 2 main examples: Sinkholing, this consists in redirecting the traffic of the botnet to a controlled machine to cut off CnC, and infiltration, which tries to wiretap or take control over the botnet from the inside by reverse engineering the malicious code and traffic. Other examples of active detection: FFSN tracking, IRC traffic analysis, peer-to-peer networks enumeration.
 \\\\
 This taxonomy applies to all botnets detection using different protocols. 
