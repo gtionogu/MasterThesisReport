@@ -212,6 +212,14 @@ Web Notes on different project topics:
                 scores = cross_val_score(estimator=pipe_lr, X=X_train, y=Y_train, cv=12, n_jobs=)
                 mean_scores = scores.mean()
 
+WHY CROSS VALIDATE?
+                As there is never enough data to train your model, removing a part of it for validation poses a problem of underfitting. By reducing the training data, we risk losing important patterns/ trends in data set, which in turn increases error induced by bias
+
+                This significantly reduces bias as we are using most of the data for fitting, and also significantly reduces variance as most of the data is also being used in validation set.
+
+
+
+
         . Best parameters with validation curves
             Before we tune the parameters, we need to diagnose and find if the model is suffering from under or overfitting.
                 - Large number of parameters tends to overfit

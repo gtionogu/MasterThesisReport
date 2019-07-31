@@ -481,8 +481,15 @@ TODO: decide if we do this?
 %Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
 
 \subsubsection{Training and testing}
-We now have a balanced and clean dataset with the chosen features. The way models are tested is by dividing a dataset into 2 sets, one for training and one for testing. In addition to this approach, it is combined with a second technique which is the 10-fold cross validation\cite{10-fold}. The training set will be used initially by the algorithm to learn and the testing set will be used to contrast the accuracy of the learning and create a feedback loop. The way datasets are divided into the 2 sets are up to us, the standard is 90-10\% to train on a larger portion of the dataset but have a testing set big enough to include most of the variations. The cross validation technique will repeat the experiment changing the the training and testing sets for 10 loops equally and then average out the results, this allows to obtain more realistic results and unbiased by the randomness of sets chosen.
-
+\paragraph{Training the models}\\
+After the steps above, we have a balanced and clean dataset, we have the features that will be used to model the classes and we have a list of algorithms.
+\begin{enumerate}
+\item Now comes the part were we are going to feed this data into our algorithms and start creating a model. The way models are verified is by dividing the dataset into 2 sets, one for training and one for testing. The way datasets are divided into the 2 sets are up to us, the standard is 80\% for the training set and 20\% for the testing set. The choice is ours, as long as the testing set is large enough to provide accurate statistical results and is diverse enough to be a good representation of the rest of the dataset.\\
+\item Each algorithm possesses parameters which are called hyper-parameters, that allow us to fine-tune the algorithms to the problem and the data. However, it would take a very experienced data scientist to be able to manually set those parameters correctly. For problems with small dimensions, the model can be visualized and it becomes easier. In our case, we have too many features to visualize the resulting model in a way that will help us understand what needs to change. For this reason, there are 2 main techniques that are used to help with this issue which are the \textbf{Grid Search} and \textbf{Random search}\cite{ml-search}. \\ 
+The grid search selects a set of values for each parameter and then runs the training of the model each time with a different combination until they are all covered. The output is the combination of parameters with the best accuracy score. This disadvantage of the technique it is affected by the curse of dimensionality. \\
+The random search works similarly but instead of trying all the value in the range of the parameter, it randomly picks a subset of combinations. For lower dimensional problems, random search has been proven to perform better.
+\item To validate the performance of the trained models in the least biased manner the machine learning community uses a technique called the k-fold cross validation\cite{10-fold}. For each one of the algorithms, the training set is divided into k random folds(equal subsets). One of the folds is then chosen as the testing fold and the rest as training for the algorithms. The algorithm is trained and tested. We repeat this process k times until all the folds have been used as the testing fold. This provides the best classifier able to generalize the data in the training dataset. It is important to point that for classification problems, we use a variation which is the stratified k-fold cross validation, this technique ensures that through the folds the balance of classes keeps the same proportions. The common value for k is 5 or 10. The results obtained are a realistic and unbiased representation of the model's performance.
+\end{enumerate} 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=.3]{img/K-fold-cross-validation.png}
@@ -490,36 +497,16 @@ We now have a balanced and clean dataset with the chosen features. The way model
 \label{fig:x cubed graph}
 \end{figure}
 
-\paragraph{hyper-parameters}
+\paragraph{Testing the model}
+We now have obtained a classifier, we need to see how to performs with our testing set. The process is pretty simple, we take the classifier and give it our testing set as input, it is important to know that the set provided to the classifier are the features only, the testing set given to the classifier isn't labeled. The result is the labeling of the testing set. From this point, we enter the analysis of the results where we compare the resulting labels from the real class they belong to.
 
-A summary of our optimization for the machine learning part of the project would be to find the best combination of classifier, scaling function, feature selection and hyper-parameter tuning.
-
-\subsubsection{Analysis of the model's prediction abilities}
-Finally, we need metrics that will provide us information on the experiment to enable the feedback loop. A very common way to do so is using the confusion matrix which we can derive a large number of useful metrics including accuracy, precision, recall, F1-Score. There are also other advanced metrics \cite{ml-metrics} that can be introduced as well such as: Logarithmic Loss, Area Under ROC Curve and Classification Report. All will be described in this section but will be detailed in the experiment section.
-\paragraph{Logarithmic Loss}
-\paragraph{Area Under ROC Curve}
-\paragraph{Classification Report}
-These metrics will allow us to understand what can be improved and the reason of the score obtained. From there we will adapt the features or the experiment to improve the results obtained. The goal is to reach the best results possible.
+\subsubsection{Analysis of the model's results}
+In this section, we will use the metrics obtained from the results of the model's predictions to provide us information on the experiment and to enable the feedback loop. For classification problems, the most common technique is the confusion matrix which can derive a large number of useful metrics including accuracy, precision, recall, F1-Score. There are also other advanced metrics \cite{ml-metrics} that can be introduced such as: Logarithmic Loss, Area Under ROC Curve and more. All will be described in the result chapter.
+These metrics will help us understand what can be improved and if the direction we are taking is improving or not the model. From there we will adapt the features and the parameters of experiment to improve the results. The goal is to reach the best results possible.
 
 \subsubsection{Result interpretation}
-\cite{ml-inter}
-Feature Importance
-    Partial Dependence Plots
-        Shap
-        Skater
-	Generalised Linear Models
-	Random Forest and SVM
-	Lime https://github.com/marcotcr/lime        
-        
-    
-Global Surrogate Models
-    TreeSurrogates
-Local Interpretable Model-agnostic Explanations (LIME)
-Shapley Values and SHapley Additive exPlanations (SHAP)
-    The game is the prediction task for a single instance of the dataset.
-    The gain is the actual prediction for this instance minus the average prediction of all instances.
-    The players are the feature values of the instance, which collaborate to receive the gain (= predict a certain value).
-
+The last part of the experiment is the interpretation of the results. We want to understand how our classifier works. To do so, we have at our disposal tools such LIME, SHAP, RFs and more that help us understand which features are important and what are the model's behaviors\cite{ml-inter}.
+Those tools will be defined more in depth in the result's chapter, under the interpretation section.
 
 \subsection{How will machine learning be implemented for this Thesis?}
 TODO: Review the need of this section.\\
@@ -530,17 +517,18 @@ Based on the explanations above on how to chose the right algorithms, here we pr
 
 \subsubsection{Gaussian Naive Bayes}
 This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event"\cite{bayes}. In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
+
 \subsubsection{K-Nearest Neighbors}
 k-Nearest Neighbors (kNN) is a very simple supervised ML algorithm. kNN classifies new objects based on their nearest neighbors. The parameter k represents the amount of nearest neighbors it looks for before it assigns the majority. The model created by kNN is actually the entire training dataset since it will use all the neighbors to determine the classification of a new item. kNN algorithm works well with a low amount of features, with datasets with large dimensions computing the distances for the k-nearest neighbors becomes computationally expensive.
+
 \subsubsection{Decision Trees}
 Decision Trees(DTs) are supervised algorithms that based on observations of labeled data creates a model of decision that is represented by a tree where all the nodes of the tree are a condition for the features and where all the leaves are the label they are classified as. The classification process starts at the root and ends in one of the leaves.\\
 DTs are very simple to visualize and perform really well even in higher dimensions. The most common problem of DTs is the overfitting of the data. Because outliers and unbalanced datasets will create branches that don't generalize the data correctly.
+
 \subsubsection{Support Vector Machine}
 Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
 Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data.
-\subsubsection{Logistic Regression}
-Logistic regression is a very basic algorithm that can be used when the target is categorical (e.g. "botnet" or "normal" traffic). The model created bases itself on a threshold to predict unknown data. The main advantage of Logistic Regression is the informative output it gives us as it explicitly expresses the relationship between the feature and the target or, in other words, which direction it takes ( e.g. "botnet" or "normal" traffic). The drawback resides in the quantity of
-data needed to obtain stable and meaningful results [22].
+
 \subsubsection{XGBoost and Adaboost}
 Both algorithms, eXtreme Gradient Boosting (XGBoost) and Adaptive Boosting (AdaBoost), are based on a similar concept which is boosting. Boosting is a technique that modifies weak learners into strong learners. It is done by training multiple of these weak learners sequentially and each improving based on the previous one.\cite{boosting} Both use this technique with different approaches to it.
 
