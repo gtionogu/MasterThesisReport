@@ -579,19 +579,20 @@ Let us now analyze the particularities of the DNS passive traffic analysis.
 \paragraph{What are the different passive detection methods?}
 With the DNS logs captured, researchers have proposed different approaches to utilize them, most of the methods involve a statistical analysis or the use of machine learning algorithms to create classifiers. Others have opted for detection through visual representations to detect anomalies.\\
 The reason we have decided to focus on the machine learning approach as mentioned in the introduction is two-fold: a will to develop our machine learning skills and methodology but also because botnet detection state of the art has shown it to be the most effective method, achieving better scores then the other techniques in the taxonomy.\\
-As explained in the "abuse" section of the DNS chapter, a new type of detection techniques have been studied that aim at finding bots evading the more usual detection techniques using the DNS protocol, which is what we aim to further study and hopefully improve the current solutions.
+As explained in the "abuse" section of the DNS chapter, a new type of detection techniques have been studied that aim at finding bots using the DNS protocol to evade the more usual detection techniques which is what we aim to further study and hopefully improve the current solutions.
 
 \section{Related work}
-Since the end goal is to find the best features for an combined solution, we have structured the current state of research as follows: 
-First, we will present the combined experiments. These experiments don't focus on a single type of detection mechanism but aggregate the different detection techniques used for botnets. We will discuss the features they have extracted, what models they have created and how they have implemented their approach.\\
-Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.
-%the objective is to find better features and better models. We will present studies focused on single detection models that cover the field of detection through passive DNS analysis. For each study we will list the features proposed, understand their purpose.\\
+Our end goal is to find the best features and techniques possible to improve the current solutions that aim at detecting all the evasion techniques, that we have named \textbf{Combined Solution}. To do so, we have structured our research as follows:\\
+First, we will present the combined experiments. These experiments do not focus on a single type of detection mechanism but aggregate the different detection techniques used by botnets. We will discuss the features they have extracted, what models they have created and how they have implemented their approach.\\
+Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.\\
+Thirdly, we will present the current state of research, the studies that we have used to improve the solutions. To structure this part we have divided the related papers by evasion technique.
+The objective is learn the different approaches from different papers, find better features and better models, see which we think could improve the current solutions and then test them out in our experiment.
 
 \subsection{Presentation of the Exposure and the Local botnet experiments}
 The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
 
-\includegraphics[scale=.5]{img/exposure_features.png}
-\includegraphics[scale=.5]{img/exposure_architecture.png}
+\includegraphics[scale=.8]{img/exposure_features.png}
+\includegraphics[scale=.8]{img/exposure_architecture.png}
 
 \paragraph{Time-based}
 When we analyse many requests to a particular domain over time, patterns indicative of malicious behaviour may emerge.\\
@@ -655,7 +656,6 @@ TTL-based & Nb distinct TTL values\\
 & Std deviation TTL\\
 \end{tabular}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Weaknesses and possible improvements}
 TODO: rework this section.
 These features are very specific to each mechanism and only work on the botnets that use them. That is why in the second part, we presented solutions with combined approaches. We want to experiment if a combined solution could provide better results and have other advantages such being more effective against new families of botnets. 
@@ -751,6 +751,7 @@ TODO: Liu et al. \cite{shadowing} are the first to propose an approach against t
 
 
 \subsection{Value summary}
+
 
 \section{Our botnet detection contribution}
 In the first part of the related works, we presented Bilge et al. \cite{exposure} where they propose a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.\\
