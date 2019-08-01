@@ -524,6 +524,9 @@ k-Nearest Neighbors (kNN) is a very simple supervised ML algorithm. kNN classifi
 Decision Trees(DTs) are supervised algorithms that based on observations of labeled data creates a model of decision that is represented by a tree where all the nodes of the tree are a condition for the features and where all the leaves are the label they are classified as. The classification process starts at the root and ends in one of the leaves.\\
 DTs are very simple to visualize and perform really well even in higher dimensions. The most common problem of DTs is the overfitting of the data. Because outliers and unbalanced datasets will create branches that don't generalize the data correctly.
 
+\subsubsection{Logistic Regression}
+Logistic regression (LR) is a simple algorithm that is very effective in binary classification. Its core is the logistic function which transforms ranges of real-values into [0-1] ranges. What the logistic regression algorithm will do is through the use of weights of features, create the logistic function (model) for 1 of the classes and then for new values, it will output a probability which can be seen as a prediction of the input belonging to the class or not \cite{lr}.
+
 \subsubsection{Support Vector Machine}
 Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
 Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data.
@@ -588,10 +591,15 @@ Secondly, to achieve our goal towards improving these solutions, we will discuss
 Thirdly, we will present the current state of research, the studies that we have used to improve the solutions. To structure this part we have divided the related papers by evasion technique.
 The objective is learn the different approaches from different papers, find better features and better models, see which we think could improve the current solutions and then test them out in our experiment.
 
-\subsection{Presentation of the Exposure and the Local botnet experiments}
-The first step in the research was to find the models that would be the current baseline for all-in solutions: because it is considered as the best all-in solution paper we could find, we are going to compare and extend the work of the EXPOSURE team.
+\subsection{Presentation of current botnet detection combined solutions}
+The first step in the research was to find the models that would be the the baseline for thr                        solutions. We found a couple of solution which are used as reference in most botnet detection papers. They are considered the best all-in solutions. We have Bilge et al.\cite{exposure} with Exposure, Heuer et al. with and we also used Notos and Pleiades, 2 solutions brought by Antonakakis et al. \cite{pleiades}.
 
-\includegraphics[scale=.8]{img/exposure_features.png}
+\subsubsection{Exposure}
+\paragraph{Interesting architecture}
+EXPOSURE, a system that employs large-scale, passive DNS analysis
+techniques to detect domains that are involved in malicious activity.
+They use 15 features extracted from DNS traffic.
+IMHERE
 \includegraphics[scale=.8]{img/exposure_architecture.png}
 
 \paragraph{Time-based}
@@ -621,9 +629,10 @@ This can be noticed with 2 simple features:\\
 \item length of the longest meaningful substring to length of domain name
 \end{itemize}
 
+\includegraphics[scale=.8]{img/exposure_features.png}
 
-
-Heuer et al.\cite{localbotnet} did a case study on local infections related to botnets. They propose a very large set of 24 features meant to detect botnets in networks . These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed.\\
+\subsubsection{LOCALBOTNET}
+Heuer et al.\cite{localbotnet} did a case study on local infections related to botnets. They propose a very large set of 23 features meant to detect botnets in networks. These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed. Unfortunately, the full paper wasn't available to us so we had to satisfy ourselves with the abstract and the list of features they implemented.\\
 features:
 \begin{tabular}{c|l}
 \hline
@@ -656,6 +665,31 @@ TTL-based & Nb distinct TTL values\\
 & Std deviation TTL\\
 \end{tabular}
 
+\subsubsection{Notos and Pleiades}
+\paragraph{Notos}
+Antonakakis et al. \cite{dnsreputation} proposed a different system called 'Notos' based on dynamic reputation of odd domain names. They studied the different aspects around the historical DNS data of domains that could be relevant to group domains based on their legitimacy. They use 3 categories of features: network, zone and evidence. They opted for a unsupervised approach using the clustering algorithm X-means. The purpose of this paper is to utilize some of the historical DNS features to be used in our all-in solution. Specifically, using some of the classes of domains defined by the authors as categorical features ( popular domains, common domains, Akamai domains,  CDN domains and dynamic DNS domains ).
+
+\paragraph{Pleiades} is a DGA detection system able to detect multiple different evasion system based on that technique.
+Antonakakis et al. \cite{pleiades} proposed Pleiades, their second big botnet project after the Notos experiment. First, following the same machine learning idea of Notos but applied to the DGA algorithms, meaning they applied the X-means clustering algorithm to DGA algorithms. Secondly, they used a boosted decision tree classification algorithm (Alternating Decision Tree) to test associations of an NXDomain's response to  DGAs. Finally, they created Hiddem Markov models for each of the DGAs domains to be able to classify the responses to a DGA directly. We'll use their work to improve the DGA features already gathered with the other papers.
+
+%P1 Mean, median and standard deviation of 1-gram
+%P2 Mean, median and standard deviation of 2-gram
+%P3 Mean, median and standard deviation of 3-gram
+%P4 Mean, median and standard deviation of 4-gram
+%P5 Mean and standard deviation of entropy(d)
+%P6 Mean and standard deviation of entropy(2LD)
+%P7 Mean and standard deviation of entropy(3LD)
+%P8 Mean, median, standard deviation and variance of domain name length
+%P9 Mean, median, standard deviation and variance of # of domain levels
+%P10 Number of distinct characters
+%P11 Number of distinct TLD
+%P12 Ratio of .com TLD
+%P13 Ratio of other TLD
+%P14 Mean, median and standard deviation of the occurrence frequency distribution for the different TLDs
+%Table 8: Pleiades features
+
+\subsubsection{Kopis} high level hierarchy analysis solution.
+
 \subsection{Weaknesses and possible improvements}
 TODO: rework this section.
 These features are very specific to each mechanism and only work on the botnets that use them. That is why in the second part, we presented solutions with combined approaches. We want to experiment if a combined solution could provide better results and have other advantages such being more effective against new families of botnets. 
@@ -674,30 +708,12 @@ Yadav et al. \cite{dga2} propose an unsupervised approach based on anomaly detec
 Schiavoni et al. \cite{phoenix} go a step further then Truong et al. with their Phoenix project by improving the initial experiment with additional features to cluster groups of DGAs under botnet families. The project works in 2 phases: DGA discovery and DGA detection. In the discovery phase, they apply the following filters that focus on linguistics: percentage of meaningful words in the domain name and the popularity of the n-grams of the domain. They construct a base generated with the top 100.000 domains from \textit{alexa.com}. Then define the Mahalanobis distance and the thresholds, using known malicious domains,  to determine when domains can be considered DGAs. Their approach is able to associate new DGAs to botnet families and follow their evolution.\\
 \\
 Ahluwalia et al. \cite{dga} analyse the basic features that are common to most domain generated by DGA and provide advanced linguistic features to improve the results. The motivation for their work was due to recent botnets using shorter DGA lengths to blend with the other domains. They then propose 3 primitive features that capture linguistic and structural characteristics and 2 more advanced features that cover the shortcomings of the primitive ones. These features are simple but obtain really good results.\\
-\\
-Antonakakis et al. \cite{dnsreputation}, in this paper they propose a different system called 'Notos' based on dynamic reputation odd domain names. They studied the different aspects around the historical DNS data of domains that could be relevant to group domains based on their legitimacy. They use 3 categories of features: network, zone and evidence. They opted for a unsupervised approach using the clustering algorithm X-means. The purpose of this paper is to utilize some of the historical DNS features to be used in our all-in solution. Specifically, using some of the classes of domains defined by the authors as categorical features ( popular domains, common domains, Akamai domains,  CDN domains and dynamic DNS domains ).
+
 \\
 Thomas et al. \cite{dga4} realized that during the domain generation process, most of the domains will not be up. This should result in a lot of NXDomain responses. Furthermore, the caching of NXDomains is limited which means that they cannot hide this traffic. Their contribution consists of a clustering technique based on domain names and request patterns; and similarity metrics for malicious domains detection.
 
 In another paper from Yadav et al. \cite{dnsfailure}, they explore the detection possibilities in the DNS failed queries due to the fast fluxing behavior. Botnets are querying a large number of domains which are only up for specific amount of times, this results in NXDOMAIN responses from the DNS queries emitted, their research has tried to use this information to improve current detection systems.
 
-A similar idea was proposed by Antonakakis et al. \cite{pleiades} creating Pleiades, their second big botnet project after the Notos experiment. First, following the same machine learning idea of Notos but applied to the DGA algorithms, meaning they applied the X-means clustering algorithm to DGA algorithms. Secondly, they used a boosted decision tree classification algorithm (Alternating Decision Tree) to test associations of an NXDomain's response to  DGAs. Finally, they created Hiddem Markov models for each of the DGAs domains to be able to classify the responses to a DGA directly. We'll use their work to improve the DGA features already gathered with the other papers.
-
-%P1 Mean, median and standard deviation of 1-gram
-%P2 Mean, median and standard deviation of 2-gram
-%P3 Mean, median and standard deviation of 3-gram
-%P4 Mean, median and standard deviation of 4-gram
-%P5 Mean and standard deviation of entropy(d)
-%P6 Mean and standard deviation of entropy(2LD)
-%P7 Mean and standard deviation of entropy(3LD)
-%P8 Mean, median, standard deviation and variance of domain name length
-%P9 Mean, median, standard deviation and variance of # of domain levels
-%P10 Number of distinct characters
-%P11 Number of distinct TLD
-%P12 Ratio of .com TLD
-%P13 Ratio of other TLD
-%P14 Mean, median and standard deviation of the occurrence frequency distribution for the different TLDs
-%Table 8: Pleiades features
 
 \subsubsection{Fast-flux}
 The behavior of IP fluxing has been well analyzed by the community and most papers propose similar features to detect fast-flux. They often differ with different settings for their experiments. On the other hand, the big challenge for our thesis was to find the features that allowed us to find differences betweent malicious fast-flux networks(FFSN) and content delivery networks(CDNs). Both use fast-flux for different reasons making it hard to differentiate.\\

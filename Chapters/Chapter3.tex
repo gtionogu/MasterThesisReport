@@ -1,12 +1,20 @@
 
-\chapter{Model creation} % Main chapter title
+\chapter{The experiment} % Main chapter title
 
-\label{Model creation}
-%source Botnet_Detection_Based_On_Machine_Learning_Techniques_Using_DNS_Query_Data\\
-Experiment Dataset Pre-Processing = feature extraction (I LIKE HOW HE EXPLAIN BI-TRI GRAMS)
+\label{experiment}
 \section{Pipeline of the research}
+
+explain all the steps of the process, 
+
 \subsection{Environment}
+
+Explain what tools are going to be used, what machines, what libraries etc (CF LAURENT)
+
 \subsection{Datasets}
+
+Use inspiration from z-thesis 6.2 Assembling the Training Sets for the labeling
+
+
 TODO: reformat the dataset section.
 
 Since some of the implementations that we are going to compare have a blacklist step, we have done a large research on the blacklists available. At first we only focused on botnets domains and IPs, but then realized that bots can query their C2 but also try to access any malicious domain or IP, either to upload or download relevant data for the bot. Therefore, the final blacklist used is a very large combination of blacklists that go from domains linked to malware or C2 to domains linked to suspicious phishing/adware campaigns. One of the websites that really helped in this process is \url{https://firebog.net/}. All these lists have been combined into a big unique blacklist used in some of the approaches presented here.\\\\
@@ -43,28 +51,40 @@ The dataset they provide for Botnet traffic analysis is composed of 9 different 
 This is a set of datasets provided by the malware capture facility project\cite{CTU}. It captures malicious traffic from different malwares then provide them to the public for research. They also provide their own analysis on most of the datasets which provides insight on how the malware act and how it can be detected.\\
 The scenarios that interest us are: the 5th and the 13th that include Fast-Flux labelled traffic.
 It also provides hundreds of additional datasets but that are not as well documents and presented which makes the research for a particular dataset more complicated.
+TODO: actually use all datasets to prove that we can detect any type of botnet traffic due to the general use of it.
 \subsection{ISOT}
 This is a dataset specifically build around DNS traffic by the The ISOT Lab from the University of Victoria. It regroups 9 exploit kits ran in virtual environments in a closed network with a custom DNS server to snif all the traffic. This dataset provides us with 3 sets of traces, malicious, bening and a mix\cite{ISOT}.
 \subsection{Processing}
 Because of the amount of different features tested in the thesis. I decided to use 2 pcap extractors. The first was provided by our teacher Prof. J. Colin which is a very effective extractor and summarizes very well the relevant data for most of the features but for labelling and some of the features, more information was required. What we did to obtain a second extractor to complement the information was to run the traffic datasets through Bro, the network IDS. This provided us with DNS.logs, that we then converted using the python "bat" library which converts directly bro logs to dataframes.\\
 Most of the labelled datasets actually only provided the IP addresses of the malicious traffic, this is why working with the bro logs was essential to label the datasets.
 
-
 \subsubsection{Information regarding the datasets}
 Sources\\
+	Already mentioned
 Content\\
+	What are the botnets analyzed
 Labelling\\
+	How did we label them?
+Use
+	How did we use it in the study, we tested for example datasets for full training and testing, maybe we used certain datasets to train and others to test. Give more detail
 \subsubsection{balancing the datasets}
+We already explained
+TODO: show stats about the balancing of the data
 \section{Assessment model (for features and models)}
+provide information on how the results feedback are looped back into the algorithm
+
+=====================================================
+TODO remove this part
+
 \subsection{Machine algorithms}
+TODO: remove this section
 \subsubsection{Supervised}
 List of algorithms (to be decided)
 \subsubsection{Unsupervised for feature extraction}
 List of algorithms (to be decided)
 \subsection{Training and testing model}
+TODO: remove this section
 \cite{dns-traffic}
-Experiment 1 – 10‐fold CV: 10‐fold CV has become the standard method in practical terms 27. The dataset is divided into 10 subsets; for each of these 10 subsets, a model is built using the remaining nine sets, and this model is evaluated on the 10th subset. Store the performance of the model, and repeat this process for all remaining subsets. In the end, we have 10 performance measures, all obtained by testing a model on data not used for its construction. The 10‐fold CV estimate is the average of these 10 measures.
-Experiment 2 – percentage split: To ensure unbiased results in training phase, the dataset is divided into two portions. The first is 75% for training, and the remaining 25% is used to check the correctness, so that the classifier can be evaluated on the data that had not been seen previously.
 \subsection{Results metrics}
-List of metrics used to analyse the models 
+TODO: remove this section
 \cite{fitting}
