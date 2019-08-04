@@ -549,23 +549,34 @@ Our end goal is to find the best features and techniques possible to improve the
 First, we will present the combined experiments. These experiments do not focus on a single type of detection mechanism but aggregate the different detection techniques used by botnets. We will discuss the features they have extracted, what models they have created and how they have implemented their approach.\\
 Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.\\
 Thirdly, we will present the current state of research, the studies that we have used to improve the solutions. To structure this part we have divided the related papers by evasion technique.
-The objective is learn the different approaches from different papers, find better features and better models, see which we think could improve the current solutions and then test them out in our experiment.
+The objective is to learn the different approaches from different papers, find better features and better models, see which we think could improve the current solutions and then test them out in our experiment.
 
 \subsection{Presentation of current botnet detection combined solutions}
-The first step in the research was to find the models that would be the the baseline for the solutions. We found a couple of solution which are used as reference in most botnet detection papers. They are considered the best all-in solutions, we have Bilge et al.\cite{exposure} with Exposure and Heuer et al.\cite{localbotnet} with localbotnet.
+The first step in the research was to find the models that would be our baseline to compare our experiment. We found a couple of solutions which are referenced in most botnet detection papers as the most extensive . We have Bilge et al.\cite{exposure} with Exposure and Heuer et al.\cite{localbotnet} with localbotnet.
 
 \subsubsection{Exposure}
-\paragraph{Interesting architecture}
-EXPOSURE, a system that employs large-scale, passive DNS analysis
-techniques to detect domains that are involved in malicious activity.
-They use 15 features extracted from DNS traffic.
-IMHERE
+Exposure is a botnet detection solution that analyzes passive DNS traffic and uses a J48 DT algorithm to predict new malicious domains. The particularity of this study was its continuous improving architecture as well as the ability of Exposure to detect new malicious domains before they are added to public blacklists.
+\paragraph{Dataset}
+The training set is a capture of passive DNS traffic from the Security Information Exchange(SIE) for 2.5 months and then almost 1.5 years for the complete assessment of the tool. Since the original dataset was around 100 billion DNS queries, to reduce the amount of volume they used 2 assumptions: whitelisting of Alexa top 1000  removed 20 billion queries and whitelisting domains older than 1 year (from which they could only find 0.09\% suspicious confirming their assumptions) removed 40 billion queries.
+\paragraph{Architecture}
+The architecture is based on 5 Components. 
+\begin{enumerate}
+\item Dataset through passive DNS traffic collection.
+\item Collection of legit and malicious domains.
+\item Domains used to label the output of the Feature Attribution component.
+\item The learning module uses the labeled data to train the classifier.
+\item The classifier trained with the learning module predicts the unlabeled traffic.
+\end{enumerate}
+It is important to point that everyday during the 2.5 months training period the collection of legit and malicious domains was improved with the predictions made by Exposure and reviewed by the writers and by updating the list with any new additions to blacklists or whitelists available.
+
 \includegraphics[scale=.8]{img/exposure_architecture.png}
 
-\paragraph{Time-based}
+\paragraph{Features}
+The set of 26 atomic features used for the training of their classifier is divided into four categories: time-based, answer-based, TTL-based and domain name-based. Their architecture is interesting and brings continuous improvement of the classifier.
+\textbf{Time-based}\\
 When we analyse many requests to a particular domain over time, patterns indicative of malicious behaviour may emerge.\\
-These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 4 features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
-\paragraph{DNS answer based}
+These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 7 atomic features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
+\textbf{DNS answer based}\\
 Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
 Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
 \begin{itemize}[noitemsep]
@@ -574,14 +585,14 @@ Malicious domains typically resolve to compromised computers that reside in diff
 \item the reverse DNS query results of the returned IP addresses
 \item the number of distinct domains that share the IP addresses that resolve to the given domain (false positive can be reduced with google reverse DNS which will have hosting providers in top answers)
 \end{itemize}
-\paragraph{TTL value based}
+\textbf{TTL value based}\\
 Low TTL and Round-Robin DNS: \\
 \begin{itemize}[noitemsep]
 \item high availability (Content Delivery Networks (CDNs))
 \item botnets using this, makes them resistant to DNS Blacklists(DNSBL) and take downs. Often using Fast-Flux Service Networks (FFSN).
 \end{itemize}
 Because FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain, it explains the purpose of the TTL features.
-\paragraph{Domain name based}
+\textbf{Domain name based}\\
 Finally 2 simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).\\
 This can be noticed with 2 simple features:\\
 \begin{itemize}[noitemsep]
@@ -589,7 +600,19 @@ This can be noticed with 2 simple features:\\
 \item length of the longest meaningful substring to length of domain name
 \end{itemize}
 
-\includegraphics[scale=.8]{img/exposure_features.png}
+\includegraphics[scale=.5]{img/exposure_all_features.png}
+
+\paragraph{Feature selection}
+The feature selection phase highlighted the following: the combination of all the features provided the least error rate, the last 2 categories (TTL and Domain-name based) had high error rates when tested by themselves and the timing-based category had the most weight but also had the most complications in regards to extracting the features because of the non sufficient time points available. \\
+Finally they used a genetic algorithm ECJ20 evaluated with a j48 DT to reduce the number of features into a 14 feature subset selected from the original 26.
+
+\includegraphics[scale=.5]{img/exposure_ga.png}
+
+\paragraph{results}
+With the selected features and using a DT classifier, they obtained a detection rate around 98\% and a FP of around 1\%. 
+\paragraph{evaluation}
+The detection rate wasn't the main purpose of the paper but to detect malicious domains before their appearance into mainstream blacklists. To assess Exposure's capabilities they checked 569 additions after the 2 months of capture in the main blacklists, with 216 seen in the training period and 211 fitting the requirements for the time-based features, all were detected as malicious previous to their apparition.
+
 
 \subsubsection{LOCALBOTNET}
 Heuer et al.\cite{localbotnet} did a case study on local infections related to botnets. They propose a very large set of 23 features meant to detect botnets in networks. These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed. Unfortunately, the full paper wasn't available to us so we had to satisfy ourselves with the abstract and the list of features they implemented.\\
@@ -624,25 +647,6 @@ TTL-based & Nb distinct TTL values\\
 & \% usage of TTL ranges\\
 & Std deviation TTL\\
 \end{tabular}
-
-\subsubsection{Notos and Pleiades}
-
-
-%P1 Mean, median and standard deviation of 1-gram
-%P2 Mean, median and standard deviation of 2-gram
-%P3 Mean, median and standard deviation of 3-gram
-%P4 Mean, median and standard deviation of 4-gram
-%P5 Mean and standard deviation of entropy(d)
-%P6 Mean and standard deviation of entropy(2LD)
-%P7 Mean and standard deviation of entropy(3LD)
-%P8 Mean, median, standard deviation and variance of domain name length
-%P9 Mean, median, standard deviation and variance of # of domain levels
-%P10 Number of distinct characters
-%P11 Number of distinct TLD
-%P12 Ratio of .com TLD
-%P13 Ratio of other TLD
-%P14 Mean, median and standard deviation of the occurrence frequency distribution for the different TLDs
-%Table 8: Pleiades features
 
 \subsection{Weaknesses and possible improvements}
 TODO: rework this section.
@@ -724,7 +728,7 @@ TODO: Liu et al. \cite{shadowing} are the first to propose an approach against t
 
 
 \subsection{Value summary}
-
+We can see that exposure is capable of detecting and that antonakakis proposed 3 solutions to explore 
 
 \section{Our botnet detection contribution}
 In the first part of the related works, we presented Bilge et al. \cite{exposure} where they propose a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.\\
