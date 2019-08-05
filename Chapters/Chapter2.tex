@@ -568,13 +568,12 @@ The architecture is based on 5 Components.
 \end{enumerate}
 It is important to point that everyday during the 2.5 months training period the collection of legit and malicious domains was improved with the predictions made by Exposure and reviewed by the writers and by updating the list with any new additions to blacklists or whitelists available.
 
-\includegraphics[scale=.8]{img/exposure_architecture.png}
+\includegraphics[scale=.6]{img/exposure_architecture.png}
 
 \subsubsection{Features}
-The set of 26 atomic features used for the training of their classifier is divided into four categories: time-based, answer-based, TTL-based and domain name-based. Their architecture is interesting and brings continuous improvement of the classifier.
+The set of 26 atomic features proposed for the training of their classifier is divided into four categories: time-based, answer-based, TTL-based and domain name-based.
 \paragraph{Time-based}
-When we analyse many requests to a particular domain over time, patterns indicative of malicious behaviour may emerge.\\
-These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 7 atomic features related to time. Either because the datasets are compositions of smaller datasets, or because the time stamps are too short.
+When we analyze many requests to a particular domain over time, patterns indicative of malicious behaviour emerge.\\
 \paragraph{DNS answer based}
 Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
 Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
@@ -603,7 +602,7 @@ This can be noticed with 2 simple features:\\
 
 \subsubsection{Feature selection}
 The feature selection phase highlighted the following: the combination of all the features provided the least error rate, the last 2 categories (TTL and Domain-name based) had high error rates when tested by themselves and the timing-based category had the most weight but also had the most complications in regards to extracting the features because of the non sufficient time points available. \\
-Finally they used a genetic algorithm ECJ20 evaluated with a j48 DT to reduce the number of features into a 14 feature subset selected from the original 26.
+Finally they used a genetic algorithm ECJ20 evaluated with a j48 DT to reduce the number of features into a 14 feature subset selected from the original 26.\\\\
 
 \includegraphics[scale=.7]{img/exposure_ga.png}
 
@@ -618,7 +617,7 @@ Heuer et al.\cite{localbotnet} did a case study on local infections related to b
 The architecture of their study was very typical for a machine learning approach. The interesting part of the experiment was related to the labeling. The used an extensive list of 22 blacklist and the Alexa 500k for the whitelisting. Another interesting part was the semi-manual labeling of the DGA domains which allowed to improve the training process by balancing the dataset and providing more data for the malicious traffic.
 
 \subsubsection{Features}
-We can see the list of features initially proposed but we don't know the feature selection process they did during the ML workflow. 
+We can see the list of features initially proposed but we don't know the feature selection process they did during the ML workflow. \\
 \begin{tabular}{c|l}
 \hline
  & LMS\\
@@ -659,7 +658,9 @@ For the dataset, where the DGA domains underwent an additional labeling process 
 
 
 \subsection{Weaknesses and possible improvements}
-IMHERE
+These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 7 atomic features related to time. Either because the datasets are compositions of smaller datasets, or because the time stamps are too short.
+
+
 These features are very specific to each mechanism and only work on the botnets that use them. That is why in the second part, we presented solutions with combined approaches. We want to experiment if a combined solution could provide better results and have other advantages such being more effective against new families of botnets. 
 This type of project already exist such as the project Exposure detailed above. The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set. This means that without the access to these features their experiment doesn't show the same level of success. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. 
 
@@ -721,7 +722,7 @@ colour: request type
 \url{https://vimeo.com/38727629}
 
 IDEA: use the DGA tricks to plot some of the tunneling done
-but more specific to NXDOMaINS / NO ERRORS and TXT / base64
+but more specific to NXDOMAINS / NO ERRORS and TXT / base64
 
 TODO: This last paper \cite{dns-tun}
 
@@ -740,7 +741,7 @@ TODO: Liu et al. \cite{shadowing} are the first to propose an approach against t
 
 
 \subsection{Value summary}
-We can see that exposure is capable of detecting and that antonakakis proposed 3 solutions to explore 
+We can see that Exposure is capable of detecting and that Antonakakis proposed 3 solutions to explore .
 
 \section{Our botnet detection contribution}
 In the first part of the related works, we presented Bilge et al. \cite{exposure} where they propose a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.\\
