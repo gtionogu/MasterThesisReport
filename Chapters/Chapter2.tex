@@ -676,23 +676,17 @@ For the dataset, where the DGA domains underwent an additional labeling process 
 
 
 \subsection{Weaknesses and possible improvements}
-The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set but also the hardest features to obtain because there is a need of the same domains/IPs appearance a certain number of times in a specific time range to be used as a feature. This means that without the access to these features their experiment doesn't show the same level of success. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. 
+%Exposure weaknesses
+The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. There is a need of the same domains/IPs appearance a certain number of times in a specific time range to extract the time-based features. Furthermore, in their study, they showed that these features were the strongest features out of the four sets, we conclude that without the access to these features the experiment would probably not show the same level of success. \\
+\cite{localbotnet} had great results and very promising features. On the other side, the training dataset used seemed a bit small compared to the amount of complexity around botnets. This looks like it could have introduced a bias in the training to the dataset.
 
-These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 7 atomic features related to time. Either because the datasets are compositions of smaller datasets, or because the time stamps are too short.
-
-Features 1 to 4 have been left out because couldn't and a datasets
-long in time enough to put in practice these features. Furthermore,
-the CIC is a compilation of different labeled datasets which is equivalent
-of not having timestamps.
-
-There is also a possibility to analyze the DNS queries and not only the answers to uncovers techniques such as tunneling.
+%improvements
+What we aim to do in our experiment is to provide for smaller environments with similar detection capabilities as Exposure. This requires features available at a lower scale. We want to explore other features proposed by the scientific community that could fill that gap and provide with similar results.
+We also notice no features targeting DNS tunneling or DNS shadowing which are 2 techniques that most recent botnets have picked up even more to do channel communication, exfiltration and improving their evasion.\\
+We think that by combining the best features from both papers with the addition of features aiming at other techniques, will improve the general detection capabilities of newer families of botnets but also provide smaller environments with such detection capabilities.
 
 
-This type of project already exist such as the project Exposure detailed above. 
 
-\cite{localbotnet} had great results but the dataset used seemed a bit small compared to the amount of complexity around botnets. This looks like it could have been overfitted to the dataset, explaining the really high FPR.
-
-TODO: weaknesses and improvements found in the other combined approaches.
 \subsection{Focused experiments}
 Here are research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter. These are the papers where we found features and ideas to improve the above experiments. For clarity, we have divided them by evasion mechanisms.
 \subsubsection{Domain-flux}
