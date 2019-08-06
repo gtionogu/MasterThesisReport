@@ -545,7 +545,7 @@ The reason we have decided to focus on the machine learning approach as mentione
 As explained in the "abuse" section of the DNS chapter, a new type of detection techniques have been studied that aim at finding bots using the DNS protocol to evade the more usual detection techniques which is what we aim to further study and hopefully improve the current solutions.
 
 \section{Related work}
-Our end goal is to find the best features and techniques possible to improve the current solutions that aim at detecting all the evasion techniques, that we have named \textbf{Combined Solution}. To do so, we have structured our research as follows:\\
+Our end goal is to find the best features and techniques possible to improve the current solutions that aim at detecting all the evasion techniques, that we have named \textbf{Combined Solution}. The reason we focused in combined approaches is because we believe that most of these features alone can be part of legitimate use-cases and combining multiple evasion techniques allow to improve the detection on malicious activity. To do so, we have structured our research as follows:\\
 First, we will present the combined experiments. These experiments do not focus on a single type of detection mechanism but aggregate the different detection techniques used by botnets. We will discuss the features they have extracted, what models they have created and how they have implemented their approach.\\
 Secondly, to achieve our goal towards improving these solutions, we will discuss the weaknesses of their approach and how we plan to improve it.\\
 Thirdly, we will present the current state of research, the studies that we have used to improve the solutions. To structure this part we have divided the related papers by evasion technique.\\
@@ -676,18 +676,19 @@ For the dataset, where the DGA domains underwent an additional labeling process 
 
 
 \subsection{Weaknesses and possible improvements}
+The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set but also the hardest features to obtain because there is a need of the same domains/IPs appearance a certain number of times in a specific time range to be used as a feature. This means that without the access to these features their experiment doesn't show the same level of success. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. 
+
 These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 7 atomic features related to time. Either because the datasets are compositions of smaller datasets, or because the time stamps are too short.
 
-Features 1 to 4 have been left out because couldn't nd a datasets
+Features 1 to 4 have been left out because couldn't and a datasets
 long in time enough to put in practice these features. Furthermore,
-the CIC is a compilation of dierent labelled datasets which is equivalent
+the CIC is a compilation of different labeled datasets which is equivalent
 of not having timestamps.
 
-There is also a possibilitiy to analyze the DNS queries and not only the answers to uncovers techniques such as tunneling.
+There is also a possibility to analyze the DNS queries and not only the answers to uncovers techniques such as tunneling.
 
 
-These features are very specific to each mechanism and only work on the botnets that use them. That is why in the second part, we presented solutions with combined approaches. We want to experiment if a combined solution could provide better results and have other advantages such being more effective against new families of botnets. 
-This type of project already exist such as the project Exposure detailed above. The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. Furthermore, in their study they showed that these features were the strongest features of the set. This means that without the access to these features their experiment doesn't show the same level of success. What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure but with the features available in smaller environments. 
+This type of project already exist such as the project Exposure detailed above. 
 
 \cite{localbotnet} had great results but the dataset used seemed a bit small compared to the amount of complexity around botnets. This looks like it could have been overfitted to the dataset, explaining the really high FPR.
 
