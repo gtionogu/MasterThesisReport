@@ -551,7 +551,7 @@ Secondly, to achieve our goal towards improving these solutions, we will discuss
 Thirdly, we will present the current state of research, the studies that we have used to improve the solutions. To structure this part we have divided the related papers by evasion technique.\\
 The objective is to learn the different approaches from different papers, find better features and better models, see which we think could improve the current solutions and then test them out in our experiment.\\
 \\
-The first step in the research was to find the models that would be our baseline to compare our experiment. We found a couple of solutions which are referenced in most botnet detection papers as the most extensive . We have Bilge et al.\cite{exposure} with Exposure and Heuer et al.\cite{localbotnet} with "Recognizing Time-Efficiently Local Botnet Infections".
+The first step in the research was to find the models that would be our baseline to compare our experiment and improve upon. We found a couple of solutions which are referenced in most botnet detection papers as the most extensive . We have Bilge et al.\cite{exposure} with Exposure and Heuer et al.\cite{localbotnet} with "Recognizing Time-Efficiently Local Botnet Infections".
 
 \subsection{Exposure Experiment}
 Exposure is a botnet detection solution that analyzes passive DNS traffic and uses a J48 DT algorithm to predict new malicious domains. The particularity of this study was its continuous improving architecture as well as the ability of Exposure to detect new malicious domains before they are added to public blacklists.
@@ -572,31 +572,49 @@ It is important to point that everyday during the 2.5 months training period the
 
 \subsubsection{Features}
 The set of 26 atomic features proposed for the training of their classifier is divided into four categories: time-based, answer-based, TTL-based and domain name-based.
+
+
 \paragraph{Time-based}
-When we analyze many requests to a particular domain over time, patterns indicative of malicious behaviour emerge.\\
+They proposed time-based features because they realized that analyzing many requests to a particular domain over time, patterns indicative of malicious behaviour would emerge. They found that there was a increase in activity followed by a decrease. Also that there was a burst of requests in a short time.
+\begin{enumerate}[noitemsep]
+\item \textbf{Short Life}\\
+\item \textbf{Daily similarities}\\
+\item \textbf{Repeating patterns}\\
+\item \textbf{Access ratio}\\
+\end{enumerate}
 \paragraph{DNS answer based}
-Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
-Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
-\begin{itemize}[noitemsep]
-\item the number of different IP addresses that are resolved for a given domain during the experiment window
-\item the number of different countries that these IP addresses are located in
-\item the reverse DNS query results of the returned IP addresses
-\item the number of distinct domains that share the IP addresses that resolve to the given domain (false positive can be reduced with Google reverse DNS which will have hosting providers in top answers)
+Here is where they focused on the domain-fluxing technique. In such cases, the DNS server cycles through the different IP addresses linked to the domain in a round robin fashion and returns a different IP mapping each time. In addition, malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains. This information resulted in this list of features:
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{4}
+\item \textbf{Number of distinct IP addresses} for a given domain during the whole capture.\\
+\item \textbf{Number of distinct countries} of the IP addresses for given a domain\\
+\item \textbf{Number of domains share the IP with}\\
+\item \textbf{Reverse DNS query results}. The outputted list of IPs from the reverse DNS query is used to extract 5 atomic features
+\begin{itemize}
+\item Ratio of IP addresses that cannot be matched with a domain name (NX domains)
+\item Used for DSL lines
+\item Belong to hosting services
+\item Belong to known ISPs
+\item Can be matched with a valid domain name
 \end{itemize}
+\end{enumerate}
 \paragraph{TTL value based}
-Low TTL and Round-Robin DNS: \\
-\begin{itemize}[noitemsep]
-\item high availability (Content Delivery Networks (CDNs))
-\item botnets using this, makes them resistant to DNS Blacklists(DNSBL) and take downs. Often using Fast-Flux Service Networks (FFSN).
-\end{itemize}
-Because FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain, it explains the purpose of the TTL features.
+Malicious traffic usually has low TTL when doing fluxing but they are not the only ones, CDNs do too. So these feature are not to be considered alone but in complement of other features. FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain.
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{8}
+\item \textbf{Average TTL}\\
+\item \textbf{Standard Deviation of TTL} TODO: for a domain this is the average TTL compared to the mean TTL.\\
+\item \textbf{Number of distinct TTL values}is the simple TTL count for the entry.\\
+\item \textbf{Number of TTL change} TODO: is the different TTLs values for the same IP/domain \\
+\item \textbf{Percentage usage of specific TTL ranges}  This feature is splitted into 5 ranges: 0-1,1-100,100-300, 300-900 and 990-inf. The value computed for each of the ranges is the percentage of TTLs in each range compared to the total TTLs.\\
+\end{enumerate}
 \paragraph{Domain name based}
-Finally 2 simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).\\
-This can be noticed with 2 simple features:\\
-\begin{itemize}[noitemsep]
-\item ratio numerical chars to length of domain name
-\item length of the longest meaningful substring to length of domain name
-\end{itemize}
+Finally, a couple of simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{13}
+\item \textbf{Ratio of numerical characters} compared to length of domain name.\\
+\item \textbf{Ratio of the length of the LMS}, where LMS stands for longest meaningful string. This consists in finding in the domain name the longest substring which is a meaningful word.\\
+\end{enumerate}
 
 \includegraphics[scale=.7]{img/exposure_all_features.png}
 
@@ -607,8 +625,7 @@ Finally they used a genetic algorithm ECJ20 evaluated with a j48 DT to reduce th
 \includegraphics[scale=.7]{img/exposure_ga.png}
 
 \subsubsection{Results}
-With the selected features and using a DT classifier, they obtained a detection rate around 98\% and a false positive of around 1\%. \\The detection rate wasn't the main purpose of the paper but to detect new malicious domains, detect them before their appearance into mainstream blacklists. To assess Exposure's capabilities, they checked the 569 additions during the capture period in the main blacklists, with 216 seen in capture for the training period and 211 fitting the requirements for the time-based features, all were detected as malicious previous to their apparition. This proved Exposure was a successful solution for detecting new botnets!
-
+With the selected features and using a DT classifier, they obtained a detection rate around 98\% and a false positive of around 1\%. \\The detection rate wasn't the main purpose of the paper but to detect new malicious domains, detect them before their appearance into mainstream blacklists. To assess Exposure's capabilities, they checked the 569 additions during the capture period in the main blacklists, with 216 seen in capture for the training period and 211 fitting the requirements for the time-based features, all were detected as malicious previous to their apparition. This proved Exposure was a successful solution for detecting new botnets.
 
 \subsection{Recognizing Time-Efficiently Local Botnet Infections}
 Heuer et al.\cite{localbotnet} did a case study on local infections related to botnets. They propose a very large set of 23 features meant to detect botnets in networks. These features aim at the different evasion techniques that are used by botnets and the purpose is to be able to detect any form of Botnet in the network analysed. Unfortunately, the full paper wasn't available to us so we had to satisfy ourselves with the abstract and figures available publicly.
@@ -617,7 +634,8 @@ Heuer et al.\cite{localbotnet} did a case study on local infections related to b
 The architecture of their study was very typical for a machine learning approach. The interesting part of the experiment was related to the labeling. The used an extensive list of 22 blacklist and the Alexa 500k for the whitelisting. Another interesting part was the semi-manual labeling of the DGA domains which allowed to improve the training process by balancing the dataset and providing more data for the malicious traffic.
 
 \subsubsection{Features}
-We can see the list of features initially proposed but we don't know the feature selection process they did during the ML workflow. \\
+We can see the list of features initially proposed but we don't know the feature selection process they did during the ML workflow.\\
+
 \begin{tabular}{c|l}
 \hline
  & LMS\\
@@ -659,6 +677,13 @@ For the dataset, where the DGA domains underwent an additional labeling process 
 
 \subsection{Weaknesses and possible improvements}
 These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 7 atomic features related to time. Either because the datasets are compositions of smaller datasets, or because the time stamps are too short.
+
+Features 1 to 4 have been left out because couldn't nd a datasets
+long in time enough to put in practice these features. Furthermore,
+the CIC is a compilation of dierent labelled datasets which is equivalent
+of not having timestamps.
+
+There is also a possibilitiy to analyze the DNS queries and not only the answers to uncovers techniques such as tunneling.
 
 
 These features are very specific to each mechanism and only work on the botnets that use them. That is why in the second part, we presented solutions with combined approaches. We want to experiment if a combined solution could provide better results and have other advantages such being more effective against new families of botnets. 
