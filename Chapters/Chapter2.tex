@@ -369,7 +369,8 @@ Malicious actors cycle through the creation of subdomains which they delete shor
 The reason this type of activity spawned is due to IDS using detection based on reputation scores for the domain names flagging domain fluxing and fast-fluxing making it complicated for botmasters to use those evasion systems as much. Malicious actors realized they could bypassed most detection systems by using the reputation of legitimate domains and that is when they started campaigns to harvest this specific type of credentials.
 
 \cite{review2}\cite{detection8}
-
+TODO: clean 
+In particular, the bad actors harvested a large amount of credentials of domain owners (e.g., through phishing emails or brute-force guessing) and logged into their accounts to create subdomains. This technique is called domain shadowing, and such subdomains are called shadowed domains. The malicious subdomains inherit the reputation of legitimate apex domain.
 \cite{shadowing2}
 \cite{shadowing3}
 \cite{shadowing4}
@@ -603,9 +604,9 @@ Malicious traffic usually has low TTL when doing fluxing but they are not the on
 \begin{enumerate}[noitemsep]
 \setcounter{enumi}{8}
 \item \textbf{Average TTL}\\
-\item \textbf{Standard Deviation of TTL} TODO: for a domain this is the average TTL compared to the mean TTL.\\
+\item \textbf{Standard Deviation of TTL}\\
 \item \textbf{Number of distinct TTL values}is the simple TTL count for the entry.\\
-\item \textbf{Number of TTL change} TODO: is the different TTLs values for the same IP/domain \\
+\item \textbf{Number of TTL change} is the different TTLs values for the same IP/domain.\\
 \item \textbf{Percentage usage of specific TTL ranges}  This feature is splitted into 5 ranges: 0-1,1-100,100-300, 300-900 and 990-inf. The value computed for each of the ranges is the percentage of TTLs in each range compared to the total TTLs.\\
 \end{enumerate}
 \paragraph{Domain name based}
@@ -678,14 +679,13 @@ For the dataset, where the DGA domains underwent an additional labeling process 
 \subsection{Weaknesses and possible improvements}
 %Exposure weaknesses
 The detection rates obtained by Exposure are really good but they are hard to implement in a real environment because the time-based features are hard to obtain. There is a need of the same domains/IPs appearance a certain number of times in a specific time range to extract the time-based features. Furthermore, in their study, they showed that these features were the strongest features out of the four sets, we conclude that without the access to these features the experiment would probably not show the same level of success. \\
-\cite{localbotnet} had great results and very promising features. On the other side, the training dataset used seemed a bit small compared to the amount of complexity around botnets. This looks like it could have introduced a bias in the training to the dataset.
-
+% localbotnet weakness
+\cite{localbotnet} had great results and very promising features. On the other side, the training dataset used seemed a bit small compared to the amount of complexity around botnets. This looks like it could have introduced a bias in the training to the dataset.\\
+\\
 %improvements
-What we aim to do in our experiment is to provide for smaller environments with similar detection capabilities as Exposure. This requires features available at a lower scale. We want to explore other features proposed by the scientific community that could fill that gap and provide with similar results.
+What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure. This requires features available at a lower scale. We want to explore other features proposed by the scientific community that could fill that gap and provide with similar results.
 We also notice no features targeting DNS tunneling or DNS shadowing which are 2 techniques that most recent botnets have picked up even more to do channel communication, exfiltration and improving their evasion.\\
 We think that by combining the best features from both papers with the addition of features aiming at other techniques, will improve the general detection capabilities of newer families of botnets but also provide smaller environments with such detection capabilities.
-
-
 
 \subsection{Focused experiments}
 Here are research papers that have proposed different techniques to detect botnets using these different evasion techniques presented in the abuse section of the DNS chapter. These are the papers where we found features and ideas to improve the above experiments. For clarity, we have divided them by evasion mechanisms.
@@ -725,39 +725,30 @@ In the following paper, Holz et al. \cite{ff3} propose some novel features compa
 \\
 Celik et al. \cite{ff4} have regrouped the large majority of features encountered in the other papers accompanied with some novel additions. They have 5 categories of features: answer-based, domain name-based, spatial-based, network-based and timing-based. We added to our list of features the ones we hadn't seen yet such as the spatial approach looking at the entropy of time zones related to A or NS records. The second interesting set of features we attempted to use in our thesis were the timing-based featured analyzing delays related to different actions (network, processing and document fetching) but we realized that we didn't have the capacity of building the infrastructure necessary to analyze them.\\
 \\
-TODO: Perdisci et al. \cite{ff} 
-
+Perdisci et al. \cite{ff} is a project tested using various geographical inputs that allows the authors to detect fast-fluxing actors long time, multiple weeks, before they appear in usual blacklists. The study clusters the groups of IPs resolving to the same domains in a specific range of time then tries to analyze if those clusters are a flux network. What is really interesting about the features of this paper is that they aren't all novel but their application to these cluster provides a lot of insights.
 
 \subsubsection{DNS tunneling}
-Another evasion technique of botnets that exploits the DNS protocol is the concealing of data exchanges through DNS tunneling. We explore below some of the studies that have proposed features and methods to detect such behavior.
-
-In \cite{tunn1}, Dietrichyz et al. analyze the use of TXT RR with segmented and encrypted data. Their study resulted in a set of features mostly analyzing the strings characteristics. Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy". Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead. They expect these behavioral communication features to be effective enough in order to extend a classifier based on the rdata features.\\
+Another evasion technique where botnets exploit the DNS protocol is the concealing of data exchanges through DNS tunneling. We explore below some of the studies that have proposed features and methods to detect such behavior.\\
 \\
-In this article written by G. Farnham \cite{tunn}, he proposed a visual approach to detecting DNS tunneling, by plotting the set of features proposed, you can detect by "visual anomaly detection" the presence of DNS tunneling in your network.. 
-x-axis: destination IP
-y-axis: character count
-radius: hostname length
-colour: request type
+In \cite{tunn}, Dietrichyz et al. analyze the use of TXT RR with segmented and encrypted data. Their study resulted in a set of features mostly analyzing the strings characteristics. Rdata features: we look for the Shannon entropy of the strings. Measures the randomness of the string. Since encrypted data as a high level of entropy this is one of the things we'll be looking for. We are looking for "high byte entropy". Because of inherent reasons this entropy for a small string can't reach the max, we are looking at the "statistical byte entropy" instead. They expect these behavioral communication features to be effective enough in order to extend a classifier based on the rdata features.\\
+\\
+In this article written by G. Farnham \cite{tunn1}, he proposed a visual approach to detecting DNS tunneling, by plotting the set of features proposed, you can detect by "visual anomaly detection" the presence of DNS tunneling in your network. He uses a simple chart where he output the following: 
+\begin{itemize}[noitemsep]
+\item x-axis: destination IP
+\item y-axis: character count
+\end{itemize}
+He then uses the radius of points to showcase the hostname length and their color to identify the request type. 
 
-\url{https://vimeo.com/38727629}
+%\url{https://vimeo.com/38727629}
 
-IDEA: use the DGA tricks to plot some of the tunneling done
-but more specific to NXDOMAINS / NO ERRORS and TXT / base64
+%This last paper \cite{dns-tun}
 
-TODO: This last paper \cite{dns-tun}
-
-\cite{tunn2}
-
-TODO: check if this is the same paper used to detect DGA, the study looks very similar. % https://pdfs.semanticscholar.org/c7cc/7c16e8952facae1e4dfb0dd768a4504cd5cb.pdf
-
-\cite{tunn3} 
-
-\cite{tunn4}
-
-TODO: follows the same idea but visually.
+Born et al. \cite{tunn2} \cite{tunn3} present 2 papers on DNS tunneling detection focused on the n-gram frequency analysis. They also detect tunneling by comparing the distribution of domains to the zipf's law patterns. This paper shows how similar some analysis of dns tunneling are very similar to DGA analysis. This is because some of the encoded data used in the transfers has the same properties. In the second paper they combine a visual and quantitative approach using the same type of features used in the first one.
 
 \subsubsection{Domain shadowing}
-TODO: Liu et al. \cite{shadowing} are the first to propose an approach against this new trend. 
+Research keeps improving their detection capabilities and botmasters are struggling. Domain shadowing is the latest trend used by malicious actors which provides really high levels of stealthiness. For this reason we think that adding the best features able to intercept this technique could be very beneficial.\\
+\\
+Liu et al. \cite{shadowing} are the first to propose an approach against this new trend. They focused on the 3 RR associated with subdomain creation: A, AAAA(IPv6) and CNAME (alias). Their goal is to detect the bulk creation of shadowed domains. They exploit 2 indicators differentiating these subdomains from normal ones: Deviation from legitimate domains under the same apex and correlation amongst shadowed domains under different apex. By apex, we are talking about the compromised domain used for the creation of subdomains.
 
 
 \subsection{Value summary}
