@@ -4,6 +4,37 @@
 \label{Sets run and result discussion} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
 \section{Results metrics analysis}
+The metrics used to assess the quality of the features are the following:
+\begin{itemize}
+\item Confusion Matrix
+\begin{itemize}
+\item True positives(TP): we predicted "class" and it is "class"
+\item True negatives(TN): we predicted "not class" and it is "not class"
+\item False positives(FP): we predicted "class" and it is "not class"
+\item Fasle negatives(FN): we predicted "not class" and it is "class"
+\end{itemize}
+\item Accuracy: the proportion of predicted true results (both true positives and true negatives) in the population, that is 
+\begin{equation}
+\frac{TP+TN}{TP+TN+FP+FN}
+\end{equation}
+\item Precision: the proportion of predicted positive cases that are indeed real positive, that is 
+ \begin{equation}
+\frac{TP}{TP+FP}
+ \end{equation}
+\item Recall (or also Sensitivity): the proportion of real positive cases that are indeed predicted positive, that is 
+\begin{equation}
+\frac{TP}{TP+FN}
+\end{equation}
+\item F-Measure: the harmonic mean of precision and recall. It measures the quality of these 2 metrics but does not take into account the True negatives that is why we introduce Matthews correlation coefficient
+\begin{equation}
+\frac{2*precision*recall}{precision+recall}
+\end{equation}
+\item Matthews correlation coefficient(MCC): it is a coefficient that is used to assess the quality of binary classifiers. Because it takes into account all the parts of the confusion matric it is considered to be a balanced metric: 
+\begin{equation}
+\frac{TP*TN - FP*FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+\end{equation}
+\end{itemize}
+
 \section{Interpretation of the results}
 
 \section{Current All-in solution assessment}
