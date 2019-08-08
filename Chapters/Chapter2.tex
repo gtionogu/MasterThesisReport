@@ -384,8 +384,6 @@ Machine learning (ML) is a mathematical study of algorithms and statistics that 
 
 \subsection{Machine learning for botnet detection}
 The goal of botnet detection is to distinguish between 2 classes of traffic: normal and malicious. We are interested in one of the tasks that machine learning algorithms excel at which is classification. After training the models, called classifiers, they are able to assign classes to any new data.
-\\
-\includegraphics[scale=.4]{img/pers_ml_workflow.png}
 
 \subsection{Machine Learning workflow}
 Machine learning has a specific pipeline that needs to be followed to obtain the best results\cite{ml-workflow}: Gathering the data, selecting the features, extracting the features, choosing the right classifier, training and testing the model, and finally, assessing the prediction capabilities of the model. Each step is explained below and its implementation will be detailed in the experiment chapter \label{experiment}.
@@ -471,42 +469,6 @@ Those tools will be defined more in depth in the result's chapter, under the int
 \subsection{How will machine learning be implemented for this Thesis?}
 TODO: Review the need of this section.\\
 A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters, are an important aspect of the experiment. A big part of the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
-
-\subsection{Algorithm selection}
-Based on the explanations above on how to chose the right algorithms, here we present the algorithms we will use. The reason for picking them is their mainstream use for this type of problem.
-
-\subsubsection{Gaussian Naive Bayes}
-This comes from the know probability and statistics Bayes' theorem. "It describes the probability of an event , based on prior knowledge of conditions that might be related to the event"\cite{bayes}. In ML learning the model saves the probabilities of each feature to belong to which category and when it is asked to predict new data, it does so by computing the event's probability to belong to each one of the categories. It bases its predictions on previous experience.
-
-\subsubsection{K-Nearest Neighbors}
-k-Nearest Neighbors (kNN) is a very simple supervised ML algorithm. kNN classifies new objects based on their nearest neighbors. The parameter k represents the amount of nearest neighbors it looks for before it assigns the majority. The model created by kNN is actually the entire training dataset since it will use all the neighbors to determine the classification of a new item. kNN algorithm works well with a low amount of features, with datasets with large dimensions computing the distances for the k-nearest neighbors becomes computationally expensive.
-
-\subsubsection{Decision Trees}
-Decision Trees(DTs) are supervised algorithms that based on observations of labeled data creates a model of decision that is represented by a tree where all the nodes of the tree are a condition for the features and where all the leaves are the label they are classified as. The classification process starts at the root and ends in one of the leaves.\\
-DTs are very simple to visualize and perform really well even in higher dimensions. The most common problem of DTs is the overfitting of the data. Because outliers and unbalanced datasets will create branches that don't generalize the data correctly.
-
-\subsubsection{Logistic Regression}
-Logistic regression (LR) is a simple algorithm that is very effective in binary classification. Its core is the logistic function which transforms ranges of real-values into [0-1] ranges. What the logistic regression algorithm will do is through the use of weights of features, create the logistic function (model) for 1 of the classes and then for new values, it will output a probability which can be seen as a prediction of the input belonging to the class or not \cite{lr}.
-
-\subsubsection{Support Vector Machine}
-Support Vector Machine (SVM) is a supervised algorithm that excels in classification problems. The algorithm looks locally between the classes what hyper-plane separates them. 
-Its hyper parameters are very interesting too, they allows to adapt to the dimension of the features to allow for transformations of the hyper-planes relative to the dimension. They also allow to tune how much we accept outliers. The tuning has to be done with care because we could end in an overfitting situation that doesn't generalizes enough and therefore could perform poorly with new data.
-
-\subsubsection{XGBoost and Adaboost}
-Both algorithms, eXtreme Gradient Boosting (XGBoost) and Adaptive Boosting (AdaBoost), are based on a similar concept which is boosting. Boosting is a technique that modifies weak learners into strong learners. It is done by training multiple of these weak learners sequentially and each improving based on the previous one.\cite{boosting} Both use this technique with different approaches to it.
-
-\paragraph{AdaBoost}
-The boosting used with Adaptive Boosting(AdaBoost) is simpler than XGBoost, it uses decision trees with a single decision node, they are called decision stumps. Each mistake made by stumps during classification are forwarded to the next stump by carrying more weight. This will allow the errors to be corrected of the numbers of stumps and obtain a cleaned up result in the end. This concept is mostly applied with DTs but it could be applied to any supervised algorithms. As are trees, AdaBoost are victims of outliers but they do a good job not to overfit the models as its peer. 
-
-\paragraph{XGBoost}
-The type of boosting used with XGBoost is Gradient Boosting on steroids. The algorithm improved is the RFs which is already a really strong supervised classifier. Like the AdaBoost, it sequentially improves the current tree using its predecessor but instead of adding more weight to the misclassified observations, it tries to train the next predictor to those observations. But this isn't all, XGBoost was created for fast and high performance to solve the slow characteristic of gradient boosting. That is where the eXtreme part comes in and where they introduced solutions to its shortcomings: parallelization of the tree construction,  distributed computing, out-of-core computing and cache optimization.\cite{xgboost} Due to this, it is one of the most popular algorithms because it provides the best performance on a range of difficult machine learning tasks. Its only drawback is its overfitting but that can be solved fine-tuning its hyper-parameters and it's explainability which can be complicated.
-
-\subsubsection{Random forest}
-The Random Forest (RF) algorithm is an improvement of the DTs. The concept is to randomly create low correlated models (forest) and give them the same input. It then picks the majority result as the prediction for the input. This technique provides a good way to protect from the overfitting that DTs are known for and to protect against individual errors of the trees. RF takes advantage of Bagging (Bootstrap aggregation) and Feature randomness to achieve this uncorrelated forest.
-Bagging consists in giving all the trees the same amount of data but with replaced data (duplicates). Secondly feature randomness as its name implies, at each node the trees only take decision based on a subset of features.\cite{rf}
-
-\subsubsection{Artificial Neural Networks}
-Artificial Neural Networks (ANN) is an algorithm created similar to how the brain works and its learning capabilities by modeling neurons and their synapses. It works as a black box system with inputs on one side and and outputs on the other which are dependent on the inputs. The black box is a network of neurons grouped in layers, neurons of each layer connect with the ones of the next layer with weighted connections that will determine when the neurons fire. The modeling is around finding the values of the neurons and the connections inside the blackbox (hidden layers). The way ANNs hidden layers are computed are through gradient descent, a way of automatically updating the weights step by step into a direction that will make them less wrong, based on the output desired.\cite{ann}
 
 \section{Classification of botnet research and detection}
 In this section, we are going to present the current state of the botnet detection taxonomy and show the weaknesses and strengths of each method. This will be followed by a discussion in the next chapter of the current state of the art when it comes to passive traffic analysis for botnet detection and what we are going to bring to it. 

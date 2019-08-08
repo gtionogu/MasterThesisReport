@@ -154,6 +154,28 @@ Timing-based & Network delay (mean and standard deviation)\\
 
 \subsection{DNS tunnelling features}
 
+\subsection{shadowing}
+1. Deviation from legitimate domains under the same apex
+2. Ccorrelation amongst shadowed domains under different apex
+- subdomain usage 
+    + analysis of date between apex creation and subdomdomain non-www creation. 
+    + ratio of popular domain (under upper apex and IP???)
+    + web connectivity, subdomains are deteched from their apex, there aren't any links + shadow domains cloaked (connectivity checked through web archive)
+- subdomain hosting
+    + deviation of hosting, distant IPs from apex and good subdomains + different AS
+    + correlation ratio, ratio of cohosted subdomains and dc(apex with subdomains hosted together)
+- subdomain activity
+    + distribution of first seen date
+    + resolution count
+    + active days
+- subdomain name
+    + diversity of name levels
+    + subdomain name length
+    
+Detection system: Woodpecker
+    a. creates profile of S (subdomains observed)
+    b. aggregation of profiles and extracts 17 features.
+    c. classifier training
 
 \subsection{All-in}
 \cite{exposure}
