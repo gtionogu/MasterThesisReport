@@ -1,34 +1,26 @@
 
 \chapter{The experiment} % Main chapter title
 \label{experiment}
-
 During this thesis the ideas for the experiment changed a lot, we started by mimicking the architecture and features from Exposure to see if we could reproduce their experiment. We rapidly realized that their features were very complicated to obtain for almost all the datasets we could find. We also realized that we didn't have a continuous improvement of our classifier because we didn't have access to a live environment passive DNS capture as Bilge et al. did. That is when we realized a gap that we could try to fill. We decided to use the most pertinent aspects of Exposure's architecture and features and combine them with the research we did on all the current techniques used to abuse the DNS protocol.
 \section{Pipeline of the research}
-%DGA PREVIOUS MODEL TOCHANGE
-%For each evasion technique discussed we have picked some of the features and methodologies proposed that we are going to test and assess. For each complete approach we train the classier on 80\% of the dataset with a 10-kfold cross validation and test the predictions on the 20\% remaining. Then using the metrics below as well as visual plots we analyse the weight of the dierent features, correlation with the other features and possible combinations or improvements. The metrics used to assess the quality of the features are the following:
-
 \includegraphics[scale=.6]{img/pers_ml_workflow.png}
-
-
-%EXPOSURE PREVIOUS MODEL TOCHANGE
 The pipeline we created follows the machine learning workflow of a classification problem. We started by curating the dataset, transforming the captures into list of features, extracting and computing all the features studied. The next processing is the labeling. At this point, we have data that can be ingested by supervised algorithms. Before that, we do a first analysis of the features and go through the feature selection process. \\
-During this feature selection we create a couple of different sets of features. that will will use to train.
-
+During this feature selection we create a couple of different sets of features that will will use to train.
+From there, we balance our dataset and we split it into 2 sets, the training set and the testing set. 
+We train the classifiers with the different algorithms we have decided to use which are . During this training process, we use a feedback loop to change the features used and test out different hyper-parameter optimization techniques. We then test the predictions of our classifiers against the testing set. And finally, we analyze our results and draw some conclusions on our experiment.
 
  Extraction of the features and labeling.
 Visual analysis of the distributions of the features and correlation
-analysis. From there we assess the features through the classiers in
-specic cases. The general case with all the features, then depending
+analysis. From there we assess the features through the classifiers in
+specific cases. The general case with all the features, then depending
 on the correlations found in the previous step we assess groups of features.
-For the classication process, we have taken 5 classiers that
+For the classification process, we have taken 5 classifiers that
 have proven their potential to see if any has a better way to classify
-the data. The classiers used in the DGA analysis were Logistic regression,
+the data. The classifiers used in the DGA analysis were Logistic regression,
 linear discriminant analysis, k-nearest neighbors, decision
-tree classier and Naive Bayes. After training the classiers, we test
-the out by predicting the evaluation set with the best classiers.
-
-The machine learning workflow of the thesis follows the workflow presented in the state of the art of machine learning.
-\subsection{Environment}
+tree classifier and Naive Bayes. After training the classifiers, we test
+the out by predicting the evaluation set with the best classifiers.
+\section{Environment}
 
 python 3
 pandas
@@ -40,7 +32,7 @@ pcap
 
 https://norvig.com/ngrams/ (n-grams)
 
-\subsection{Datasets}
+\section{Datasets}
 
 Use inspiration from z-thesis 6.2 Assembling the Training Sets for the labeling
 
@@ -68,42 +60,61 @@ The ISOT Http Botnet dataset consists of 2 different datasets: malicious DNS tra
 The ISOT Botnet dataset which consists in a large dataset regrouping 9 malicious botnets traffic in a controlled environment. 
 And finally the CTU scenarios provided by the malware capture facility project.
 
+SHOW SMALL TABLE WITH NUMBERS 
+
 \section{Purpose of datasets}
 The idea of having different datasets allows to understand if some techniques work against a large variety of evasion techniques or on specific ones. This also can be a way to propose complete feature set for complete detections.
 \\
 Finding proper datasets with botnet traffic with malicious DNS traces is not an easy thing to achieve. Luckily, the CIC team were kind enough to allow me to use their dataset designed for botnet traffic analysis. We also found a dataset proposed by the CTU which is a set of 13 scenarios that represent different types of malicious traffic generated by botnets. The CTU dataset was not as rich in DNS traffic as the other ones, but provided with fast flux traffic to test some of the features proposed to detect FF.
 
-\section{Presentation of the datasets}
+IMHERE
+TODO: fill each of the sections for each dataset
 \subsection{CIC}
+Source\\
+	Already mentioned
+Content\\
+	What are the botnets analyzed
+Labeling\\
+	How did we label them?
+Use
+	How did we use it in the study, we tested for example datasets for full training and testing, maybe we used certain datasets to train and others to test. Give more detail
 This is a dataset maintained by the Canadian Institute for Cybersecurity. The have compiled malicious traffic from different sources and for most of them the traces are labelled which is very convenient for machine learning supervised approaches.\\ 
-The dataset they provide for Botnet traffic analysis is composed of 9 different Botnets and of 2 datasets, a training and a testing dataset. Unfortunately, even being the largest labelled  dataset, the DNS traffic was low. 
+The dataset they provide for Botnet traffic analysis is composed of 9 different Botnets and of 2 datasets, a training and a testing dataset. Unfortunately, even being the largest labeled  dataset, the DNS traffic was low. 
 \subsection{CTU}
-This is a set of datasets provided by the malware capture facility project\cite{CTU}. It captures malicious traffic from different malwares then provide them to the public for research. They also provide their own analysis on most of the datasets which provides insight on how the malware act and how it can be detected.\\
-The scenarios that interest us are: the 5th and the 13th that include Fast-Flux labelled traffic.
-It also provides hundreds of additional datasets but that are not as well documents and presented which makes the research for a particular dataset more complicated.
-TODO: actually use all datasets to prove that we can detect any type of botnet traffic due to the general use of it.
-\subsection{ISOT}
-This is a dataset specifically build around DNS traffic by the The ISOT Lab from the University of Victoria. It regroups 9 exploit kits ran in virtual environments in a closed network with a custom DNS server to snif all the traffic. This dataset provides us with 3 sets of traces, malicious, bening and a mix\cite{ISOT}.
-\subsection{Processing}
-Because of the amount of different features tested in the thesis. I decided to use 2 pcap extractors. The first was provided by our teacher Prof. J. Colin which is a very effective extractor and summarizes very well the relevant data for most of the features but for labelling and some of the features, more information was required. What we did to obtain a second extractor to complement the information was to run the traffic datasets through Bro, the network IDS. This provided us with DNS.logs, that we then converted using the python "bat" library which converts directly bro logs to dataframes.\\
-Most of the labelled datasets actually only provided the IP addresses of the malicious traffic, this is why working with the bro logs was essential to label the datasets.
-
-\subsubsection{Information regarding the datasets}
 Sources\\
 	Already mentioned
 Content\\
 	What are the botnets analyzed
-Labelling\\
+Labeling\\
 	How did we label them?
 Use
 	How did we use it in the study, we tested for example datasets for full training and testing, maybe we used certain datasets to train and others to test. Give more detail
-\subsubsection{balancing the datasets}
-We already explained
-TODO: show stats about the balancing of the data
-\section{Assessment model (for features and models)}
-provide information on how the results feedback are looped back into the algorithm
+	
+This is a set of datasets provided by the malware capture facility project\cite{CTU}. It captures malicious traffic from different malwares then provide them to the public for research. They also provide their own analysis on most of the datasets which provides insight on how the malware act and how it can be detected.\\
+The scenarios that interest us are: the 5th and the 13th that include Fast-Flux labeled traffic.
+It also provides hundreds of additional datasets but that are not as well documents and presented which makes the research for a particular dataset more complicated.
+TODO: actually use all datasets to prove that we can detect any type of botnet traffic due to the general use of it.
+\subsection{ISOT}
+Sources\\
+	Already mentioned
+Content\\
+	What are the botnets analyzed
+Labeling\\
+	How did we label them?
+Use
+	How did we use it in the study, we tested for example datasets for full training and testing, maybe we used certain datasets to train and others to test. Give more detail
+	
+This is a dataset specifically build around DNS traffic by the The ISOT Lab from the University of Victoria. It regroups 9 exploit kits ran in virtual environments in a closed network with a custom DNS server to snif all the traffic. This dataset provides us with 3 sets of traces, malicious, bening and a mix\cite{ISOT}.
+	
+\section{Dataset Processing}
+Because of the amount of different features tested in the thesis. I decided to use 2 pcap extractors. The first was provided by our teacher Prof. J. Colin which is a very effective extractor and summarizes very well the relevant data for most of the features but for labeling and some of the features, more information was required. What we did to obtain a second extractor to complement the information was to run the traffic datasets through Bro, the network IDS. This provided us with DNS.logs, that we then converted using the python "bat" library which converts directly bro logs to dataframes.\\
+Most of the labelled datasets actually only provided the IP addresses of the malicious traffic, this is why working with the bro logs was essential to label the datasets.
+\subsection{cleaning}
+\subsection{normalization}
+\subsection{balancing the datasets}
 
-=====================================================
+\section{Assessment model (for features and models)}
+provide information on how the results feedback are looped back into the algorithma
 
 \subsection{Machine algorithms}
 \subsection{Algorithm selection}
@@ -145,10 +156,11 @@ Artificial Neural Networks (ANN) is an algorithm created similar to how the brai
 
 
 \subsection{Feature extraction}
-List of algorithms (to be decided)
+PCA
+
 \subsection{Training and testing model}
-TODO: remove this section
-\cite{dns-traffic}
+We used 10-
+
 \subsection{Results metrics}
 TODO: remove this section
 \cite{fitting}
