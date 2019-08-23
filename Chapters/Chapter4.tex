@@ -1,19 +1,35 @@
 % Chapter 1
 
-\chapter{All-in solution process} 
-\label{All-in solution process}
+\chapter{Combined solution process} 
+\label{Combined solution process}
 
-\section{Features extraction and features analysis}
+\section{Features extraction}
 %source Botnet_Detection_Based_On_Machine_Learning_Techniques_Using_DNS_Query_Data\\
-Experiment Dataset Pre-Processing = feature extraction (I LIKE HOW HE EXPLAIN BI-TRI GRAMS)
+%Experiment Dataset Pre-Processing = feature extraction (I LIKE HOW HE EXPLAIN BI-TRI GRAMS)
+After curating the dataset, we can now start to extract the value that will allow us to train our classifiers. The extraction of the data and the computation of the features of the dataset is a very long process. There are a lot of possible features possible for each problem and this is why the state of the art is so important, it will provide you with the current information that can be extracted and the value that it provides. In this section we'll present all the features we extracted from our research and all the features that we selected for the final set. \\
+The more features you have the more precise your classifier becomes but it induces a lot of other problems explained in the machine learning section. Mainly, overfitting and complexity issues.\\\\
+In this section we will go through some pre-processing we did for the features computation, a presentation of the features extracted in our state of the art research and finally, an analysis of the features for their selection and the final set used for the classifier.
 
+\subsection{Features pre-processing}
+To reduce time during the computation of the features we pre-processed some values that are used later by our features. There are 3 main values that we provided for the features:
+\begin{itemize}
+\item N-grams: a lot of features analyzing the domain name use n-grams to detect if the domain name is part of the usual distributions of n-grams for the most reputable sites. To help with their computation, we used tables that provided the frequency of each bi-gram and tri-gram in the top 1 million sites of alexa.com.
+\item Autonomous Systems (AS): Fast flux have a weakness in their wall of proxies which is that by nature they are located in different ASs based on the randomness of the infections. Therefore, for each IP returned by A queries, we computed the country and the ASN related to their AS.
+\item Black/white lists: Since Exposure used an architecture that would start by labeling traffic based on white lists and black lists we decided to adopt the idea and introduce them as features instead. \\
+\end{itemize}
 
-Explain all the pre-computation done to obtain certain features.
+\subsection{Black lists and white lists}
+%%%%%%%%%%%%%%%%%%%%%%%%% BLACK LISTS WHITE LISTS
+We have done a large research on the blacklists available. The first idea was to use basics lists with an additional check with the virusTotal API to provide up to date information on the domain but with the limited API, it is a very long process it becomes not a viable solution. Instead, we researched the blacklists used by virusTotal and other DNSBL providers and have a very long static list instead.
+At first we only focused on botnets domains and IPs, but then realized that bots can query their CnC but also try to access any malicious domain or IP, either to upload or download relevant data for the bot. Therefore, the final blacklist used is a very large combination of blacklists that go from domains linked to malware or CnC to domains linked to suspicious phishing/adware campaigns. One of the websites that really helped us in this process is \url{https://firebog.net/}. Finally, all the lists have been combined into a big unique blacklist used to compute certain features.\\
+For the white lists, the most common resource used is the alexa.com top 1 million sites. We tried to find other resources available but they were all already comprised in the alexa.com list. 
+\subsection{The DNS features}
+A lot of features for botnets, need an aggregation of packets to be computed, that is why we decided to group together all queries under the same query. This simplified a lot of the features specially, for the features related to DNS answers and TTLs. But this could in rare occasions result in aggregating normal and botnet queries under the same scope if they are accessed by both parties, this is to keep in mind if odd results appear because of it.\\
+In the sections below we list the different features presented in the state of the art that we thought could improve Exposure results without the time-based features. In the list below is a large gathering of different ideas where a lot of features have already been rejected to lack of data or resources to obtain them.
+\subsubsection{Domain-flux Features}
 
-\subsection{Domain-flux Features}
-
-\cite{dga}
-They propose these features to detect DGAs:\\\\
+%They propose these features to detect DGAs:\\\\
+%\cite{dga}
 \begin{tabular}{|l|}
 \hline
 length of the domain name excluding TLD (top level domain)\\
@@ -24,61 +40,108 @@ Number of consonants in the SLD\\
 \hline
 Number of digits in the SLD\\
 \hline
-SLD trigram entropy\\
+SLD tri-gram entropy\\
 \hline
-SLD trigram conditional probability\\
+SLD tri-gram conditional probability\\
 \hline
 \end{tabular}
 
-\subsection{Fast-flux features}
+\subsubsection{Fast-flux features}
 
-\cite{honeynet}
-\cite{ff2}
-\cite{ff3}
-\cite{ff_botconf}
+%\cite{honeynet}
+%\cite{ff2}
+%\cite{ff3}
+%\cite{ff_botconf}
 \begin{tabular}{|l|}
 \hline
 Numerous unique A records for a domain\\
 \hline
 Numerous unique NS records for a  domain\\
 \hline
-Different Autonomous Systems (ASN) for the IPs of linked to the same domain\\
+Different Autonomous Systems (AS) for the IPs of linked to the same domain\\
 \hline
-Different countries\cite{dga}
-They propose these features to detect DGAs:\\\\
-\begin{tabular}{|l|}
-\hline
-length of the domain name excluding TLD (top level domain)\\
-\hline
-Number of vowels in the Second Level Domain (SLD)\\
-\hline
-Number of consonants in the SLD\\
-\hline
-Number of digits in the SLD\\
-\hline
-SLD trigram entropy\\
-\hline
-SLD trigram conditional probability\\
-\hline
-\end{tabular} for the IPs of linked to the same domain\\
+Different countries for the IPs of linked to the same domain\\
 \hline
 Short Time-To-Live (TTL)\\
 \hline
-\end{tabular}
+Ratio of different ranges of IPs\\
+\hline
+Fluxiness, is the total of unique A records for a domain divided by the number \\of A records returned for each lookup. This measures consistency in the unique A records returned \\
+\hline
+Flux-score, is an hyper feature that combines Unique A records, AS numbers \\and NS records into a single vector.\\
+\hline
+Number of resolved IPs\\
+\hline
+Number of domains resolving to the same IPs\\
+\hline
+Avg. TTL\\
+\hline
+Network prefix diversity, is a ratio of the /16 network prefixes \\
+\hline
+IP Growth Ratio, represents the average number of new IP addresses \\discovered per each DNS response related to any domain\\
+\hline
+Autonomous System (AS) diversity\\
+\hline
+Organization diversity\\
+\hline
+Country Code diversity\\
+\hline
+DNS packet size\\
+\hline
+Edit Distance\\
+\hline
+KL (Kullback-Leibler) Divergence (unigrams and bigrams)\\
+\hline
+Jaccard Index (unigrams and bigrams)\\
+\hline
+Time Zone Entropy of A records\\
+\hline
+Time Zone Entropy of NS records\\
+\hline
+Number of distinct autonomous systems\\
+\hline
+Number of distinct networks\\
+\hline
+ \end{tabular}
 
-\cite{ff1}
-Some features for FF detection: 
-nb of A records returned: 1-3 normal, 5 or more ff 
-nb of NS: normal -> small, ff -> several NS
-several A records for the NS AS: small nb of A from 1 AS -> normal,
-located in different AS -> ff 
-Hardware and IP: range of IP is diverged -> ff 
-No physical agent -> ff 
-no guarantee uptime -> ff
+%\cite{ff5}
+%\begin{tabular}{c|l}
+%Type & Features\\
+%\hline
+% & Number of unique A records\\
+%DNS Answer-based &  Number of NS records\\
+% & \\
+%\hline
+% & Edit Distance\\
+%Domain name-based & KL (Kullback-Leibler) Divergence (unigrams and bigrams)\\
+% & Jaccard Index (unigrams and bigrams)\\
+%\hline
+% & Time Zone Entropy of A records\\
+%Spatial-based & Time Zone Entropy of NS records\\
+% & Minimal service distances (mean and standard deviation)\\
+%\hline
+% & Number of distinct autonomous systems\\
+%Network-based & Number of distinct networks\\
+% \hline
+% & Round Trip Time of DNS request\\
+%Timing-based & Network delay (mean and standard deviation)\\
+%& Processing delay (mean and standard deviation)\\
+%& Document fetch delay (mean and standard deviation)\\
+%\end{tabular}
 
-\cite{ff3}
-\textbf{Fluxiness} is the total of unique A records for a domain divided by the number of A records returned for each lookup. This measures consistency in the unique A records returned. \\
-\textbf{Flux-score} an hyperplane that separates benign from malicious fast flux where $ x = (n_A,n_{ASN},n_{NS})$ (unique A records, ASN and SN records) and the plane is defined as follows\\
+%\cite{ff1}
+%Some features for FF detection: \\
+%nb of A records returned: 1-3 normal, 5 or more ff \\
+%nb of NS: normal -> small, ff -> several NS\\
+%several A records for the NS AS: small nb of A from 1 AS -> normal,\\
+%located in different AS -> ff \\
+%Hardware and IP: range of IP is diverged -> ff \\
+%No physical agent -> ff \\
+%no guarantee uptime -> ff\\
+
+%\cite{ff3}
+%\textbf{Fluxiness} is the total of unique A records for a domain divided by the number of A records returned for each lookup. This measures consistency in the unique A records returned. \\
+%\textbf{Flux-score} an hyperplane that separates benign from malicious fast flux where $ x = (n_A,n_{ASN},n_{NS})$ (unique A records, ASN and SN records) and the plane is defined as follows\\
 %\begin{equation}
 %F(x) = 
 %\begin{cases}
@@ -86,146 +149,232 @@ no guarantee uptime -> ff
 %   w^Tx-b \leq 0 & \text{x is CDN}\\
 %\end{cases}
 %\end{equation}
-From $F(x)$ they induce a metric $f(x) = w^Tx$ with w the weight of the vector and b a bias. $f(x) > b$ would mean x is a FFSN. By empirically testing this on a labelled dataset they determined the value of w and b. $w = (1.32,18.54,0)$ and $b =142.38$. We can notice that $n_{NS}$ does not have any impact.
+%From $F(x)$ they induce a metric $f(x) = w^Tx$ with w the weight of the vector and b a bias. $f(x) > b$ would mean x is a FFSN. By empirically testing this on a labelled dataset they determined the value of w and b. $w = (1.32,18.54,0)$ and $b =142.38$. We can notice that $n_{NS}$ does not have any impact.
 
-\cite{fluXOR}
+%\cite{fluXOR}
+%\begin{tabular}{c|l}
+%\hline
+%Number of resolved IPs\\
+%\hline
+%Number of domains (in a cluster = domains with similar IPs)\\
+%\hline
+%Avg. TTL per domain in a cluster\\
+%\hline
+%Network prefix diversity = ratio between the number of distinct\\ /16 network prefixes and the total \\
+%\hline
+%number of IPs (measures the scattering)\\
+%\hline
+%Number of distinct domain names that resolved to at least one of \\the IP addresses in the considered cluster\\
+%\hline
+%IP Growth Ratio. This represents the average number
+%of new IP\\ addresses discovered per each DNS response related to any domain\\
+%\hline
+%\end{tabular}
+%\\\\
+%Then the active ones:\\\\
+%\begin{tabular}{|l|}
+%\hline
+%Autonomous System (AS) diversity (ratio between the number of distinct\\ ASs where the IPs of a cluster reside and the total number of resolved IPs. \\Same for the following diversities)\\
+%\hline
+%BGP prefix diversity\\
+%\hline
+%Organization diversity\\
+%\hline
+%Country Code diversity\\
+%\hline
+%Dynamic IP ratio (ratio of dynamic vs total IPs using keywords in reverse\\ DNS lookups)\\
+%\hline
+%Average Uptime Index (average uptime for the IPs in a cluster,\\ Uptime tested through probing)\\
+%\hline
+%\end{tabular}
+
+\subsubsection{DNS tunneling features}
+
+As mentioned in the research, a lot of the features proposed for tunneling are the same as DGA because they both involve either payloads or requests that have non-human readable characteristics. To avoid redundance, we have omitted to repeat most of the features similar to DGA.\\\\
 \begin{tabular}{|l|}
 \hline
-Number of resolved IPs\\
+NXDomain count\\
 \hline
-Number of domains (in a cluster = domains with similar IPs)\\
+TXT RR present\\
+\hline 
+TC Flag is set (truncation of the packet)\\
 \hline
-Avg. TTL per domain in a cluster\\
+Request type (categorical for the different RRs used in tunneling)\\
 \hline
-Network prefix diversity = ratio between the number of distinct\\ /16 network prefixes and the total \\
+Character count\\
 \hline
-number of IPs (measures the scattering)\\
+Statistical byte entropy\\
 \hline
-Number of distinct domain names that resolved to at least one of \\the IP addresses in the considered cluster\\
-\hline
-IP Growth Ratio. This represents the average number
-of new IP\\ addresses discovered per each DNS response related to any domain\\
+DGA features\\
 \hline
 \end{tabular}
-\\\\
-Then the active ones:\\\\
+
+\subsubsection{Shadowing}
+
+This sections is divided into 2 main sets of features. When mentioning Apex in this section we are referring to the domain name (2LD + TLD).
+\begin{itemize}
+\item Deviation from legitimate domains under the same apex
+\item Correlation among shadowed domains under different apex 
+\end{itemize}
+
+This spawns the following set of features, all related to the subdomains characteristics:\\
+
 \begin{tabular}{|l|}
 \hline
-Autonomous System (AS) diversity (ratio between the number of distinct\\ ASs where the IPs of a cluster reside and the total number of resolved IPs. \\Same for the following diversities)\\
+Usage (creation data, ratio of popular domain, web connectivity) \\
 \hline
-BGP prefix diversity\\
+Hosting (hosting deviation, correlation ratio of subdomain)\\
 \hline
-Organization diversity\\
+Activity (first seen date distribution, resolution count and active days)\\
 \hline
-Country Code diversity\\
-\hline
-Dynamic IP ratio (ratio of dynamic vs total IPs using keywords in reverse\\ DNS lookups)\\
-\hline
-Average Uptime Index (average uptime for the IPs in a cluster,\\ Uptime tested through probing)\\
+Name(diversity of name levels and subdomain name length)\\
 \hline
 \end{tabular}
 
-\cite{ff5}
-\begin{tabular}{c|l}
-Type & Features\\
+
+%- subdomain usage 
+%    + analysis of date between apex creation and subdomain non-www creation. 
+%    + ratio of popular domain (under upper apex and IP???)
+%    + web connectivity, subdomains are deteched from their apex, there aren't any links + shadow domains cloaked (connectivity checked through web archive)
+%- subdomain hosting
+%    + deviation of hosting, distant IPs from apex and good subdomains + different AS
+%    + correlation ratio, ratio of cohosted subdomains and dc(apex with subdomains hosted together)
+%- subdomain activity
+%    + distribution of first seen date
+%    + resolution count
+%    + active days
+%- subdomain name
+%    + diversity of name levels
+%    + subdomain name length
+%    
+%Detection system: Woodpecker
+%    a. creates profile of S (subdomains observed)
+%    b. aggregation of profiles and extracts 17 features.
+%    c. classifier training
+
+\subsection{Combined solution features}
+
+For Exposure features, we have removed the time-based features since we couldn't use them efficiently with the datasets used due to time capture times being too short for those features to provide insightful data.\\\\
+
+\begin{tabular}{|l|}
 \hline
- & Number of unique A records\\
-DNS Answer-based &  Number of NS records\\
- & DNS packet size\\
- & TC (Tnmcated) Flag is set\\
+Number of distinct IP addresses for a given domain during the whole capture.\\
 \hline
- & Edit Distance\\
-Domain name-based & KL (Kullback-Leibler) Divergence (unigrams and bigrams)\\
- & Jaccard Index (unigrams and bigrams)\\
+Number of distinct countries of the IP addresses for given a domain\\
 \hline
- & Time Zone Entropy of A records\\
-Spatial-based & Time Zone Entropy of NS records\\
- & Minimal service distances (mean and standard deviation)\\
+Number of domains sharing the IP\\
 \hline
- & Number of distinct autonomous systems\\
-Network-based & Number of distinct networks\\
- \hline
- & Round Trip Time of DNS request\\
-Timing-based & Network delay (mean and standard deviation)\\
-& Processing delay (mean and standard deviation)\\
-& Document fetch delay (mean and standard deviation)\\
+Reverse DNS query results. The outputted list of IPs from the reverse DNS \\query is used to extract 5 atomic features\\
+%\begin{itemize}
+%\item Ratio of IP addresses that cannot be matched with a domain name (NX domains)
+%\item Used for DSL lines
+%\item Belong to hosting services
+%\item Belong to known ISPs
+%\item Can be matched with a valid domain name
+%\end{itemize}
+\hline
+Average TTL\\
+\hline
+Standard Deviation of TTL\\
+\hline
+Number of distinct TTL values is the simple TTL count for the entry.\\
+\hline
+Number of TTL change is the different TTLs values for the same IP/domain.\\
+\hline
+Percentage usage of specific TTL ranges\\  %This feature is splitted into 5 ranges: 0-1,1-100,100-300, 300-900 and 990-inf. The value computed for each of the ranges is the percentage of TTLs in each range compared to the total TTLs.\\
+\hline
+Ratio of numerical characters compared to length of domain name.\\
+\hline
+Ratio of the length of the LMS, where LMS stands for longest meaningful string.\\% This consists in finding in the domain name the longest substring which is a meaningful word.\\
+\hline
 \end{tabular}
-
-
-\subsection{DNS tunnelling features}
-
-\subsection{shadowing}
-1. Deviation from legitimate domains under the same apex
-2. Ccorrelation amongst shadowed domains under different apex
-- subdomain usage 
-    + analysis of date between apex creation and subdomdomain non-www creation. 
-    + ratio of popular domain (under upper apex and IP???)
-    + web connectivity, subdomains are deteched from their apex, there aren't any links + shadow domains cloaked (connectivity checked through web archive)
-- subdomain hosting
-    + deviation of hosting, distant IPs from apex and good subdomains + different AS
-    + correlation ratio, ratio of cohosted subdomains and dc(apex with subdomains hosted together)
-- subdomain activity
-    + distribution of first seen date
-    + resolution count
-    + active days
-- subdomain name
-    + diversity of name levels
-    + subdomain name length
-    
-Detection system: Woodpecker
-    a. creates profile of S (subdomains observed)
-    b. aggregation of profiles and extracts 17 features.
-    c. classifier training
-
-\subsection{All-in}
-\cite{exposure}
-\paragraph{Time-based}
-When we analyse many requests to a particular domain over
-time, patterns indicative of malicious behaviour may emerge.\\
-These were supposed to be the features with the most weight, unfortunately due to lack of the same caliber of capture available to the authors of Exposure, we could not test out the 4 features related to time. Either because the datasets are compositions of smaller datasets, or because the timestamps are too short.
-\paragraph{DNS answer based}
-Here are some domain-flux features: A domain name can map to multiple IP addresses. In such cases,the DNS server cycles through the different IP addresses in a round robin fashion and returns a different IP mapping each time. \\
-Malicious domains typically resolve to compromised computers that reside in different locations. The attackers typically use domains that map to multiple IP addresses, and IPs might be shared across different domains.
-\begin{itemize}[noitemsep]
-\item the number of different IP addresses that are resolved for a given domain during the experiment window
-\item the number of different countries that these IP addresses are located in
-\item the reverse DNS query results of the returned IP addresses
-\item the number of distinct domains that share the IP addresses that resolve to the given domain (false positive can be reduced with google reverse DNS which will have hosting providers in top answers)
-\end{itemize}
-\paragraph{TTL value based}
-Low TTL and Round-Robin DNS: \\
-\begin{itemize}[noitemsep]
-\item high availability (Content Delivery Networks (CDNs))
-\item botnets using this, makes them resistant to DNS Blacklists(DNSBL) and take downs. Often using Fast-Flux Service Networks (FFSN).
-\end{itemize}
-Because FFSN are usually detectable because of low TTL and growing list of distinct IP addresses for a domain, it explains the purpose of the TTL features.
-\paragraph{Domain name based}
-Finally 2 simple features to expect detection of DGA: there is a big difference between legit domain names and domains generated by DGAs(Domain Generation Algorithms(DGAs).\\
-This can be noticed with 2 simple features:\\
-\begin{itemize}[noitemsep]
-\item ratio numerical chars to length of domain name
-\item length of the longest meaningful substring to length of domain name
-\end{itemize}
-
-
-
-%Number of resolved IPs.
-%Number of domains
-%Avg. TTL per domain
-%Number of domains per network
-%IP diversity
-%IP Growth Ratio
-%IP Last Growth Ratio 
-%IP Prefixes Last Growth Ratio
-
-
-
-
+\\\\Same as with Exposure, we removed the time-based features.\\\\
+\begin{tabular}{|l|}
+\hline
+LMS\\
+\hline
+Nb of numerical / character\\
+\hline
+Ngram\\
+\hline
+DBForwardBackwardSimilarity (FBS)\\
+\hline
+DBDialup\\
+\hline
+Nb distinct IP addresses\\
+\hline
+Nb distinct Countries\\
+\hline
+Nb distinct Domain Share IP\\
+\hline
+NXDomain\\
+\hline
+MXRecordPresent\\
+\hline
+SOA (min, exp, refresh, retry)\\
+\hline
+TXTRecordLength\\
+\hline
+Nb distinct AS\\
+\hline
+Reputation AS\\
+\hline
+Size of AS\\
+\hline
+Average TTL\\
+\hline
+Nb distinct TTL values\\
+\hline
+Nb TTL changes\\
+\hline
+\% usage of TTL ranges\\
+\hline
+Std deviation TTL\\
+\hline
+\end{tabular}
 
 \subsection{Features analysis}
-PCA LDA ...
-
+As explained before, it would be great if we could use all these features together to create the classifier but that would introduce a lot of different questions. If all features aren't independent, this would introduce a bias towards that group of features giving them more weight. It also would make testing and computing of features extremely costly and long. For this reason, it is important to select a subset of the features proposed and introduce strong features. This can be done through statistical analysis of the features behavior with the different classes, it can also be done visually, this can provide a good idea of features that do not bring relevant information to the problem. %This is an important step because it argues the use of each feature and makes their selection a lot more relevant than what theory shows regarding a problem, in our case the detection of botnets.
 \subsection{Features discussion}
-\section{Features selection for All-in solution}
-\subsection{Feature optimization cycle (adding/removing features, changing or modifying thresholds )}
-\section{Comparison of the results}
+We realized during our work that a lot of these feature we complicated to obtain or the datasets we were working with didn't show any evidence of that feature being relevant due to the technique not being present in the dataset. This selection resulted of an manual analysis of the features against the dataset. This could be improved using automated techniques and testing out more feature selection tools.
+\section{Features selection}
+In the current status of feature analysis our selection of features is the following:
+\begin{tabular}{|l|}
+\hline
+In Alexa top 1 million\\
+\hline
+In Blacklist\\
+\hline
+Nb unique IP addresses\\
+\hline
+Nb domains sharing IPs\\
+\hline
+Nb unique Countries\\
+\hline
+Nb unique ASNs\\
+\hline
+Nb different IP ranges\\
+\hline
+Nb distinct TTLs\\
+\hline
+Ratios of TTL ranges\\
+\hline
+Standard deviation TTLs\\
+\hline
+Average TTLs\\
+\hline
+Length of FQDN but TLD\\
+\hline
+Nb vowels 2LD\\
+\hline
+Nb consonants 2LD\\
+\hline
+Nb digits 2LD\\
+\hline
+Tri-gram entropy 2LD\\
+\hline
+Tri-gram conditional probability 2LD\\
+\hline
+LMS Ratio\\
+\hline
+\end{tabular}

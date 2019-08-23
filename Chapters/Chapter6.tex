@@ -1,20 +1,24 @@
-% Chapter 1
-
 \chapter{Conclusion} % Main chapter title
-
 \label{Conclusion} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+In this project, we realized an experiment to provide smaller environments with the capabilities of solutions such as Exposure. We did so by removing the complicated features from Exposure and tried to find other sets of feature to improve the solution. In addition to providing new features, we also tested other machine learning algorithms such as XGBoost and did a wide testing of scalers and hyper-parameters.\\
+\\
+Unfortunately, the results obtained didn't reach the expected results from Exposure solution, and even if we obtain results in the lower end of the 90\% range, those results are considered very low when it comes to supervised malicious traffic classification because the FP rate will generate a huge amount of alerts and result in too much noise for analysts.\\
+\\
 
-\section{This will depend on results}
-\section{Advantages of solution}
-\section{Limitations}
-LOOK AT EXPOSURE (chapter 9
-
-look at beginning of chapter 3
 \section{Improvements propositions}
-TODO: use z-thesis to inspire ourselves on how to formulate and ideas to propose.
-Also use laurent's work as an inspiration for future improvements.
-
-Use a better datasets such as the one provided by ISC SIE (caida.org)
-
-Another improvement could be the pipeline with 5 classifiers following each other with each one of it trained specifically on 1 DNS evasion technique. The experiment would be to compare the efficiency and comprehension of the results provided by both architectures.
-\section{Welcome and Thank You}
+We realized that the detection of botnet traffic is very complicated and to hope catch all types of evasion techniques, a combined approach might not be the best solution. But that anomaly detection techniques that are given the right features and that create a really good baseline for normal traffic could be a better approach.\\
+\\
+Another approach that we considered but didn't test is a special architecture for botnet detection: Training 4 classifiers based each on a single evasion technique. This could provide a better detection of the individuals techniques and because they are piped after each other, malicious traffic would have a harder time not being detected.\\
+\\
+The feature selection process and the interpretation of the models in the project haven't been exploited enough, to obtain better results a reduction of features using PCA or selecting the best features would have provided with some improvement and an understanding to our results.\\
+\\
+Using larger datasets such as the ones provided by ISC SIE (caida.org) with additional manual labeling could be an option as well\\
+\\
+Another improvement could be the pipeline with 5 classifiers following each other with each one of it trained specifically on 1 DNS evasion technique. The experiment would be to compare the efficiency and comprehension of the results provided by both architectures.\\
+\\
+Use better hardware such as hydra to test out more options and algorithms. (SVM, xgboost, knn)
+The reason those algorithms took long is because we tried them under a lot of different scaling techniques and optimizing their hyper-parameters.\\
+\\
+Improve the labeling of datasets used going through a manual review, this would ensure that the final results are focused on the detection of the channel communication part of the infection and not on the rest. Our goal was able to improve the detection of botnets.
+\\
+Trying an anomaly detection approach instead, this would reduce  lot of problems related to normal traffic seen from the botnets and focus on the parts that are unusual and which make botnets discoverable through DNS analysis. 

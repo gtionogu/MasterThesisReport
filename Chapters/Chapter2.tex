@@ -6,30 +6,27 @@
 
 In this chapter, we will define all the concepts that are needed to understand and follow our experiment. We will start with an extensive review of botnets, the DNS protocol, the abuses of the DNS protocol, this will be followed with explanation of the different concepts in machine learning present during our experiment, and finally we will end the state of the art by presenting the solutions we have used as baseline to our project and what papers we have used to improve them. 
 \section{Botnets}
-As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage \cite{survey1}\cite{survey2}.
-Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat \cite{report1}.\\
+As stated in the introduction botnets are an important problem for anyone involved somehow with the internet. They can result in great economic damage \cite{survey1}.
+Especially with their continuous improvement to become more resilient and powerful which makes them an even more important threat.\\
 \\
 Botnets can become very lucrative and can infect very large amount of devices resulting in scary tool \cite{pheonix}. Here are some examples of the magnitude they can reach: \textbf{Flashback} with 600k compromised targets, \textbf{Grum} with 840k compromised devices and sending 40 Billion spam emails per month, \textbf{TDL-4} with 4.5 Million victims in first the 3 months and \textbf{Gameover ZeuS} with 1 Million infections, because of its resilience mechanisms this botnet was one of the hardest to take down.\\
 \\
-The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavors criminals bring to the market\cite{survey2}.
+The reason botnets are still an ongoing research topic is that there isn't a complete solution for their detection and mitigation. Researchers and organisations have to keep working to keep updated with all the new flavors criminals bring to the market.
 \subsection{Definition}
-\paragraph{What is a botnet?} A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible\cite{detection1}. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, exfiltrate data and more actions explained down below\cite{survey3}\cite{honeynet}.
+\paragraph{What is a botnet?} A botnet is a network of infected machines with programs called bots, these bots owned and controlled by a remote attacker called the botmaster. Users get infected via the same vector attacks used by malware, email attachment, malicious website, unaware download, etc. When bots usually infect these machines in stealthy manner, staying as unnoticeable as possible\cite{detection1}. The control of such bots is done through the Command and Control (CnC) server. The CnC server allows the master to issue commands to and receives responses from individual bots or aggregations of bots. These exchanges are done to update the software of the malware, execute attacks, ex-filtrate data and more actions explained down below\cite{survey3}\cite{honeynet}.
 
-\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. The paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both\cite{tracking}. \\
+\paragraph{What is a bot?} Bots are small programs allowing to remotely control and perform commands on computers. They are the foundation of botnets. The paper presented by the SANS institute considers two types of bots. Bots used to perpetuate attacks, bots used for their content and both. \\
 A clear distinction between a bot agent and a common piece of malware lies within a bot's ability to communicate with a Command-and-Control (CnC) infrastructure. CnC allows a bot agent to receive new instructions and malicious capabilities, as dictated by a remote criminal entity. This compromised host then can be used as an unwilling participant in Internet crime as soon as it is linked into a botnet via that same CnC.\\
 These programs are embedded with port scanning, vulnerability scanning, exploitation kits and payloads that allow them to spread the botnet and infect their victims\cite{bot-com}.\\
 There are many different families of bots, some very modular such as the Agobot others less complete but easier to use such as the SDBot family. Bots families are also classified depending on the channel type and attack type, for example GT-Bots are a IRC bots but there are a lot of different protocols exploited as botnets channels. These 3 families are the most often found. Lesser usual ones have specific functions or plugins to fill in the gaps left by developers to customize the bots, a good examples would be the Dataspy Network X bots. There are very small bots such as the Q8 Bots and Perl-based bots that still allow for a large range of commands and attacks. Finally some bots are composed of a single file like Kaiten bot which makes it very easy to upload to compromised machines.
 
-\paragraph{Why do botnets provide more powerful attacks?} Botnets give the control to the botmaster of two critical resources: CPU (processing power) and IP addresses (anonymity). Even if the use of CPU stays low on the infected machines, the aggregate of bots can provide power equivalent to supercomputers with the additional perk of executing traffic from different addresses instead of a single IP\cite{survey4}.
+\paragraph{Why do botnets provide more powerful attacks?} Botnets give the control to the botmaster of two critical resources: CPU (processing power) and IP addresses (anonymity). Even if the use of CPU stays low on the infected machines, the aggregate of bots can provide power equivalent to supercomputers with the additional perk of executing traffic from different addresses instead of a single IP \cite{survey4}.
 
-\paragraph{What is the purpose of botnets?} All these resources make botnets very powerful to execute network attacks\cite{bot-intro}. Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed\cite{honeynet2}.
+\paragraph{What is the purpose of botnets?} All these resources make botnets very powerful to execute network attacks \cite{bot-intro}. Cybercriminals use botnets to execute a long list of malicious activities and structure related actions, we have listed some of these but any type of cyber attack can be uploaded to these bots and executed \cite{honeynet2}.
 
+\paragraph{What are the advances in botnets?} Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularized botnets are sold to anyone, this has made them an even bigger threat that they already were \cite{survey5}.
+This BaaS is possible with decentralized architectures that can subdivided into smaller botnets to sold and then reintegrated to the parent botnet after use.
 
-\paragraph{What are the advances in botnets?} Another reason botnets are a big threat is that criminals have started to provide botnets as a Service (BaaS) which are considered a big part of the botnet economy. This popularized botnets are sold to anyone, this has made them an even bigger threat that they already were\cite{survey5}.
-This BaaS is possible with decentralized architectures that can subdivided into smaller botnets to sold and then reintegrated to the parent botnet after use\cite{tracking}.
-
-
-\cite{memoire1}
 \paragraph{What types of actions are performed by botnets?} A victim host could be infected by targeting known vulnerability or by infected programs. When the victim is infected, the botnet will try to stay stealthy and with the exploit kit installed, it can do an extensive amount of damage. Here are some of the methods to control the infected hosts.\\
 This first list presents general use of botnets:
 \begin{itemize}[noitemsep]
@@ -60,19 +57,19 @@ This second list targets activities of bots on the compromised machines to take 
 \end{itemize}
 
 \subsection{Life cycle}
-\paragraph{What are the steps that make up a botnet life cycle?} Life cycle execution might differ from one bot to another but they have generally a common structure. Here is the common structure presented in these surveys: \cite{survey2} \cite{survey7} \cite{survey8} \cite{survey9}.
+\paragraph{What are the steps that make up a botnet life cycle?} Life cycle execution might differ from one bot to another but they have generally a common structure. Here is the common structure \cite{survey7} \cite{survey8} \cite{survey9} presented in these surveys: 
 \begin{enumerate}
-\item \textbf{Exploitation} The first phase is the infection of the host. The bots gets access to the victim host through different possible vectors (email attachment, vulnerability scanning and exploit, obtained credentials, malicious site, ...). The next step of this phase consists on uploading to the host the binary of the bot \cite{bot-appr}.
-The bot connects to a server of the botmaster and downloads it. This step is very important for this thesis because it is the first DNS lookup the bot will perform and it has been noticed as the most consistent behavior of bots. This is where the bots are going to start to hide their DNS activity.
-\cite{detection2}
+\item \textbf{Exploitation} The first phase is the infection of the host. The bots gets access to the victim host through different possible vectors (email attachment, vulnerability scanning and exploit, obtained credentials, malicious site, ...). The next step of this phase consists on uploading to the host the binary of the bot.
+The bot connects to a server of the botmaster and downloads it. This step is very important for this thesis because it is the first DNS lookup the bot will perform and it has been noticed as the most consistent behavior of bots. This is where the bots are going to start to hide their DNS activity \cite{detection2}
 \cite{detection3}
 \cite{inside-bot}
-\cite{detection4}
-\item \textbf{Rallying} This is the phase where the bots will establish the link with the botmaster command and control servers (CnC), join the botnet and wait for instructions. When establishing the connection with the botmaster bots have to use stealth techniques to avoid getting discovered and more importantly revealing the CnC. These techniques will be discussed in the Misuses and abuses of DNS.
-\cite{detection5}
-\cite{detection6} 
-\item \textbf{Attack/execution} From this point on the bot is ready to get the orders from the botmaster and start executing actions. This is where the different actions defined above are executed by the botnet.
-\cite{survey10} 
+\cite{detection4}.
+
+\item \textbf{Rallying} This is the phase where the bots will establish the link with the botmaster command and control servers (CnC), join the botnet and wait for instructions. When establishing the connection with the botmaster bots have to use stealth techniques to avoid getting discovered and more importantly revealing the CnC. These techniques will be discussed in the Misuses and abuses of DNS \cite{detection5}
+\cite{detection6}.
+ 
+\item \textbf{Attack/execution} From this point on the bot is ready to get the orders from the botmaster and start executing actions. This is where the different actions defined above are executed by the botnet \cite{survey10}.
+ 
 \item \textbf{Update and maintenance}
 This phase allows the botmaster to update periodically the software of the bots, new exploits, new attacks, the same way administrators patch their software. This final phase is a loop that goes back to the second phase where the bot contacts the CnC server to proceed to this binary upload and commands fetching. This is the second phase where the DNS request will use evasion techniques to stay hidden.
 \cite{detection7}
@@ -144,16 +141,25 @@ CnC topologies encountered in the wild typically match one of the following type
 \paragraph{Star}
 The Star topology relies upon a single centralized CnC server to communicate with the rest of the botnet. Each bot agent is issued new instructions directly from the central CnC point\cite{bot-com}. When a bot agent compromises a new victim, it is configured to reach its central CnC, where it will register itself as a botnet member and await for new instructions. The main problem with this topology is the single point of failure that constitutes the CnC server \cite{bot-intro}.
 
+\includegraphics[scale=0.9]{img/pers_star.png}
+
 \paragraph{Multi-server}
 Multi-server is the logical follow up of the star topology, it is the combination of star CnC botnets joined together with the CnC servers connected to eachother. This is close to what is done in cluster database management with multiple servers deployed for load balancing and data replication. This ensures that if a CnC server is removed from the botnet, the other CnC servers will take its load and manage the bots that were connected to it. This topology is more complicated to setup, botmasters can even add a geographical component by having these CnC servers in the countries with bots deployed to improve speed and improve resistance to legal shutdowns.
+
+
+\includegraphics[scale=.7]{img/pers_multi_star.png}
 
 \paragraph{Hierarchical}
 Hierarchical topology is a tree based structure where any part of the tree can be used as a botnet on its own. In this topology, bots can proxy the CnC commands and instructions to the rest of the tree. Another interesting aspect of this architecture is that bots do not know the location of the rest of the botnet. They are aware of parts of it. This allows makes it harder to take down the botnet and allows to segment it for selling or leasing. The downside of it is the latency of the botnet introduced by its branching rendering certain attacks difficult.
 
+\includegraphics[scale=0.8]{img/pers_tree.png}
+
 \paragraph{Random - P2P}
 This structure is decentralized and is composed of dynamic master-slaves or P2P relationships. Any bot can be used as CnC by the botmaster and relay them to the rest of the bots. To be told apart from the other traffic going through the botnet, traffic with commands will have a specific identification as a signature. This topology is very hard to take down because any node can be used as CnC, it also hard to hijack because there isn't a central structure and communications between nodes don't always use the same paths. The weakness of this topology is that it can reveal a lot of information about the botnet by simply monitoring a infected node and its communications with external hosts.
 
-\paragraph{What design to pick ?} Here is a summary of the features taken into account when creating a botnet.\\
+\includegraphics[scale=.7]{img/pers_p2p.png}
+
+\paragraph{What design to pick ?} Here is a summary \cite{phoenix} of the features taken into account when creating a botnet.\\
 \begin{tabular}{|p{7cm}|p{7cm}|}
 \hline
 Pros & Cons \\
@@ -187,11 +193,9 @@ The decentralized infrastructure and the many-to-many communication links betwee
 \hline
 \end{tabular}
 
-IMAGE topologies (cf folder)
-
 \newpage
 
-\cite{phoenix}
+
 \section{Uses and abuses of DNS protocol}
 The latest trend of botnet hide their channel through the DNS protocol. They use it to hinder their identification and rallying process \cite{survey2}.\\
 
@@ -207,12 +211,12 @@ The server replies with a DNS response that contains the "answer" requested or a
 The idea behind the protocol was to provide a human readable domain name to servers. That way humans could identify these domains and associate them with something concrete. The protocol simply looks for the server with the lookup table transforming them into machine readable addresses \cite{dns1}.
 
 
-\paragraph{Example of the DNS protocol \cite{dns2}\cite{dns3}} This will later help us understand the abuses of the protocol .\\
+\paragraph{Example of the DNS protocol} This will later help us understand the abuses of the protocol \cite{dns2}\cite{dns3}.\\\\
 When a client (user or device) tries to reach mail.google.com it sends a DNS request for that domain name from a \textbf{DNS client}.\\
 The \textbf{DNS server} defined by the client receives the request and searches for it in its records. If it finds it then it sends the IP address to the DNS client. Otherwise, it will contact DNS name servers that could have the domain in their records following a specific logic in its search.\\
 It will start by querying the \textbf{Root DNS servers} that will give it directions through the branches of the DNS tree hierarchy to the \textbf{Top Level Domains} DNS servers(TLD). It will first look for the TLDs resolving .com, then the name server that resolves google.com, down to the name server that will resolve mail.google.com to its IP address. The DNS server that received the first request will receive the response and send it to the client finally.\\
 Finally, the client can now connect to the server using the resolved IP address.\\
-TODO: DIAGRAM 
+
 
 \paragraph{Structure of the DNS packets?} To understand how the protocol is exploited we need to dive into the specifics of the packet structure.
 
@@ -232,7 +236,7 @@ TODO: DIAGRAM
     +---------------------+
 
 \end{verbatim}
-The format of a DNS message is the same for a request or a response but parts of the message will be filled differently. In the request, the client will fill the \textbf{Question section} with the information that needs to be resolved:
+The format of a DNS message is the same for a request or a response but parts of the message will be filled differently. In the request, the client will fill the \textbf{Question section} with the information that needs to be resolved \cite{dns4} :
 \begin{verbatim}
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
@@ -252,15 +256,14 @@ value & explanation\\
 \hline
 q\_name  & Domain name requested (domain to be asked) \\
 \hline
-q\_type  & Type of RR record requested (A,AAAA,CNAME,MX,NS,PTR,...) \\
+q\_type  & Type of RR record requested \\
 \hline
 q\_class & Class of the request (often IN for internet) \\
 \hline
 \end{tabular}
 
-\cite{dns4}
-The server will respond by filling the \textbf{Answer section}: \\
-\cite{dns5}
+.\\The server will respond by filling the \textbf{Answer section} \cite{dns5}:\\
+
 \begin{verbatim}
                                     1  1  1  1  1  1
       0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
@@ -285,8 +288,7 @@ The server will respond by filling the \textbf{Answer section}: \\
 \end{verbatim}
 
 The important parts are the TTL (Time To Live) and the RDATA. TTL contains the span of time for which the Answer is valid, RDATA contains the answer to the RR requested.\\
-\cite{dns6}
-Here is a list of the main RR types and what they query.\\
+Here is a list of the main RR types\cite{dns6} and what they query.\\
 \begin{itemize}[noitemsep]
 \item \textbf{A or AAAA}: translation of a hostname into an IP address (IPv4 or IPv6).\\
 \item \textbf{MX}: information regarding the mail servers of the domain queried (ex: DNS request for google.com with RR$=$MX could return mail.google.com) \\
@@ -306,22 +308,21 @@ Looking up through DNS requests the CnC servers is an essential part in the life
 Because of the growth of the internet, content providers have built complex infrastructures. Their goal is to sustain the load of the traffic and provide the best services. Some of the things implemented are load balancers, data fail-over, high availability through replication , security with end-to-end encryption, etc. To do so, they can use DNS features that allow to manage this type of architectures effectively. These features have inspired malicious actors with the following misuses: fast-flux, domain flux and DNS tunneling.
 
 \subsubsection{Domain flux}
-Domain-flux is a type of DNS feature that allows multiple domains to point towards the same IP address, making it hard to blacklist the domains related to the botnet. Bots are equipped with a special Domain Generation Algorithm (DGA). This is used to generate an ensemble of domains from which it will try to contact to received the next update. The idea behind generating such a big amount of domains is to register the domains that will come at a particular time and only register them exactly when they want to update the botnet and do it for a certain amount of time. The botmaster knows which domains are generated at a particular point in time since that is the seed of the algorithm and can register them before they are queried, that way they control when botnets can reach their CnC. This also improves the resilience of botnets infrastructure.
+Domain-flux is a type of DNS feature that allows multiple domains to point towards the same IP address, making it hard to blacklist the domains related to the botnet. Bots are equipped with a special Domain Generation Algorithm (DGA). This is used to generate an ensemble of domains from which it will try to contact to received the next update. The idea behind generating such a big amount of domains is to register the domains that will come at a particular time and only register them exactly when they want to update the botnet and do it for a certain amount of time. The botmaster knows which domains are generated at a particular point in time since that is the seed of the algorithm and can register them before they are queried, that way they control when botnets can reach their CnC. This also improves the resilience of botnets infrastructure \cite{bot-com}.
 
-IMAGE: ADD picture explaining dga
+%\includegraphics[scale=.3]{img/domain_flux.png}
 
-\cite{bot-com}
-\paragraph{There are the 2 techniques used to achieve domain fluxing}
+\paragraph{There are the 2 techniques used to achieve domain fluxing} 
 \begin{itemize}[noitemsep]
-\item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. A rule defined by "*.example.com" would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarding is typical for phishing and spamming botnets. It allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the different nodes (china01.example.com, china02.example.com).\cite{fqdn}
+\item \textbf{Domain Wildcarding} abuses the wilcarding capabilities of the DNS protocol. This can create rules that make all Fully Qualified Domain Names (FQDN) point to the same IP address. A rule defined by "*.example.com" would group all FQDN under that scope (mail.example.com, service.example.com, 123.example.com). DNS wildcarding is typical for phishing and spamming botnets. It allows to bypass some of the anti-spam defenses and even to use the wilcard argument as information to identify the different nodes (china01.example.com, china02.example.com) \cite{fqdn}.
 \item \textbf{Domain Generation Algorithms(DGA)} is the latest technology used by botnets for domain flux. It consists of algorithms that generate pseudo-random domain names based on a seed (this is the changing factor in the algorithm, ex: current time) chosen by the botmaster. This creates a list of FQDN that change constantly. Bots will try to reach all of the FQDN generated and when the botmaster wants to communicate with them, he will simply compute a couple of future FQDN and register them for his CnC servers to make them reachable by the bots and send the next instructions or updates. Since these domains only last a short amount of time, it becomes very complicated to block all of the possible generated domains through blacklisting or find the C2C servers.\\
-In this github repository\cite{dga1}, they have compiled some examples of DGA used by famous botnets. As expected, the algorithms have 2 main functions, one that gets the seed (from input to the algorithm or using dynamic values such as date and time), the second is the domain generation, which will usually choose a TLD and then appends the result obtained from the random function with the dynamic seed.
+In this github repository \cite{dga1}, they have compiled some examples of DGA used by famous botnets. As expected, the algorithms have 2 main functions, one that gets the seed (from input to the algorithm or using dynamic values such as date and time), the second is the domain generation, which will usually choose a TLD and then appends the result obtained from the random function with the dynamic seed.
 \end{itemize}
 
 \subsubsection{IP flux}
-\paragraph{What is the concept of IP/Fast-flux networks?} IP-flux does the following: associate a certain number of IP addresses to a single FQDN. When sending a request to for the FQDN, one of these addresses is picked using the round-robin algorithm. This technique is normally used for load distribution, load balancing or fault-tolerance. All these addresses potentially host the identical servers, round-robin simply decides on the order it will present them when a request is made for the FQDN. The purpose was to enable IP-fluxing for Content Delivery Networks(CDN) to be able to point customers towards other nodes in the network to obtain the content sought.\cite{robin_dns} Round-robin divides time into small periods and presents equal blocks of these addresses in a circular order, it doesn't provide priority for any of the blocks of addresses or specific addresses.\cite{robin}\\
+\paragraph{What is the concept of IP/Fast-flux networks?} IP-flux does the following: associate a certain number of IP addresses to a single FQDN. When sending a request to for the FQDN, one of these addresses is picked using the round-robin algorithm. This technique is normally used for load distribution, load balancing or fault-tolerance. All these addresses potentially host the identical servers, round-robin simply decides on the order it will present them when a request is made for the FQDN. The purpose was to enable IP-fluxing for Content Delivery Networks(CDN) to be able to point customers towards other nodes in the network to obtain the content sought. Round-robin \cite{robin-dns} divides time into small periods and presents equal blocks of these addresses in a circular order, it doesn't provide priority for any of the blocks of addresses or specific addresses \cite{robin}.\\
 
-IMAGE: IP flux
+\includegraphics[scale=.6]{img/pers_ff.png}
 
 \paragraph{How do botnets exploit this feature ?}
 Fast-Flux is mostly used by botmasters to hide a malicious network behind a large amount of dynamic proxies(flux-agents).\cite{ff1} When a bot tries to connect with the CnC his request to the FQDN goes through a DNS server that returns one of these proxies which is picked from an immense list of rotating addresses. After that, the flux-agent relays the client's request to the mothership.\cite{wiki_ff} Behind the curtain of redirections created by the network of proxies, botmasters use it to distribute updates or host malicious content. They key elements for FFSN strength are very short TTLs and the round-robin answer from a large list of agents\cite{hybrid}\cite{tracking2}.
@@ -336,45 +337,41 @@ The power of FFSN is allowing one domain name to have an unlimited number of IP 
 \item \textbf{Double-flux}: Multiple name servers are assigned to the same domain and then use single-flux for the multiple IP addresses of the master. This provides a second layer of redundancy. This also means that the TTLs are short for the A records and the NS records too.
 \end{itemize}
 
-IMAGE replace these below by own pictures
 
-Normal FF\cite{survey6}\\
-\includegraphics[scale=.7]{img/normal_FF.jpg}
-single flux\\
-\includegraphics[scale=.7]{img/single_FF.jpg}
-double flux\\
-\includegraphics[scale=.7]{img/double_FF.jpg}
+%IMAGE replace these below by own pictures
+
+%Normal FF\cite{survey6}\\
+%\includegraphics[scale=.7]{img/normal_FF.jpg}
+%single flux\\
+%\includegraphics[scale=.7]{img/single_FF.jpg}
+%double flux\\
+%\includegraphics[scale=.7]{img/double_FF.jpg}
 
 
-ADD IMAGE HERE:
-\cite{ff_visual}
-\cite{ff2_visual}
+%ADD IMAGE HERE:
+%\cite{ff_visual}
+%\cite{ff2_visual}
 
 
 
 \subsubsection{DNS tunneling}
-DNS tunneling is a technique used to bypass restriction on a protocol or hide certain activity by embedding it in the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected \cite{Botnet1} while exfiltrating data. The only positive aspect about this abuse is that there are almost no legitimate reasons for this application as we saw with fast-flux, this makes obvious malicious behavior stands behind if this type of traffic is discovered.\cite{tunneling}
+DNS tunneling is a technique used to bypass restriction on a protocol or hide certain activity by embedding it in the DNS protocol. For example using the TXT  as q\_type or the subdomain itself to actually carry encoded data (i.e bWFsd2FyZQ.maliciousdomain.com, where bWFsd2FyZQ is encoded text). Usually, the payload will be fragmented to avoid unusual long domains or packets. This has been done to avoid restrictions but botnets also use it to hide malicious traffic or payloads. They can also use DNS tunneling to remain undetected \cite{Botnet1} while ex-filtrating data. The only positive aspect about this abuse is that there are almost no legitimate reasons for this application as we saw with fast-flux, this makes obvious malicious behavior stands behind if this type of traffic is discovered \cite{tunneling}.
 \\
-Paloalto's research unit provided a nice overview of the DNS tunneling practices\cite{tunneling2}. They explain how the protocol can be used either to exfiltrate or infiltrate data with infected machines. They show how different parts of the protocol can be exploited. They divided the botnet traffic using dns tunneling into 3 types: heartbeat, exfiltration and infiltration. A heartbeat will be a simple query for an A record met with a NXDOMAIN response. An exfiltration can only use the query to send data therefore, it is usually fragmented through multiple A queries with the data embedded in the query as mentioned above. A big problem remains that because DNS uses UDP it can't rely on the same assurances provided by TCP. And finally infiltration, this usecase has a lot limitations then the exfiltration because it can hide the encoded data in the values of the records such as the TXT record. It has the same problem as the exfiltration which it can't rely on the protocol to ensure the data is correctly arrived.
+Paloalto's research unit provided a nice overview of the DNS tunneling practices\cite{tunneling2}. They explain how the protocol can be used either to ex-filtrate or infiltrate data with infected machines. They show how different parts of the protocol can be exploited. They divided the botnet traffic using dns tunneling into 3 types: heartbeat, ex-filtration and infiltration. A heartbeat will be a simple query for an A record met with a NXDOMAIN response. An ex-filtration can only use the query to send data therefore, it is usually fragmented through multiple A queries with the data embedded in the query as mentioned above. A big problem remains that because DNS uses UDP it can't rely on the same assurances provided by TCP. And finally infiltration, this use case has a lot limitations then the ex-filtration because it can hide the encoded data in the values of the records such as the TXT record. It has the same problem as the ex-filtration which it can't rely on the protocol to ensure the data is correctly arrived.
 An interesting question they ask is how does the bot know when to ask for a TXT record instead of a A record. An they use a lot of different options but the most common one is the following: the malicious DNS server will respond with a NOERROR response when it is ready to provide the next payload and that is how the bot will change its next query for a TXT record.
 
 
-\includegraphics[scale=.8]{img/pers_tunn.png}
+%\includegraphics[scale=.6]{img/pers_tunn.png}
 
 
 \subsubsection{Domain shadowing}
 The last abuse of DNS which has been recently detected, used by botnets as a communication channel is DNS shadowing. DNS shadowing is an abuse obtain by stealing account credentials from legitimate domains for the purpose of creating subdomains aimed at malicious servers. This provides criminals with a great amount of subdomains that inherit their parent's domain reputation. This allows to bypass a lot of features based on reputation and 2LD.
+\\
 Malicious actors cycle through the creation of subdomains which they delete shortly after, similar to the fast-flux rotation behavior.
 \\
-The reason this type of activity spawned is due to IDS using detection based on reputation scores for the domain names flagging domain fluxing and fast-fluxing making it complicated for botmasters to use those evasion systems as much. Malicious actors realized they could bypassed most detection systems by using the reputation of legitimate domains and that is when they started campaigns to harvest this specific type of credentials.
-
-\cite{review2}\cite{detection8}
-TODO: clean 
-In particular, the bad actors harvested a large amount of credentials of domain owners (e.g., through phishing emails or brute-force guessing) and logged into their accounts to create subdomains. This technique is called domain shadowing, and such subdomains are called shadowed domains. The malicious subdomains inherit the reputation of legitimate apex domain.
-\cite{shadowing2}
-\cite{shadowing3}
-\cite{shadowing4}
-\cite{shadowing5}
+The reason this type of activity spawned is due to IDS using detection based on reputation scores for the domain names flagging domain fluxing and fast-fluxing making it complicated for botmasters to use those evasion systems as much. Malicious actors realized they could bypassed most detection systems by using the reputation of legitimate domains and that is when they started campaigns to harvest this specific type of credentials\cite{shadowing2}\cite{shadowing3}.\\
+\\
+In particular, the bad actors harvested a large amount of credentials of domain owners\cite{review2}\cite{detection8} (e.g., through phishing emails or brute-force guessing) and logged into their accounts to create subdomains. This technique is called domain shadowing, and such subdomains are called shadowed domains. The malicious subdomains inherit the reputation of legitimate apex domain\cite{shadowing4}\cite{shadowing5}.
 
 \section{Machine learning approach}
 We use machine learning in our thesis to create models around certain behaviors botnets show to help us distinguish them from the legitimate traffic. The next sections will detail what machine learning is, how it works and its implementation in the thesis.
@@ -386,7 +383,9 @@ Machine learning (ML) is a mathematical study of algorithms and statistics that 
 The goal of botnet detection is to distinguish between 2 classes of traffic: normal and malicious. We are interested in one of the tasks that machine learning algorithms excel at which is classification. After training the models, called classifiers, they are able to assign classes to any new data.
 
 \subsection{Machine Learning workflow}
-Machine learning has a specific pipeline that needs to be followed to obtain the best results\cite{ml-workflow}: Gathering the data, selecting the features, extracting the features, choosing the right classifier, training and testing the model, and finally, assessing the prediction capabilities of the model. Each step is explained below and its implementation will be detailed in the experiment chapter \label{experiment}.
+Machine learning has a specific pipeline that needs to be followed to obtain the best results \cite{ml-workflow}: Gathering the data, selecting the features, extracting the features, choosing the right classifier, training and testing the model, and finally, assessing the prediction capabilities of the model. Each step is explained below and its implementation will be detailed in the experiment chapter.
+
+\includegraphics[scale=.3]{img/ML_workflow.png}
 
 \subsubsection{Data gathering} The machine learning algorithms need to be fed data that has information about the problem. We need data that will be able to shape and create the model. In our case, we searched for captures of DNS traffic available publicly to study botnets, preferably labeled data as malicious or botnet. This labeling is essential for the learning stage. Another step which is important when creating the dataset is to balance it out correctly between the 2 labels. If there is an imbalance, the label with the greater presence in the dataset will influence the model excessively and poorly train it. The dataset research will be detailed in \label{datasetchapter}.
 
@@ -432,11 +431,11 @@ These categories are based on the training data given to the algorithms. \textbf
 \textbf{Unsupervised algorithms} use unlabeled data as input. This type of algorithm will group data based on similar values for different features.
 Semi-supervised algorithms is the combination of both, where the training data is partially labeled. This is very useful for datasets where there is only partial labelisation available.
 \\
-\includegraphics[scale=.3]{img/supVsUnsup.png}
+\includegraphics[scale=.24]{img/supVsUnsup.png}
 \cite{supvsunsup}
 Now we need to decide what algorithm makes more sense to model the data in accordance to the problem that is being solved. We are trying to solve a detection problem. This  falls into a classification problem where supervised algorithms prevail\cite{supvsunsup2}. To find the best algorithm to model the problem we will test out different algorithms and compare them under the same conditions.\\
 \\
-TODO: decide if we do this?
+
 %Supervised algorithms have been chosen for the modeling part of the problem but unsupervised of algorithms will be used as well for the research of new features in the \textbf{features selection} step.
 
 \subsubsection{Training the models}
@@ -448,12 +447,9 @@ The grid search selects a set of values for each parameter and then runs the tra
 The random search works similarly but instead of trying all the value in the range of the parameter, it randomly picks a subset of combinations. For lower dimensional problems, random search has been proven to perform better.
 \item To validate the performance of the trained models in the least biased manner the machine learning community uses a technique called the k-fold cross validation\cite{10-fold}. For each one of the algorithms, the training set is divided into k random folds(equal subsets). One of the folds is then chosen as the testing fold and the rest as training for the algorithms. The algorithm is trained and tested. We repeat this process k times until all the folds have been used as the testing fold. This provides the best classifier able to generalize the data in the training dataset. It is important to point that for classification problems, we use a variation which is the stratified k-fold cross validation, this technique ensures that through the folds the balance of classes keeps the same proportions. The common value for k is 5 or 10. The results obtained are a realistic and unbiased representation of the model's performance.
 \end{enumerate} 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=.3]{img/K-fold-cross-validation.png}
-\caption{An example graph}
-\label{fig:x cubed graph}
-\end{figure}
+
+\includegraphics[scale=2]{img/K-fold-cross-validation.png}
+
 
 \subsubsection{Testing the model}
 We now have obtained a classifier, we need to see how to performs with our testing set. The process is pretty simple, we take the classifier and give it our testing set as input, it is important to know that the set provided to the classifier are the features only, the testing set given to the classifier isn't labeled. The result is the labeling of the testing set. From this point, we enter the analysis of the results where we compare the resulting labels from the real class they belong to.
@@ -466,19 +462,19 @@ These metrics will help us understand what can be improved and if the direction 
 The last part of the experiment is the interpretation of the results. We want to understand how our classifier works. To do so, we have at our disposal tools such LIME, SHAP, RFs and more that help us understand which features are important and what are the model's behaviors\cite{ml-inter}.
 Those tools will be defined more in depth in the result's chapter, under the interpretation section.
 
-\subsection{How will machine learning be implemented for this Thesis?}
-TODO: Review the need of this section.\\
-A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters, are an important aspect of the experiment. A big part of the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
+%\subsection{How will machine learning be implemented for this Thesis?}
+%TODO: Review the need of this section.\\
+%A big part of the work will be the feature selection. Going through the papers that have already done research on the subject, doing statistical analysis and using unsupervised learning to possibly extract more features and pick the ones we consider most effective. The algorithms used for detection as well as their parameters, are an important aspect of the experiment. A big part of the challenge in machine learning is to find the features with enough strength to create the model and the right settings for the classifiers so the fit the data correctly, it is very easy to fall in the over-fitting or under-fitting problem.
 
 \section{Classification of botnet research and detection}
 In this section, we are going to present the current state of the botnet detection taxonomy and show the weaknesses and strengths of each method. This will be followed by a discussion in the next chapter of the current state of the art when it comes to passive traffic analysis for botnet detection and what we are going to bring to it. 
 
 \subsection{Taxonomy of Botnets}
 \includegraphics[scale=.6]{img/Botnet-detection-taxonomy.png}
-\label(taxonomy)
+
 
 %%%% SYSTEMS
-\subsubsection{Detection systems} In a recent survey, Alieyan et al. \cite{survey1} presented the taxonomy of botnet detection techniques. We will follow down the path of the detection taxonomy until reaching our center of interest. As we can see on the figure \ref{taxonomy}, there are 2 type of systems used for detection: \textbf{Honeypots} and \textbf{Intrusion Detection System} (IDS). Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information from the behavior of the malicious actor on the host. IDS aim at analyzing the network and security logs, and alert the security analysts of any malicious or suspicious traffic. The IDS is divided into 2 techniques. An older one \textbf{based on signatures} and newer one \textbf{based on abnormal behavior}.
+\subsubsection{Detection systems} In a recent survey, Alieyan et al. \cite{survey1} presented the taxonomy of botnet detection techniques. We will follow down the path of the detection taxonomy until reaching our center of interest. As we can see on the figure above, there are 2 type of systems used for detection: \textbf{Honeypots} and \textbf{Intrusion Detection System} (IDS). Honeypots aim at creating an environment specially forged to attract malicious traffic and extract information from the behavior of the malicious actor on the host. IDS aim at analyzing the network and security logs, and alert the security analysts of any malicious or suspicious traffic. The IDS is divided into 2 techniques. An older one \textbf{based on signatures} and newer one \textbf{based on abnormal behavior}.
 
 %%%% IDS
 \subsubsection{A legacy problem} A big trend among companies for a long time and even today was solely use of a signature-based detection in their IDS \cite{detection8}. However, these signatures have shown to be ineffective against bots that are constantly getting updated with new code and new evasion techniques. Furthermore, they are ineffective against any new type of emerging botnet. Signature-based detection is great for known botnets\cite{snort} and should always be implemented in IDS solutions but is insufficient and should always be coupled with other techniques. The recent introduction of other techniques such as abnormal behavior has been mostly motivated by the goal to solve this issue.
@@ -579,7 +575,7 @@ Finally, a couple of simple features to expect detection of DGA: there is a big 
 \item \textbf{Ratio of the length of the LMS}, where LMS stands for longest meaningful string. This consists in finding in the domain name the longest substring which is a meaningful word.\\
 \end{enumerate}
 
-\includegraphics[scale=.7]{img/exposure_all_features.png}
+\includegraphics[scale=.8]{img/exposure_all_features.png}
 
 \subsubsection{Feature selection}
 The feature selection phase highlighted the following: the combination of all the features provided the least error rate, the last 2 categories (TTL and Domain-name based) had high error rates when tested by themselves and the timing-based category had the most weight but also had the most complications in regards to extracting the features because of the non sufficient time points available. \\
@@ -630,11 +626,11 @@ TTL-based & Nb distinct TTL values\\
 & Std deviation TTL\\
 \end{tabular}
 
-\subsubsection{results}
+\subsubsection{Results}
 They decided to test 6 classifiers to find the most optimal for the problem. The algorithms tested were ANN, Bayes, DT(J48), RF, KNN and SVM. The classifiers were trained on 2 different datasets. 
-\paragraph{automatic labeling}
+\paragraph{Automatic labeling}
 This was the raw dataset simply using the blacklists and whitelists for labeling. The results showed that the accuracy(95.2\%) and the false positive rate(around 1\%)were the best for the ANN and the DT.
-\paragraph{semi-manual labeling}
+\paragraph{Semi-manual labeling}
 For the dataset, where the DGA domains underwent an additional labeling process resulting in a batter dataset the results were the following: 95.7\% - 95.9\% accuracy for ANN, RF and DT (J48), and a false positive rate of 0.4\% for the DT, followed closely by 0.6\% for the ANN.
 
 
@@ -646,7 +642,7 @@ The detection rates obtained by Exposure are really good but they are hard to im
 \\
 %improvements
 What we aim to do in our experiment is to provide smaller environments with similar detection capabilities as Exposure. This requires features available at a lower scale. We want to explore other features proposed by the scientific community that could fill that gap and provide with similar results.
-We also notice no features targeting DNS tunneling or DNS shadowing which are 2 techniques that most recent botnets have picked up even more to do channel communication, exfiltration and improving their evasion.\\
+We also notice no features targeting DNS tunneling or DNS shadowing which are 2 techniques that most recent botnets have picked up even more to do channel communication, ex-filtration and improving their evasion.\\
 We think that by combining the best features from both papers with the addition of features aiming at other techniques, will improve the general detection capabilities of newer families of botnets but also provide smaller environments with such detection capabilities.
 
 \subsection{Focused experiments}
@@ -677,10 +673,10 @@ The behavior of IP fluxing has been well analyzed by the community and most pape
 The common features presented by  Salusky et al.\cite{honeynet}, Nazario et al.\cite{ff1}, Perdisci et al.\cite{ff2}, Holz et al.\cite{ff3} and Stalmans et al.\cite{ff_botconf} bring forward the features to detect fast-fluxing in general such as a large amount of unique A RRs for a domains, numerous unique NS for a domain and different Autonomous System (ASN) for the IPs linked to the same domain. \\
 The next papers present additional features to distinguish detection specifically of the FFSN from the CDNs. \\
 \\
-Nazario et al. \cite{ff1} showed visually how the FF traffic features present themselves.
-\includegraphics[scale=.7]{img/ff_features.jpg}\\
+Nazario et al. \cite{ff1} provided a really good visual support to how the FF traffic features present themselves.\\\\
+\includegraphics[scale=.5]{img/ff_features.jpg}\\
 \includegraphics[scale=.6]{img/ff_features_2.png}
-\\
+\\\
 Perdisci et al. \cite{ff2} aimed at improving the Honeynet's features \cite{honeynet}. Their method consisted in collecting recursive DNS logs for a period of time, filter most of the non-fast-fluxing traffic. Secondly, they grouped the domains names using different features such as similar ISPs, same CDN. And finally, they classify, using a Decision Tree algorithm, the clusters of domain names as malicious or legitimate. They used a base of features provided by \cite{fluXOR} and added their own. We used some of the features they presented for our classifiers as well as the traffic volume reduction filters to improve some of the features already on-boarded. \\
 \\
 In the following paper, Holz et al. \cite{ff3} propose some novel features compared to the other papers. They presented the restrictions FFSNs face compared to CDNs: problems such as location and uptime that FFSN can't garantee. From all the features they captured they introduced functions to classify FFSN and CDNs:fluxiness and flux-score. They even considered the possibility of botnets mimicking CDNs but the metrics used already take into account the restrictions FFSN have that can't be avoided. The rest of the study approaches the detection of FFSN using the HTML content returned by the spam websites. We focused our interest in the 2 functions presented in the paper as new features for our classifiers.\\
@@ -696,14 +692,12 @@ In \cite{tunn}, Dietrichyz et al. analyze the use of TXT RR with segmented and e
 \\
 In this article written by G. Farnham \cite{tunn1}, he proposed a visual approach to detecting DNS tunneling, by plotting the set of features proposed, you can detect by "visual anomaly detection" the presence of DNS tunneling in your network. He uses a simple chart where he output the following: 
 \begin{itemize}[noitemsep]
-\item x-axis: destination IP
-\item y-axis: character count
+\item On the x-axis: destination IP
+\item On the y-axis: character count
 \end{itemize}
 He then uses the radius of points to showcase the hostname length and their color to identify the request type. 
-
+\\
 %\url{https://vimeo.com/38727629}
-
-%This last paper \cite{dns-tun}
 
 Born et al. \cite{tunn2} \cite{tunn3} present 2 papers on DNS tunneling detection focused on the n-gram frequency analysis. They also detect tunneling by comparing the distribution of domains to the zipf's law patterns. This paper shows how similar some analysis of dns tunneling are very similar to DGA analysis. This is because some of the encoded data used in the transfers has the same properties. In the second paper they combine a visual and quantitative approach using the same type of features used in the first one.
 
@@ -713,13 +707,13 @@ Research keeps improving their detection capabilities and botmasters are struggl
 Liu et al. \cite{shadowing} are the first to propose an approach against this new trend. They focused on the 3 RR associated with subdomain creation: A, AAAA(IPv6) and CNAME (alias). Their goal is to detect the bulk creation of shadowed domains. They exploit 2 indicators differentiating these subdomains from normal ones: Deviation from legitimate domains under the same apex and correlation amongst shadowed domains under different apex. By apex, we are talking about the compromised domain used for the creation of subdomains.
 
 
-\subsection{Value summary}
-We can see that Exposure is capable of detecting and that Antonakakis proposed 3 solutions to explore .
+%\subsection{Value summary}
+%We can see that Exposure is capable of detecting and that Antonakakis proposed 3 solutions to explore .
 
-\section{Our botnet detection contribution}
-In the first part of the related works, we presented Bilge et al. \cite{exposure} where they propose a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.\\
-\\
-The second part presented very interesting studies and projects that allowed the detection of the different evasion mechanisms using the DNS protocol. They allowed us to extract valuable features and techniques for each mechanism. \\
-\\ 
-TODO: Explain our possible contribution: 
-"lower FPR, stronger features, better applicability of features, different modules"
+%\section{Our botnet detection contribution}
+%In the first part of the related works, we presented Bilge et al. \cite{exposure} where they propose a large-scale system that uses passive DNS monitoring of 15 features to detect malicious activity. The interesting parts of this paper were some of the unusual features proposed among the 4 categories of features presented and their pipeline for the project which we used for inspiration. What we look add to this paper is the low-scale part that is missing, some of the features are only available to ISPs and the idea is to scale it to any company with DNS monitoring capabilities.\\
+%\\
+%The second part presented very interesting studies and projects that allowed the detection of the different evasion mechanisms using the DNS protocol. They allowed us to extract valuable features and techniques for each mechanism. \\
+%\\ 
+%TODO: Explain our possible contribution: 
+%"lower FPR, stronger features, better applicability of features, different modules"

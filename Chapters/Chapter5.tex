@@ -8,10 +8,10 @@ The metrics used to assess the quality of the features are the following:
 \begin{itemize}
 \item Confusion Matrix
 \begin{itemize}
-\item True positives(TP): we predicted "class" and it is "class"
-\item True negatives(TN): we predicted "not class" and it is "not class"
-\item False positives(FP): we predicted "class" and it is "not class"
-\item Fasle negatives(FN): we predicted "not class" and it is "class"
+\item True positives( TP ): we predicted "class" and it is "class"
+\item True negatives( TN ): we predicted "not class" and it is "not class"
+\item False positives( FP ): we predicted "class" and it is "not class"
+\item False negatives( FN ): we predicted "not class" and it is "class"
 \end{itemize}
 \item Accuracy: the proportion of predicted true results (both true positives and true negatives) in the population, that is 
 \begin{equation}
@@ -21,23 +21,63 @@ The metrics used to assess the quality of the features are the following:
  \begin{equation}
 \frac{TP}{TP+FP}
  \end{equation}
-\item Recall (or also Sensitivity): the proportion of real positive cases that are indeed predicted positive, that is 
-\begin{equation}
-\frac{TP}{TP+FN}
-\end{equation}
+%\item Recall (or also Sensitivity): the proportion of real positive cases that are indeed predicted positive, that is 
+%\begin{equation}
+%\frac{TP}{TP+FN}
+%\end{equation}
 \item F-Measure: the harmonic mean of precision and recall. It measures the quality of these 2 metrics but does not take into account the True negatives that is why we introduce Matthews correlation coefficient
 \begin{equation}
 \frac{2*precision*recall}{precision+recall}
 \end{equation}
-\item Matthews correlation coefficient(MCC): it is a coefficient that is used to assess the quality of binary classifiers. Because it takes into account all the parts of the confusion matric it is considered to be a balanced metric: 
+\item Matthews correlation coefficient(MCC): is a coefficient that is used to assess the quality of binary classifiers. Because it takes into account all the parts of the confusion matrix it is considered to be a balanced metric: 
 \begin{equation}
 \frac{TP*TN - FP*FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
 \end{equation}
+\item Area Under the Curve(AUC) - ROC:  provides a measure of how well a parameter can distinguish between the 2 classes, similar to the accuracy metric. The higher the AUC the better the classifier performs.
 \end{itemize}
 
-\section{Interpretation of the results}
+We used the Accuracy score of the confusion matrix to decide which algorithm would be the best version of itself.
 
-\section{Current All-in solution assessment}
-\subsection{Exposure}
-\subsection{Recognizing Time-efficiently Local Botnet Infections (Heuer et Al.)}
-\subsection{More to come}
+\section{Interpretation of the results}
+\subsection{Results}
+Because of the nested loops testing all the scalers, with all the algorithms optimizing the hyper-parameters, here is the summary for each algorithm with their best performance. The different scalers were: StandardScaler (STD), MinMaxScaler (MMS), RobustScaler (RS), QuantileTransformer (QTU \ QTN), PowerTransformer (Power) and Normalizer (NORM).\\\\
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|}
+Classifier & Best Score & TPR & FPR & Acc & Prec & Err & F-M & MCC & AUC\\
+\hline
+Xgboost(RS) & 0.898 & 0.925 & 0.128 & 0.898 & 0.101 & 0.880 & 0.902 & 0.798 & 0.898\\
+\hline
+DT(NORM) & 0.902 & 0.455 & 0.050 & 0.698 & 0.3013 & 0.902 & 0.605 & 0.463 & 0.702\\
+\hline
+RF(STD) & 0.884 & 0.877 & 0.118 & 0.879 & 0.120 & 0.884 & 0.880 & 0.759 & 0.879\\
+\hline
+NB(PWR) & 0.705 & 0.851 & 0.445 & 0.705 & 0.294 & 0.663 & 0.746 & 0.4265 & 0.703\\
+\hline
+Aboost(PWR) & 0.849 & 0.892 & 0.195 & 0.849 & 0.151 & 0.8246 & 0.857 & 0.7004 & 0.848\\
+\hline
+LR(PWR) & 0.805 & 0.832 & 0.206 & 0.813 & 0.186 & 0.806 & 0.819 & 0.626 & 0.813\\
+\hline
+NN(PWR) & 0.847 & 0.923 & 0.171 & 0.876 & 0.123 & 0.847 & 0.883 & 0.756 & 0.876\\
+\hline
+\end{tabular}
+
+\subsection{Features discussion}
+To understand what features have the most importance and towards what class they pushed the classification towards we used a couple of different tools: Random Forest, LIME, 
+Decision Trees are awesome for so many things, they can help you in the feature selection, you can use them to classify data and by nature their structure allows to understand how they classifies the data into the different classes.\\
+Local Interpretable Model-agnostic Explanations (LIME) and Shapley values and additive explanations (SHAP) are options that provide a lot of information as well in regards to interpretation.
+\subsection{Results discussion}
+We obtain scores that do not surpass the 90\% accuracy score, which for this type of problem is a low score but could be explained by a lot of different factors.\\
+
+It is interesting to see that our approach to test out different scalers showed its value, since we can see that the best scores use multiple different scalers for each classifier. We can see that the PowerScalers seems to provide the best format of data for most classifiers and the interesting bit is that the most common scaler (MMS) doesn't provide the best scores for any algorithm.\\
+\\
+The focus of our work is to detect the moment where the bots will use the DNS protocol as the channel with their CnC, because we know that whatever protocol they are using as a communications mean they have to go through the DNS protocol. They need to resolve domains, if they do not use DNS and directly use the IPs, they will be spotted rapidly by most IDS or security tools.\\
+When looking at the predictions made by our classifier, we realized that a lot of the DNS traffic of the bots labeled as normal was related to normal traffic. What was interesting is to note that our approach isn't able to detect traffic related to the attacks performed by the bots. One of the examples was a bruteforce to Wordpress sites, all the DNS traffic generated from that attack looked completely normal. The reason it is important is because most traffic is labeled by IP of the infected host, therefore all DNS traffic from that host is counted in the predictions as well. We could argue that the attack traffic was used in the training part as well and could be recognized but since it looks exactly like legit traffic because there was no interactions with the rest of the botnet the weight of the normal traffic would take over.\\
+\\
+The high predictions from the Exposure and Heuer et al. came from 2 different things from our research. Exposure used a very large sample making it more reasonable in proportion to obtain higher scores, specially as they were manually verifying the results each day to improve the classifier.\\
+\\
+In our initial implementation our first goal was to introduce 2 additional evasion techniques to Exposure, DNS tunneling and DNS shadowing but we didn't realize that finding datasets for those 2 categories would be so hard, especially mixed with the other evasion techniques which are more slightly more noisy. In this regards, an anomaly detection method would probably have suited these 2 techniques better. That is also sustained by the visual effectiveness of DNS tunneling detection which can be easily spotted.\\
+\\
+
+%\section{Current All-in solution assessment}
+%\subsection{Exposure}
+%\subsection{Recognizing Time-efficiently Local Botnet Infections (Heuer et Al.)}
+%\subsection{More to come}
